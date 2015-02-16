@@ -212,24 +212,36 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201502100109493_InitialCreate.cs" />
-    <Compile Include="Migrations\201502100109493_InitialCreate.Designer.cs">
-      <DependentUpon>201502100109493_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201502160314457_ChildAddedToFeeding3.cs" />
+    <Compile Include="Migrations\201502160314457_ChildAddedToFeeding3.Designer.cs">
+      <DependentUpon>201502160314457_ChildAddedToFeeding3.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201502100112169_FeedingBreastColumnNullable.cs" />
-    <Compile Include="Migrations\201502100112169_FeedingBreastColumnNullable.Designer.cs">
-      <DependentUpon>201502100112169_FeedingBreastColumnNullable.cs</DependentUpon>
+    <Compile Include="Migrations\201502160317411_ChildAddedToFeeding31.cs" />
+    <Compile Include="Migrations\201502160317411_ChildAddedToFeeding31.Designer.cs">
+      <DependentUpon>201502160317411_ChildAddedToFeeding31.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502160430212_test4.cs" />
+    <Compile Include="Migrations\201502160430212_test4.Designer.cs">
+      <DependentUpon>201502160430212_test4.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Child.cs" />
+    <Compile Include="Models\CjUser.cs" />
+    <Compile Include="Models\DiaperChanges.cs" />
     <Compile Include="Models\Feedings.cs" />
+    <Compile Include="Models\Measurement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\CozyJozy.mdf" />
+    <Content Include="App_Data\CozyJozy_log.ldf">
+      <DependentUpon>CozyJozy.mdf</DependentUpon>
+    </Content>
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Content\bootstrap.css" />
@@ -296,9 +308,6 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
@@ -306,11 +315,14 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201502100109493_InitialCreate.resx">
-      <DependentUpon>201502100109493_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201502160314457_ChildAddedToFeeding3.resx">
+      <DependentUpon>201502160314457_ChildAddedToFeeding3.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502100112169_FeedingBreastColumnNullable.resx">
-      <DependentUpon>201502100112169_FeedingBreastColumnNullable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201502160317411_ChildAddedToFeeding31.resx">
+      <DependentUpon>201502160317411_ChildAddedToFeeding31.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502160430212_test4.resx">
+      <DependentUpon>201502160430212_test4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

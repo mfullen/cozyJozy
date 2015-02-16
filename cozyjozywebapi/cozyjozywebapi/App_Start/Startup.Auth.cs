@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using cozyjozywebapi.Entity;
+using cozyjozywebapi.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
@@ -17,7 +19,8 @@ namespace cozyjozywebapi
         {
             PublicClientId = "self";
 
-            UserManagerFactory = () => new UserManager<IdentityUser>(new UserStore<IdentityUser>());
+            UserManagerFactory = () => new UserManager<IdentityUser>(new UserStore<IdentityUser>(new CozyJozyContext()));
+           
 
             OAuthOptions = new OAuthAuthorizationServerOptions
             {

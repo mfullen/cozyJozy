@@ -7,13 +7,13 @@ namespace cozyjozywebapi.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.0.0-20911")]
-    public sealed partial class FeedingBreastColumnNullable : IMigrationMetadata
+    public sealed partial class test4 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(FeedingBreastColumnNullable));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(test4));
         
         string IMigrationMetadata.Id
         {
-            get { return "201502100112169_FeedingBreastColumnNullable"; }
+            get { return "201502160430212_test4"; }
         }
         
         string IMigrationMetadata.Source
