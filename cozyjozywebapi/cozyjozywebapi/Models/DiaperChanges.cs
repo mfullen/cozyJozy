@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace cozyjozywebapi.Models
 {
@@ -12,5 +14,9 @@ namespace cozyjozywebapi.Models
         public string Notes { get; set; }
         public bool Urine { get; set; }
         public bool Stool { get; set; }
+        public int ChildId { get; set; }
+        [ForeignKey("Id")]
+        [JsonIgnore]
+        public virtual Child Child { get; set; }
     }
 }

@@ -15,5 +15,11 @@ namespace cozyjozywebapi.Controllers
         {
             return View();
         }
+
+        [Authorize]
+        public ActionResult Test()
+        {
+            return View();
+        }
     }
 }

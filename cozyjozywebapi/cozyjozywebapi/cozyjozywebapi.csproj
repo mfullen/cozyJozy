@@ -16,10 +16,10 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
-    <IISExpressUseClassicPipelineMode />
+    <IISExpressSSLPort>5830</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
@@ -191,6 +191,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
@@ -223,6 +225,10 @@
     <Compile Include="Migrations\201502160430212_test4.cs" />
     <Compile Include="Migrations\201502160430212_test4.Designer.cs">
       <DependentUpon>201502160430212_test4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502180154499_ChildForeginKey.cs" />
+    <Compile Include="Migrations\201502180154499_ChildForeginKey.Designer.cs">
+      <DependentUpon>201502180154499_ChildForeginKey.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -263,6 +269,10 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="Areas\Dashboard\Views\web.config" />
+    <Content Include="Areas\Dashboard\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Dashboard\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -306,6 +316,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Home\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -324,6 +335,12 @@
     <EmbeddedResource Include="Migrations\201502160430212_test4.resx">
       <DependentUpon>201502160430212_test4.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502180154499_ChildForeginKey.resx">
+      <DependentUpon>201502180154499_ChildForeginKey.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Areas\Dashboard\Models\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -339,16 +356,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>6703</DevelopmentServerPort>
-          <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:5830/</IISUrl>
-          <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
-          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

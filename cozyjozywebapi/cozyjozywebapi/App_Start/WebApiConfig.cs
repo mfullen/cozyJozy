@@ -18,6 +18,8 @@ namespace cozyjozywebapi
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
+            config.Filters.Add(new AuthorizeAttribute());
+
             // Use camel case for JSON data.
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
