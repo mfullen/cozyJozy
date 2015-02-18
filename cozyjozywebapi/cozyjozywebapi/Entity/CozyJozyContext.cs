@@ -18,6 +18,7 @@ namespace cozyjozywebapi.Entity
         public DbSet<Child> Child { get; set; }
         public DbSet<DiaperChanges> DiaperChanges { get; set; }
         public DbSet<Measurement> Measurements { get; set; }
+        public DbSet<ChildPermissions> ChildPermissions { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -34,6 +35,6 @@ namespace cozyjozywebapi.Entity
                 x.MapLeftKey("UserId");
                 x.MapRightKey("ChildId");
             });
-        }  
+        }
     }
 }

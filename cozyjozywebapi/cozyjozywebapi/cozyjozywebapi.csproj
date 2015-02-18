@@ -208,9 +208,11 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ChildrenController.cs" />
     <Compile Include="Controllers\FeedingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Entity\CozyJozyContext.cs" />
+    <Compile Include="Filters\ChildPermissionFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -230,10 +232,15 @@
     <Compile Include="Migrations\201502180154499_ChildForeginKey.Designer.cs">
       <DependentUpon>201502180154499_ChildForeginKey.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502181805595_childpermissions.cs" />
+    <Compile Include="Migrations\201502181805595_childpermissions.Designer.cs">
+      <DependentUpon>201502181805595_childpermissions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Child.cs" />
+    <Compile Include="Models\ChildPermissions.cs" />
     <Compile Include="Models\CjUser.cs" />
     <Compile Include="Models\DiaperChanges.cs" />
     <Compile Include="Models\Feedings.cs" />
@@ -337,6 +344,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502180154499_ChildForeginKey.resx">
       <DependentUpon>201502180154499_ChildForeginKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502181805595_childpermissions.resx">
+      <DependentUpon>201502181805595_childpermissions.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

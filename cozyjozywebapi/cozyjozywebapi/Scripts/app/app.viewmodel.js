@@ -112,7 +112,7 @@
         self.errors.removeAll();
 
         if (accessToken) {
-            dataModel.setAccessToken(accessToken, persistent)
+            dataModel.setAccessToken(accessToken, persistent);
         }
 
         self.user(new UserInfoViewModel(self, userName, dataModel));

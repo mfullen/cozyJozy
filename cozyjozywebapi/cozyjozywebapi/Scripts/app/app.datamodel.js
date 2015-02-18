@@ -35,6 +35,8 @@
     }
 
     // Operations
+    self.getSecurityHeaders = getSecurityHeaders();
+
     self.clearAccessToken = function () {
         localStorage.removeItem("accessToken");
         sessionStorage.removeItem("accessToken");
