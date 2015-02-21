@@ -1,0 +1,77 @@
+﻿<!-- ko with: childmgt -->
+<div data-bind="ifnot: child">
+    <h2>Add New Child</h2>
+    <div>
+        <label for="gender">Gender (Male)</label>
+        <input id="gender" data-bind="checked: male" type="checkbox" title="Gender (Male)" />
+    </div>
+    <div>
+        <label for="firstName">First Name</label>
+        <input id="firstName" data-bind="value: firstName" type="text" title="First Name" />
+    </div>
+    <div>
+        <label for="middleName">Middle Name</label>
+        <input id="middleName" data-bind="value: middleName" type="text" title="Middle Name" />
+    </div>
+    <div>
+        <label for="lastName">Last Name</label>
+        <input id="lastName" data-bind="value: lastName" type="text" title="Last Name" />
+    </div>
+    <div>
+        <label for="dob">Date of Birth</label>
+        <input id="dob" data-bind="value: dob" type="text" title="Last Name" />
+    </div>
+    <button class="btn btn-default" data-bind="click: create, enable: canSave">Save</button>
+    <button class="btn btn-default" data-bind="click: cancel">Cancel</button>
+</div>
+
+<div data-bind="if: child">
+    <h2>Update Child</h2>
+    <div>
+        <label for="childId" data-bind="visible: false">Id</label>
+        <label id="childId" data-bind="text: child().id, visible: false"></label>
+    </div>
+    <div>
+        <label for="gender">Gender (Male)</label>
+        <input id="gender" data-bind="checked: child().male" type="checkbox" title="Gender (Male)" />
+    </div>
+    <div>
+        <label for="firstName">First Name</label>
+        <input id="firstName" data-bind="value: child().firstName" type="text" title="First Name" />
+    </div>
+    <div>
+        <label for="middleName">Middle Name</label>
+        <input id="middleName" data-bind="value: child().middleName" type="text" title="Middle Name" />
+    </div>
+    <div>
+        <label for="lastName">Last Name</label>
+        <input id="lastName" data-bind="value: child().lastName" type="text" title="Last Name" />
+    </div>
+    <div>
+        <label for="dob">Date of Birth</label>
+        <input id="dob" data-bind="value: child().dateOfBirth" type="text" title="Last Name" />
+    </div>
+    <button class="btn btn-default" data-bind="click: update">Save</button>
+    <button class="btn btn-default" data-bind="click: cancel">Cancel</button>
+</div>
+
+
+<div class="row">
+    <h1>Children</h1>
+    <table>
+        <tbody data-bind="foreach: children">
+            <tr>
+                <td data-bind="text: id"></td>
+                <td data-bind="text: firstName"></td>
+                <td data-bind="text: middleName"></td>
+                <td data-bind="text: lastName"></td>
+                <td data-bind="text: dateOfBirth"></td>
+                <td>
+                    <button class="btn btn-default" data-bind="click: $parent.edit">Edit</button>
+                    <button class="btn btn-default" data-bind="click: $parent.delete">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!-- /ko -->

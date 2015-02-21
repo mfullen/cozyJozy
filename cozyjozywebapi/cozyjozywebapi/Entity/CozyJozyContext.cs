@@ -8,7 +8,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace cozyjozywebapi.Entity
 {
-    public class CozyJozyContext   : IdentityDbContext<CjUser>
+    public class CozyJozyContext   : IdentityDbContext<User>
     {
         public CozyJozyContext()
             : base("CozyJozy")
@@ -26,7 +26,7 @@ namespace cozyjozywebapi.Entity
             modelBuilder.Entity<IdentityRole>().HasKey<string>(r => r.Id);
             modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
 
-            modelBuilder.Entity<CjUser>()
+            modelBuilder.Entity<User>()
                 .HasMany(x => x.Child)
                 .WithMany(x => x.Followers)
             .Map(x =>

@@ -6,7 +6,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace cozyjozywebapi.Models
 {
-    public class CjUser : IdentityUser
+    public class User : IdentityUser
     {
         public virtual ICollection<Child> Child { get; set; } 
     }

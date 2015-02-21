@@ -68,6 +68,13 @@
         Loading: {} // Other views are added dynamically by app.addViewModel(...).
     };
 
+    //cozyJozy specific
+    self.selectedChild = ko.observable();
+
+    self.availableChildren = ko.computed(function () {
+        return dataModel.getChildren();
+    });
+
     // UI state
     self.errors = ko.observableArray();
     self.user = ko.observable(null);
@@ -115,6 +122,7 @@
             dataModel.setAccessToken(accessToken, persistent);
         }
 
+        dataModel.fetchChildren();
         self.user(new UserInfoViewModel(self, userName, dataModel));
         self.navigateToHome();
     };

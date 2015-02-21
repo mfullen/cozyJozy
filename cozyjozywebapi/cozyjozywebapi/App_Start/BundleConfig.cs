@@ -15,7 +15,8 @@ namespace cozyjozywebapi
 
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
                 "~/Scripts/knockout-{version}.js",
-                "~/Scripts/knockout.validation.js"));
+                "~/Scripts/knockout.validation.js",
+                "~/Scripts/knockout.mapping-latest.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
                 "~/Scripts/app/ajaxPrefilters.js",
@@ -23,6 +24,8 @@ namespace cozyjozywebapi
                 "~/Scripts/app/app.datamodel.js",
                 "~/Scripts/app/app.viewmodel.js",
                 "~/Scripts/app/home.viewmodel.js",
+                "~/Scripts/app/childmgt.viewmodel.js",
+                "~/Scripts/app/feeding.viewmodel.js",
                 "~/Scripts/app/login.viewmodel.js",
                 "~/Scripts/app/register.viewmodel.js",
                 "~/Scripts/app/registerExternal.viewmodel.js",

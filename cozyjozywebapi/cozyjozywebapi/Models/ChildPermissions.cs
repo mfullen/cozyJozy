@@ -14,6 +14,6 @@ namespace cozyjozywebapi.Models
         public virtual Child Child { get; set; }
         public string IdentityUserId { get; set; }
         public virtual IdentityUser IdentityUser { get; set; }
-        public virtual ICollection<IdentityRole> Roles { get; set; }
+        public virtual IdentityRole Role { get; set; }
     }
 }

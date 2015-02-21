@@ -7,10 +7,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using cozyjozywebapi.Entity;
 using cozyjozywebapi.Models;
+using Microsoft.AspNet.Identity;
 
 namespace cozyjozywebapi.Controllers
 {
@@ -81,9 +83,16 @@ namespace cozyjozywebapi.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Child.Add(child);
+            var savedChild = db.Child.Add(child);
             await db.SaveChangesAsync();
-
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+            db.ChildPermissions.Add(new ChildPermissions()
+            {
+                ChildId = child.Id,
+                Role = db.Roles.FirstOrDefault(c => c.Id == "PARENT"),
+                IdentityUserId = userId
+            });
+            await db.SaveChangesAsync();
             return CreatedAtRoute("DefaultApi", new { id = child.Id }, child);
         }
 

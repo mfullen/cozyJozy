@@ -35,7 +35,9 @@
     }
 
     // Operations
-    self.getSecurityHeaders = getSecurityHeaders();
+    self.getSecurityHeaders = function() {
+         return getSecurityHeaders();
+    }
 
     self.clearAccessToken = function () {
         localStorage.removeItem("accessToken");
@@ -79,6 +81,29 @@
 
     // Data
     self.returnUrl = siteUrl;
+
+
+    //app specific
+    self.children = ko.observableArray();
+    self.setChildren = function(c) {
+        self.children(c);
+    }
+
+    self.getChildren = function() {
+        return self.children();
+    }
+
+    self.fetchChildren = function() {
+        $.ajax({
+            url: 'api/children',
+            cache: false,
+            headers: self.getSecurityHeaders(),
+            contentType: 'json',
+            success: function (data) {
+                self.setChildren(data);
+            }
+        });
+    }
 
     // Data access operations
     self.addExternalLogin = function (data) {

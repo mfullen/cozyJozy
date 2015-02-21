@@ -1,0 +1,21 @@
+﻿<!-- ko with: feedingMgt -->
+
+
+<div class="row">
+    <h1>Feedings</h1>
+    <table>
+        <tbody data-bind="foreach: feedings">
+            <tr>
+                <td data-bind="text: id"></td>
+                <td data-bind="text: startTime"></td>
+                <td data-bind="text: endTime"></td>
+                <td data-bind="text: deliveryType"></td>
+                <td data-bind="text: amount"></td>
+                <td data-bind="text: dateReported"></td>
+                <td data-bind="text: spitUp"></td>
+                <td data-bind="text: childId"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!-- /ko -->

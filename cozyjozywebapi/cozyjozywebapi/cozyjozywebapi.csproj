@@ -191,8 +191,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Areas\Dashboard\Controllers\DashboardController.cs" />
-    <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
@@ -236,12 +234,28 @@
     <Compile Include="Migrations\201502181805595_childpermissions.Designer.cs">
       <DependentUpon>201502181805595_childpermissions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502182105421_Role-CP.cs" />
+    <Compile Include="Migrations\201502182105421_Role-CP.Designer.cs">
+      <DependentUpon>201502182105421_Role-CP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502182108216_Role-CP-2.cs" />
+    <Compile Include="Migrations\201502182108216_Role-CP-2.Designer.cs">
+      <DependentUpon>201502182108216_Role-CP-2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502202039377_deliverytype-spitup.cs" />
+    <Compile Include="Migrations\201502202039377_deliverytype-spitup.Designer.cs">
+      <DependentUpon>201502202039377_deliverytype-spitup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502210019439_gender.cs" />
+    <Compile Include="Migrations\201502210019439_gender.Designer.cs">
+      <DependentUpon>201502210019439_gender.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Child.cs" />
     <Compile Include="Models\ChildPermissions.cs" />
-    <Compile Include="Models\CjUser.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Models\DiaperChanges.cs" />
     <Compile Include="Models\Feedings.cs" />
     <Compile Include="Models\Measurement.cs" />
@@ -263,6 +277,8 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\app\childmgt.viewmodel.js" />
+    <Content Include="Scripts\app\feeding.viewmodel.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -276,15 +292,13 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <Content Include="Areas\Dashboard\Views\web.config" />
-    <Content Include="Areas\Dashboard\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Dashboard\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Dashboard\Views\Dashboard\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\knockout-2.3.0.debug.js" />
     <Content Include="Scripts\knockout-2.3.0.js" />
+    <Content Include="Scripts\knockout.mapping-latest.debug.js" />
+    <Content Include="Scripts\knockout.mapping-latest.js" />
     <Content Include="Scripts\knockout.validation.debug.js" />
     <Content Include="Scripts\knockout.validation.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
@@ -323,7 +337,8 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Home\Test.cshtml" />
+    <Content Include="Views\Home\_ChildMgt.cshtml" />
+    <Content Include="Views\Home\_Feeding.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -348,10 +363,20 @@
     <EmbeddedResource Include="Migrations\201502181805595_childpermissions.resx">
       <DependentUpon>201502181805595_childpermissions.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502182105421_Role-CP.resx">
+      <DependentUpon>201502182105421_Role-CP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502182108216_Role-CP-2.resx">
+      <DependentUpon>201502182108216_Role-CP-2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502202039377_deliverytype-spitup.resx">
+      <DependentUpon>201502202039377_deliverytype-spitup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502210019439_gender.resx">
+      <DependentUpon>201502210019439_gender.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Areas\Dashboard\Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

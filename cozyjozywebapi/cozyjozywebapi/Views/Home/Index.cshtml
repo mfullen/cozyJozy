@@ -23,12 +23,15 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <p class="navbar-brand" data-bind="if: !loggedIn()">Application Name</p>
-                    <a href="#" class="navbar-brand" data-bind="if: loggedIn, click: navigateToHome">Application Name</a>
+                    <p class="navbar-brand" data-bind="if: !loggedIn()">CozyJozy</p>
+                    <a href="#" class="navbar-brand" data-bind="if: loggedIn, click: navigateToHome">CozyJozy</a>
                 </div>
                 <div data-bind="if: loggedIn" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
+                        <li><select data-bind="options: availableChildren, optionsText: function(item) { return item.firstName + ' ' + item.middleName + ' ' + item.lastName;}, value: selectedChild"></select></li>
                         <li><a href="#" data-bind="click: navigateToHome">Home</a></li>
+                        <li><a href="#" data-bind="click: navigateToChildManagement">Child Management</a></li>
+                        <li><a href="#" data-bind="click: navigateToFeeding">Feeding</a></li>
                         <li>@Html.ActionLink("API", "Index", "Help", new { area = "HelpPage" }, null)</li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right" data-bind="with: user">
@@ -45,13 +48,15 @@
             <p class="text-danger" data-bind="text: $data"></p>
         </div>
         @Html.Partial("_Home")
+        @Html.Partial("_ChildMgt")
+        @Html.Partial("_Feeding")
         @Html.Partial("_Login")
         @Html.Partial("_Register")
         @Html.Partial("_RegisterExternal")
         @Html.Partial("_Manage")
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - CozyJozy</p>
         </footer>
     </div>
 
@@ -59,5 +64,6 @@
     @Scripts.Render("~/bundles/knockout")
     @Scripts.Render("~/bundles/app")
     @Scripts.Render("~/bundles/bootstrap")
+    
 </body>
 </html>
