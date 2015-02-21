@@ -250,6 +250,34 @@
     <Compile Include="Migrations\201502210019439_gender.Designer.cs">
       <DependentUpon>201502210019439_gender.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502210243196_fixid.cs" />
+    <Compile Include="Migrations\201502210243196_fixid.Designer.cs">
+      <DependentUpon>201502210243196_fixid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502210245598_fixid2.cs" />
+    <Compile Include="Migrations\201502210245598_fixid2.Designer.cs">
+      <DependentUpon>201502210245598_fixid2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502210248398_fixid3.cs" />
+    <Compile Include="Migrations\201502210248398_fixid3.Designer.cs">
+      <DependentUpon>201502210248398_fixid3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502210306038_removed-feedings-from-child.cs" />
+    <Compile Include="Migrations\201502210306038_removed-feedings-from-child.Designer.cs">
+      <DependentUpon>201502210306038_removed-feedings-from-child.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502210314092_fixid4.cs" />
+    <Compile Include="Migrations\201502210314092_fixid4.Designer.cs">
+      <DependentUpon>201502210314092_fixid4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502210317208_fixid41.cs" />
+    <Compile Include="Migrations\201502210317208_fixid41.Designer.cs">
+      <DependentUpon>201502210317208_fixid41.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502210324110_fixid42.cs" />
+    <Compile Include="Migrations\201502210324110_fixid42.Designer.cs">
+      <DependentUpon>201502210324110_fixid42.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -295,8 +323,10 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <Content Include="Scripts\knockout-2.3.0.debug.js" />
-    <Content Include="Scripts\knockout-2.3.0.js" />
+    <Content Include="Scripts\knockout-3.2.0.debug.js" />
+    <Content Include="Scripts\knockout-3.2.0.js" />
+    <Content Include="Scripts\knockout-3.3.0.debug.js" />
+    <Content Include="Scripts\knockout-3.3.0.js" />
     <Content Include="Scripts\knockout.mapping-latest.debug.js" />
     <Content Include="Scripts\knockout.mapping-latest.js" />
     <Content Include="Scripts\knockout.validation.debug.js" />
@@ -374,6 +404,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502210019439_gender.resx">
       <DependentUpon>201502210019439_gender.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502210243196_fixid.resx">
+      <DependentUpon>201502210243196_fixid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502210245598_fixid2.resx">
+      <DependentUpon>201502210245598_fixid2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502210248398_fixid3.resx">
+      <DependentUpon>201502210248398_fixid3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502210306038_removed-feedings-from-child.resx">
+      <DependentUpon>201502210306038_removed-feedings-from-child.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502210314092_fixid4.resx">
+      <DependentUpon>201502210314092_fixid4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502210317208_fixid41.resx">
+      <DependentUpon>201502210317208_fixid41.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502210324110_fixid42.resx">
+      <DependentUpon>201502210324110_fixid42.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

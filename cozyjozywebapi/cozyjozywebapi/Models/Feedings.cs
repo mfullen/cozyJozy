@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -15,6 +16,7 @@ namespace cozyjozywebapi.Models
     }
     public class Feedings
     {
+        [Key]
         public int Id { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
@@ -23,7 +25,6 @@ namespace cozyjozywebapi.Models
         public DateTime DateReported { get; set; }
         public bool SpitUp { get; set; }
         public int ChildId { get; set; }
-        [ForeignKey("Id")]
         [JsonIgnore]
         public virtual Child Child { get; set; }
     }

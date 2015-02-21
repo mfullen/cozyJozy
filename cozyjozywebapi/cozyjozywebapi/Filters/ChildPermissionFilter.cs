@@ -25,7 +25,8 @@ namespace cozyjozywebapi.Filters
             {
                 throw new HttpException(403, "Forbidden");
             }
-            actionContext.ActionArguments["authorthizedChildren"] = validChildIds;
+            HttpContext.Current.Items["authorthizedChildren"] = validChildIds;
+            //actionContext.ActionArguments["authorthizedChildren"] = validChildIds;
         }
     }
 }

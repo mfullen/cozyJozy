@@ -1,5 +1,73 @@
-﻿<!-- ko with: feedingMgt -->
+﻿@using cozyjozywebapi.Models
+<!-- ko with: feedingMgt -->
 
+<div data-bind="ifnot: feeding">
+    <h2>Add New Feeding</h2>
+    <div>
+        <label for="startTime">Start Time</label>
+        <input id="startTime" data-bind="value: startTime" type="text" title="Start Time" />
+    </div>
+    <div>
+        <label for="endime">End Time</label>
+        <input id="endime" data-bind="value: endTime" type="text" title="End Time" />
+    </div>
+
+    <div>
+        <label>Delivery Type</label>
+        <select data-bind="options: deliveryTypes, optionsText: 'name', optionsValue: 'value', value: deliveryType "></select>
+    </div>
+
+    <div>
+        <label for="amount">Amount (mL)</label>
+        <input id="amount" data-bind="numeric: amount, value: amount" />
+        <span data-bind="text: amountOunces() + ' oz'"></span>
+    </div>
+
+    <div>
+        <label>Spit up?</label>
+        <input data-bind="checked: spitUp" type="checkbox" />
+    </div>
+
+
+    <button class="btn btn-default" data-bind="click: create, enable: canSave">Save</button>
+    <button class="btn btn-default" data-bind="click: cancel">Cancel</button>
+</div>
+
+<div data-bind="if: feeding">
+    <h2>Update Feeding</h2>
+    <div>
+        <label for="feedingId" data-bind="visible: false">Id</label>
+        <label id="feedingId" data-bind="text: feeding().id, visible: false"></label>
+    </div>
+    <div>
+        <label for="startTime">Start Time</label>
+        <input id="startTime" data-bind="value: feeding().startTime" type="text" title="Start Time" />
+    </div>
+    <div>
+        <label for="endime">End Time</label>
+        <input id="endime" data-bind="value: feeding().endTime" type="text" title="End Time" />
+    </div>
+
+    <div>
+        <label>Delivery Type</label>
+        <select data-bind="options: deliveryTypes, optionsText: 'name', optionsValue: 'value', value: feeding().deliveryType "></select>
+    </div>
+
+    <div>
+        <label for="amount">Amount (mL)</label>
+        <input id="amount" data-bind="numeric: feeding().amount, value: feeding().amount" />
+        <span data-bind="text: amountOunces2() + ' oz'"></span>
+    </div>
+
+    <div>
+        <label>Spit up?</label>
+        <input data-bind="checked: feeding().spitUp" type="checkbox" />
+    </div>
+
+
+    <button class="btn btn-default" data-bind="click: create, enable: canSave">Save</button>
+    <button class="btn btn-default" data-bind="click: cancel">Cancel</button>
+</div>
 
 <div class="row">
     <h1>Feedings</h1>
@@ -9,11 +77,16 @@
                 <td data-bind="text: id"></td>
                 <td data-bind="text: startTime"></td>
                 <td data-bind="text: endTime"></td>
-                <td data-bind="text: deliveryType"></td>
+                <td data-bind="text: $parent.getDeliveryType($data.deliveryType)"></td>
                 <td data-bind="text: amount"></td>
                 <td data-bind="text: dateReported"></td>
                 <td data-bind="text: spitUp"></td>
                 <td data-bind="text: childId"></td>
+                
+                <td>
+                    <button class="btn btn-default" data-bind="click: $parent.edit">Edit</button>
+                    <button class="btn btn-default" data-bind="click: $parent.delete">Delete</button>
+                </td>
             </tr>
         </tbody>
     </table>

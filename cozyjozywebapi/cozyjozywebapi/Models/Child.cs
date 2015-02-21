@@ -16,8 +16,6 @@ namespace cozyjozywebapi.Models
         public bool Male { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<Feedings> Feedings { get; set; }
-        [JsonIgnore]
         public virtual ICollection<DiaperChanges> DiaperChanges { get; set; }
         [JsonIgnore]
         public virtual ICollection<Measurement> Measurements { get; set; }
