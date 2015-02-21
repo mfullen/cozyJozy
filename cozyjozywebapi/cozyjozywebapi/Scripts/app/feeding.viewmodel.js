@@ -76,6 +76,7 @@
         self.dateReported("");
         self.childId(null);
         self.spitUp(false);
+        self.feeding(null);
     }
 
     self.edit = function(f) {
@@ -83,11 +84,44 @@
     }
     
     self.update = function() {
-        
+        var feed = self.feeding();
+        $.ajax({
+            url: 'api/feeding',
+            cache: 'false',
+            type: 'PUT',
+            contentType: 'application/json',
+            headers: dataModel.getSecurityHeaders(),
+            data: ko.toJSON(feed),
+            success: function (data) {
+                var temp = ko.observableArray();
+                temp(self.feedings().slice(0));
+                self.feedings.removeAll();
+                self.feedings(temp());
+
+                self.reset();
+            },
+            failure: function (xhr, textStatus, err) {
+                console.log("Error", xhr, textStatus, err);
+            }
+        });
     }
 
-    self.delete = function() {
-        
+    self.delete = function(f) {
+        if (confirm('Are you sure you want to Delete this feeding?')) {
+            $.ajax({
+                url: 'api/feeding/' + f.id,
+                cache: 'false',
+                type: 'DELETE',
+                contentType: 'application/json',
+                headers: dataModel.getSecurityHeaders(),
+                success: function (data) {
+                    self.feedings.remove(f);
+                },
+                failure: function (xhr, textStatus, err) {
+                    console.log("Error", xhr, textStatus, err);
+                }
+            });
+        }
     }
 
     self.amountOunces = ko.computed(function () {

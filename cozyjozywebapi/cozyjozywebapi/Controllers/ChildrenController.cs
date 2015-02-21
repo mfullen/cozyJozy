@@ -23,7 +23,8 @@ namespace cozyjozywebapi.Controllers
         // GET: api/Children
         public IQueryable<Child> GetChild()
         {
-            return db.Child;
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+            return db.ChildPermissions.Where(c => c.IdentityUserId == userId).Select(c => c.Child);
         }
 
         // GET: api/Children/5
