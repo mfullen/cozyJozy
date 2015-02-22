@@ -7,13 +7,13 @@ namespace cozyjozywebapi.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.0.0-20911")]
-    public sealed partial class fixid : IMigrationMetadata
+    public sealed partial class toazure : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(fixid));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(toazure));
         
         string IMigrationMetadata.Id
         {
-            get { return "201502210243196_fixid"; }
+            get { return "201502222026496_toazure"; }
         }
         
         string IMigrationMetadata.Source

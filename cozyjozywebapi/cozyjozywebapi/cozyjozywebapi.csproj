@@ -215,77 +215,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201502160314457_ChildAddedToFeeding3.cs" />
-    <Compile Include="Migrations\201502160314457_ChildAddedToFeeding3.Designer.cs">
-      <DependentUpon>201502160314457_ChildAddedToFeeding3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502160317411_ChildAddedToFeeding31.cs" />
-    <Compile Include="Migrations\201502160317411_ChildAddedToFeeding31.Designer.cs">
-      <DependentUpon>201502160317411_ChildAddedToFeeding31.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502160430212_test4.cs" />
-    <Compile Include="Migrations\201502160430212_test4.Designer.cs">
-      <DependentUpon>201502160430212_test4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502180154499_ChildForeginKey.cs" />
-    <Compile Include="Migrations\201502180154499_ChildForeginKey.Designer.cs">
-      <DependentUpon>201502180154499_ChildForeginKey.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502181805595_childpermissions.cs" />
-    <Compile Include="Migrations\201502181805595_childpermissions.Designer.cs">
-      <DependentUpon>201502181805595_childpermissions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502182105421_Role-CP.cs" />
-    <Compile Include="Migrations\201502182105421_Role-CP.Designer.cs">
-      <DependentUpon>201502182105421_Role-CP.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502182108216_Role-CP-2.cs" />
-    <Compile Include="Migrations\201502182108216_Role-CP-2.Designer.cs">
-      <DependentUpon>201502182108216_Role-CP-2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502202039377_deliverytype-spitup.cs" />
-    <Compile Include="Migrations\201502202039377_deliverytype-spitup.Designer.cs">
-      <DependentUpon>201502202039377_deliverytype-spitup.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502210019439_gender.cs" />
-    <Compile Include="Migrations\201502210019439_gender.Designer.cs">
-      <DependentUpon>201502210019439_gender.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502210243196_fixid.cs" />
-    <Compile Include="Migrations\201502210243196_fixid.Designer.cs">
-      <DependentUpon>201502210243196_fixid.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502210245598_fixid2.cs" />
-    <Compile Include="Migrations\201502210245598_fixid2.Designer.cs">
-      <DependentUpon>201502210245598_fixid2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502210248398_fixid3.cs" />
-    <Compile Include="Migrations\201502210248398_fixid3.Designer.cs">
-      <DependentUpon>201502210248398_fixid3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502210306038_removed-feedings-from-child.cs" />
-    <Compile Include="Migrations\201502210306038_removed-feedings-from-child.Designer.cs">
-      <DependentUpon>201502210306038_removed-feedings-from-child.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502210314092_fixid4.cs" />
-    <Compile Include="Migrations\201502210314092_fixid4.Designer.cs">
-      <DependentUpon>201502210314092_fixid4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502210317208_fixid41.cs" />
-    <Compile Include="Migrations\201502210317208_fixid41.Designer.cs">
-      <DependentUpon>201502210317208_fixid41.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502210324110_fixid42.cs" />
-    <Compile Include="Migrations\201502210324110_fixid42.Designer.cs">
-      <DependentUpon>201502210324110_fixid42.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502221250435_fixid43.cs" />
-    <Compile Include="Migrations\201502221250435_fixid43.Designer.cs">
-      <DependentUpon>201502221250435_fixid43.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502221316514_trackReportedByUser.cs" />
-    <Compile Include="Migrations\201502221316514_trackReportedByUser.Designer.cs">
-      <DependentUpon>201502221316514_trackReportedByUser.cs</DependentUpon>
+    <Compile Include="Migrations\201502222026496_toazure.cs" />
+    <Compile Include="Migrations\201502222026496_toazure.Designer.cs">
+      <DependentUpon>201502222026496_toazure.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -330,6 +262,9 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <None Include="Properties\PublishProfiles\cozyjozy.pubxml" />
+    <None Include="Properties\PublishProfiles\cozyjozyazure.pubxml" />
+    <None Include="Properties\PublishProfiles\cozyJozymikefullen.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -387,62 +322,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201502160314457_ChildAddedToFeeding3.resx">
-      <DependentUpon>201502160314457_ChildAddedToFeeding3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502160317411_ChildAddedToFeeding31.resx">
-      <DependentUpon>201502160317411_ChildAddedToFeeding31.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502160430212_test4.resx">
-      <DependentUpon>201502160430212_test4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502180154499_ChildForeginKey.resx">
-      <DependentUpon>201502180154499_ChildForeginKey.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502181805595_childpermissions.resx">
-      <DependentUpon>201502181805595_childpermissions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502182105421_Role-CP.resx">
-      <DependentUpon>201502182105421_Role-CP.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502182108216_Role-CP-2.resx">
-      <DependentUpon>201502182108216_Role-CP-2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502202039377_deliverytype-spitup.resx">
-      <DependentUpon>201502202039377_deliverytype-spitup.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502210019439_gender.resx">
-      <DependentUpon>201502210019439_gender.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502210243196_fixid.resx">
-      <DependentUpon>201502210243196_fixid.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502210245598_fixid2.resx">
-      <DependentUpon>201502210245598_fixid2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502210248398_fixid3.resx">
-      <DependentUpon>201502210248398_fixid3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502210306038_removed-feedings-from-child.resx">
-      <DependentUpon>201502210306038_removed-feedings-from-child.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502210314092_fixid4.resx">
-      <DependentUpon>201502210314092_fixid4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502210317208_fixid41.resx">
-      <DependentUpon>201502210317208_fixid41.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502210324110_fixid42.resx">
-      <DependentUpon>201502210324110_fixid42.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502221250435_fixid43.resx">
-      <DependentUpon>201502221250435_fixid43.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502221316514_trackReportedByUser.resx">
-      <DependentUpon>201502221316514_trackReportedByUser.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201502222026496_toazure.resx">
+      <DependentUpon>201502222026496_toazure.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
