@@ -283,6 +283,10 @@
     <Compile Include="Migrations\201502221250435_fixid43.Designer.cs">
       <DependentUpon>201502221250435_fixid43.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502221316514_trackReportedByUser.cs" />
+    <Compile Include="Migrations\201502221316514_trackReportedByUser.Designer.cs">
+      <DependentUpon>201502221316514_trackReportedByUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -433,6 +437,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502221250435_fixid43.resx">
       <DependentUpon>201502221250435_fixid43.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502221316514_trackReportedByUser.resx">
+      <DependentUpon>201502221316514_trackReportedByUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

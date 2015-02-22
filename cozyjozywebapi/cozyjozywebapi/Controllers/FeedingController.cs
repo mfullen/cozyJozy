@@ -11,6 +11,7 @@ using System.Web.UI.WebControls;
 using cozyjozywebapi.Entity;
 using cozyjozywebapi.Filters;
 using cozyjozywebapi.Models;
+using Microsoft.AspNet.Identity;
 
 namespace cozyjozywebapi.Controllers
 {
@@ -18,13 +19,14 @@ namespace cozyjozywebapi.Controllers
     public class FeedingController : ApiController
     {
         private readonly CozyJozyContext context = new CozyJozyContext();
+        private const string _authorthizedchildren = "authorthizedChildren";
         private const int MaxPageSize = 100;
         // GET api/<controller>
 
 
         public IHttpActionResult Get(int pagesize = 25, int page = 0, int childId = 0)
         {
-            var authorthizedChildren = HttpContext.Current.Items["authorthizedChildren"] as List<int>;
+            var authorthizedChildren = HttpContext.Current.Items[_authorthizedchildren] as List<int>;
 
             if (pagesize > MaxPageSize)
             {
@@ -43,7 +45,7 @@ namespace cozyjozywebapi.Controllers
         // GET api/<controller>/5
         public IHttpActionResult Get(int id)
         {
-            var authorthizedChildren = HttpContext.Current.Items["authorthizedChildren"] as List<int>;
+            var authorthizedChildren = HttpContext.Current.Items[_authorthizedchildren] as List<int>;
 
             var data = context.Feedings.FirstOrDefault(f => f.Id == id);
             if (data == null || !authorthizedChildren.Contains(data.ChildId))
@@ -55,7 +57,7 @@ namespace cozyjozywebapi.Controllers
         // POST api/<controller>
         public IHttpActionResult Post(Feedings feeding)
         {
-            var authorthizedChildren = HttpContext.Current.Items["authorthizedChildren"] as List<int>;
+            var authorthizedChildren = HttpContext.Current.Items[_authorthizedchildren] as List<int>;
             if (!authorthizedChildren.Contains(feeding.ChildId))
                 return BadRequest();
 
@@ -70,6 +72,8 @@ namespace cozyjozywebapi.Controllers
                 DeliveryType = feeding.DeliveryType
             };
             newFeeding.ChildId = newFeeding.Child.Id;
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+            newFeeding.UserId = userId;
             var entity = context.Feedings.Add(newFeeding);
             context.SaveChanges();
             var myUri = Request.RequestUri + entity.Id.ToString();
@@ -79,12 +83,14 @@ namespace cozyjozywebapi.Controllers
         // PUT api/<controller>/5
         public IHttpActionResult Put(Feedings feeding)
         {
-            var authorthizedChildren = HttpContext.Current.Items["authorthizedChildren"] as List<int>;
+            var authorthizedChildren = HttpContext.Current.Items[_authorthizedchildren] as List<int>;
 
             if (!authorthizedChildren.Contains(feeding.ChildId))
                 return BadRequest();
 
             feeding.DateReported = DateTime.Now;
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+            feeding.UserId = userId;
             var existingFeed = context.Feedings.FirstOrDefault(i => i.Id == feeding.Id);
             if (existingFeed == null || existingFeed.Id < 1)
             {
@@ -99,7 +105,7 @@ namespace cozyjozywebapi.Controllers
         // DELETE api/<controller>/5
         public IHttpActionResult Delete(int id)
         {
-            var authorthizedChildren = HttpContext.Current.Items["authorthizedChildren"] as List<int>;
+            var authorthizedChildren = HttpContext.Current.Items[_authorthizedchildren] as List<int>;
 
             var existingFeed = context.Feedings.FirstOrDefault(i => i.Id == id);
             if (existingFeed == null || !authorthizedChildren.Contains(existingFeed.ChildId))

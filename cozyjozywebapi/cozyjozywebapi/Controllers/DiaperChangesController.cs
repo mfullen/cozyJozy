@@ -13,6 +13,7 @@ using System.Web.Http.Description;
 using cozyjozywebapi.Entity;
 using cozyjozywebapi.Filters;
 using cozyjozywebapi.Models;
+using Microsoft.AspNet.Identity;
 
 namespace cozyjozywebapi.Controllers
 {
@@ -71,6 +72,8 @@ namespace cozyjozywebapi.Controllers
             {
                 return BadRequest();
             }
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+            diaperChanges.UserId = userId;
 
             context.Entry(diaperChanges).State = EntityState.Modified;
 
@@ -104,6 +107,8 @@ namespace cozyjozywebapi.Controllers
                 return BadRequest(ModelState);
             }
 
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+            diaperChanges.UserId = userId;
             context.DiaperChanges.Add(diaperChanges);
 
             try

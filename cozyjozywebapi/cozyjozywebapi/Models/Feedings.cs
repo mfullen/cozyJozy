@@ -27,5 +27,8 @@ namespace cozyjozywebapi.Models
         public int ChildId { get; set; }
         [JsonIgnore]
         public virtual Child Child { get; set; }
+        public string UserId { get; set; }
+        [JsonIgnore]
+        public virtual User ReportedBy { get; set; }
     }
 }
