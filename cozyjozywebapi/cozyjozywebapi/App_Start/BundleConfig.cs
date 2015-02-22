@@ -26,6 +26,7 @@ namespace cozyjozywebapi
                 "~/Scripts/app/home.viewmodel.js",
                 "~/Scripts/app/childmgt.viewmodel.js",
                 "~/Scripts/app/feeding.viewmodel.js",
+                "~/Scripts/app/diapermgt.viewmodel.js",
                 "~/Scripts/app/login.viewmodel.js",
                 "~/Scripts/app/register.viewmodel.js",
                 "~/Scripts/app/registerExternal.viewmodel.js",

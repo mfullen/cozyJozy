@@ -15,7 +15,6 @@ namespace cozyjozywebapi.Models
         public bool Urine { get; set; }
         public bool Stool { get; set; }
         public int ChildId { get; set; }
-        [ForeignKey("Id")]
         [JsonIgnore]
         public virtual Child Child { get; set; }
     }

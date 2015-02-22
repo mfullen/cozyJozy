@@ -47,8 +47,7 @@
         };
 
         self.feeding(feed2Send);
-        var d2Send = ko.toJSON(self.feeding);
-        console.log(d2Send);
+
         $.ajax({
             url: 'api/feeding',
             cache: 'false',
