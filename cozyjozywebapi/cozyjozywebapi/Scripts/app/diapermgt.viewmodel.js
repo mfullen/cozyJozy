@@ -10,15 +10,17 @@
 function DiaperManagement(app, dataModel) {
     var self = this;
 
+    var newDc = function() {
+        return new DC({
+            id: 0,
+            occurredOn: '',
+            notes: '',
+            urine: false,
+            stool: false
+        });
+    }
 
-
-    self.diaperChange = ko.observable(new DC({
-        id: 0,
-        occurredOn: '',
-        notes: '',
-        urine: false,
-        stool: false
-    }));
+    self.diaperChange = ko.observable(newDc());
 
     self.diaperChanges = ko.observableArray();
 
@@ -31,15 +33,13 @@ function DiaperManagement(app, dataModel) {
 
     self.openNew = function () {
         self.isEditing(false);
+        self.diaperChange(newDc());
         self.isCreatingNew(true);
     }
 
     self.create = function () {
-     
         self.diaperChange().childId(app.selectedChild().id);
-    
-        console.log("ko.toJson.Diaper", ko.toJSON(self.diaperChange));
-        console.log("self.diaperChange", self.diaperChange());
+
         $.ajax({
             url: 'api/diaperchanges',
             cache: 'false',
@@ -59,7 +59,7 @@ function DiaperManagement(app, dataModel) {
     }
 
     self.reset = function () {
-        self.diaperChange(null);
+        self.diaperChange(newDc());
         self.isEditing(false);
         self.isCreatingNew(false);
     }

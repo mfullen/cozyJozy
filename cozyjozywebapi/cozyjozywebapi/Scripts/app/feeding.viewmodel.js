@@ -1,17 +1,16 @@
-﻿function Feeding(app, dataModel) {
+﻿function FEED(data) {
+    this.id = ko.observable(data.id);
+    this.startTime = ko.observable(data.startTime).extend({ required: true });
+    this.endTime = ko.observable(data.endTime).extend({ required: true });
+    this.deliveryType = ko.observable(data.deliveryType);
+    this.amount = ko.observable(data.amount).extend({ numeric: 2 });
+    this.dateReported = ko.observable(data.dateReported);
+    this.childId = ko.observable(data.childId);
+    this.spitUp = ko.observable(data.spitUp);
+}
+
+function Feeding(app, dataModel) {
     var self = this;
-
-    self.id = ko.observable("");
-    self.startTime = ko.observable("").extend({ required: true });
-    self.endTime = ko.observable("").extend({ required: true });
-    self.deliveryType = ko.observable("");
-    self.amount = ko.observable().extend({ numeric: 2 });
-    self.dateReported = ko.observable("");
-    self.childId = ko.observable("");
-    self.spitUp = ko.observable();
-
-
-   
 
     self.deliveryTypes = [
         { value: 0, name: "Left Breast", code: "LB" },
@@ -29,24 +28,35 @@
         return null;
     };
 
-    self.feeding = ko.observable();
+    var newFeed = function() {
+        return new FEED({
+            id: 0,
+            startTime: '',
+            endTime: '',
+            dateReported: '',
+            spitUp: '',
+        });
+    }
+
+    self.feeding = ko.observable(newFeed());
+
     self.feedings = ko.observableArray();
+
+    self.isEditing = ko.observable(false);
+    self.isCreatingNew = ko.observable(false);
 
     self.canSave = function () {
 
     }
 
-    self.create = function () {
-        var feed2Send = {
-            startTime: self.startTime,
-            endTime: self.endTime,
-            deliveryType: self.deliveryType,
-            amount: self.amount,
-            spitUp: self.spitUp,
-            childId: app.selectedChild().id
-        };
+    self.openNew = function () {
+        self.isEditing(false);
+        self.feeding(newFeed());
+        self.isCreatingNew(true);
+    }
 
-        self.feeding(feed2Send);
+    self.create = function () {
+        self.feeding().childId(app.selectedChild().id);
 
         $.ajax({
             url: 'api/feeding',
@@ -54,9 +64,9 @@
             type: 'POST',
             contentType: 'application/json',
             headers: dataModel.getSecurityHeaders(),
-            data: ko.toJSON(self.feeding),
+            data: ko.toJSON(self.feeding()),
             success: function (data) {
-                self.feedings.push(data);
+                self.feedings.push(new FEED(data));
                 self.reset();
             }
         });
@@ -67,19 +77,14 @@
     }
 
     self.reset = function() {
-        self.id("");
-        self.startTime("");
-        self.endTime("");
-        self.deliveryType("");
-        self.amount(null);
-        self.dateReported("");
-        self.childId(null);
-        self.spitUp(false);
-        self.feeding(null);
+        self.feeding(newFeed());
+        self.isEditing(false);
+        self.isCreatingNew(false);
     }
 
     self.edit = function(f) {
         self.feeding(f);
+        self.isEditing(true);
     }
     
     self.update = function() {
@@ -108,7 +113,7 @@
     self.delete = function(f) {
         if (confirm('Are you sure you want to Delete this feeding?')) {
             $.ajax({
-                url: 'api/feeding/' + f.id,
+                url: 'api/feeding/' + f.id(),
                 cache: 'false',
                 type: 'DELETE',
                 contentType: 'application/json',
@@ -124,33 +129,27 @@
     }
 
     self.amountOunces = ko.computed(function () {
-        if (!self.amount() || self.amount() < 0)
+        if (!self.feeding() || !self.feeding().amount() || self.feeding().amount() < 0)
             return 0;
-        return +(Math.round((self.amount() * 0.033814) + "e+2") + "e-2");
-    }, self);
-
-    self.amountOunces2 = ko.computed(function () {
-        if (!self.feeding() || !self.feeding().amount || self.feeding().amount < 0)
-            return 0;
-        return +(Math.round((self.feeding().amount * 0.033814) + "e+2") + "e-2");
+        return +(Math.round((self.feeding().amount() * 0.033814) + "e+2") + "e-2");
     }, self);
 
     self.getText = function(d) {
         //60 mL (2 oz) @ 2/22/2015 7:45 pm  - 2/22/2015 8:00 pm 
         var amountText = '';
-        if (d.amount) {
-            var amountOz = +(Math.round((d.amount * 0.033814) + "e+2") + "e-2");
-            amountText = amountText + d.amount + ' mL (' + amountOz + ' oz) from ';
+        if (d.amount()) {
+            var amountOz = +(Math.round((d.amount() * 0.033814) + "e+2") + "e-2");
+            amountText = amountText + d.amount() + ' mL (' + amountOz + ' oz) from ';
         }
 
-        var rowText = amountText  + self.getDeliveryType(d.deliveryType) + ' @ ';
-        rowText = rowText + moment(d.startTime).format('hh:mm a') + ' for ' + self.getTimeDiff(d) + ' minutes';
+        var rowText = amountText  + self.getDeliveryType(d.deliveryType()) + ' @ ';
+        rowText = rowText + moment(d.startTime()).format('hh:mm a') + ' for ' + self.getTimeDiff(d) + ' minutes';
         return rowText;
     }
 
     self.getTimeDiff = function(d) {
-        var sd = moment(d.startTime);
-        var ed = moment(d.endTime);
+        var sd = moment(d.startTime());
+        var ed = moment(d.endTime());
         return ed.diff(sd, 'minutes');
     }
 
@@ -161,7 +160,9 @@
         data: { childId: app.selectedChild().id },
         contentType: 'json',
         success: function (data) {
-            self.feedings(data);
+            for (var i = 0; i < data.length; i++) {
+                self.feedings.push(new FEED(data[i]));
+            }
         }
     });
 }

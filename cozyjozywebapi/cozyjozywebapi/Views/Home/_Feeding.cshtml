@@ -1,135 +1,143 @@
 ﻿@using cozyjozywebapi.Models
 <!-- ko with: feedingMgt -->
 
-<div data-bind="ifnot: feeding">
-    <h2>Add New Feeding</h2>
-    
-    <div class="container">
-        <div class="row">
-            <div class='col-sm-3'>
-                <div class="form-group">
-                    <label for="startdate">Start Date Time</label>
-                    <div id="startdate" class='input-group date datetimepicker'>
-                        <input type='text' class="form-control" data-bind="datetimepicker: startTime" />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="container">
-        <div class="row">
-            <div class='col-sm-3'>
-                <div class="form-group">
-                    <label for="enddate">End Date Time</label>
-                    <div id="enddate" class='input-group date datetimepicker'>
-                        <input type='text' class="form-control" data-bind="datetimepicker: endTime" />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-   
-
-    <div>
-        <label>Delivery Type</label>
-        <select data-bind="options: deliveryTypes, optionsText: 'name', optionsValue: 'value', value: deliveryType "></select>
-    </div>
-
-    <div>
-        <label for="amount">Amount (mL)</label>
-        <input id="amount" data-bind="numeric: amount, value: amount" />
-        <span data-bind="text: amountOunces() + ' oz'"></span>
-    </div>
-
-    <div>
-        <label>Spit up?</label>
-        <input data-bind="checked: spitUp" type="checkbox" />
-    </div>
-
-
-    <button class="btn btn-default" data-bind="click: create, enable: canSave">Save</button>
-    <button class="btn btn-default" data-bind="click: cancel">Cancel</button>
+<div>
+    <button class="btn btn-default glyphicon glyphicon-plus" data-bind="click: openNew"></button>
 </div>
 
-<div data-bind="if: feeding">
-    <h2>Update Feeding</h2>
-    <div>
-        <label for="feedingId" data-bind="visible: false">Id</label>
-        <label id="feedingId" data-bind="text: feeding().id, visible: false"></label>
-    </div>
- 
-    <div class="container">
-        <div class="row">
-            <div class='col-sm-3'>
-                <div class="form-group">
-                    <label for="startdate">Start Date Time</label>
-                    <div id="startdate" class='input-group date datetimepicker'>
-                        <input type='text' class="form-control" data-bind="datetimepicker: feeding().startTime" />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
+
+<div data-bind="if: isCreatingNew">
+    <div data-bind=" with: feeding">
+        <h2>Add New Feeding</h2>
+
+        <div class="container">
+            <div class="row">
+                <div class='col-sm-3'>
+                    <div class="form-group">
+                        <label for="startdate">Start Date Time</label>
+                        <div id="startdate" class='input-group date datetimepicker'>
+                            <input type='text' class="form-control" data-bind="datetimepicker: startTime" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="container">
-        <div class="row">
-            <div class='col-sm-3'>
-                <div class="form-group">
-                    <label for="enddate">End Date Time</label>
-                    <div id="enddate" class='input-group date datetimepicker'>
-                        <input type='text' class="form-control" data-bind="datetimepicker: feeding().endTime" />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
+        <div class="container">
+            <div class="row">
+                <div class='col-sm-3'>
+                    <div class="form-group">
+                        <label for="enddate">End Date Time</label>
+                        <div id="enddate" class='input-group date datetimepicker'>
+                            <input type='text' class="form-control" data-bind="datetimepicker: endTime" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
+
+        <div>
+            <label>Delivery Type</label>
+            <select data-bind="options: $parent.deliveryTypes, optionsText: 'name', optionsValue: 'value', value: deliveryType "></select>
+        </div>
+
+        <div>
+            <label for="amount">Amount (mL)</label>
+            <input id="amount" data-bind="numeric: amount, value: amount" />
+            <span data-bind="text: $parent.amountOunces() + ' oz'"></span>
+        </div>
+
+        <div>
+            <label>Spit up?</label>
+            <input data-bind="checked: spitUp" type="checkbox" />
+        </div>
+
+
+        <button class="btn btn-default" data-bind="click: $parent.create, enable: $parent.canSave">Save</button>
+        <button class="btn btn-default" data-bind="click: $parent.cancel">Cancel</button>
     </div>
-
-
-
-    <div>
-        <label>Delivery Type</label>
-        <select data-bind="options: deliveryTypes, optionsText: 'name', optionsValue: 'value', value: feeding().deliveryType "></select>
-    </div>
-
-    <div>
-        <label for="amount">Amount (mL)</label>
-        <input id="amount" data-bind="numeric: feeding().amount, value: feeding().amount" />
-        <span data-bind="text: amountOunces2() + ' oz'"></span>
-    </div>
-
-    <div>
-        <label>Spit up?</label>
-        <input data-bind="checked: feeding().spitUp" type="checkbox" />
-    </div>
-
-
-    <button class="btn btn-default" data-bind="click: update, enable: canSave">Save</button>
-    <button class="btn btn-default" data-bind="click: cancel">Cancel</button>
 </div>
 
+<div data-bind="if: isEditing">
+    <div data-bind=" with: feeding">
+        <h2>Update Feeding</h2>
+        <div>
+            <label for="feedingId" data-bind="visible: false">Id</label>
+            <label id="feedingId" data-bind="text: id, visible: false"></label>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class='col-sm-3'>
+                    <div class="form-group">
+                        <label for="startdate">Start Date Time</label>
+                        <div id="startdate" class='input-group date datetimepicker'>
+                            <input type='text' class="form-control" data-bind="datetimepicker: startTime" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class='col-sm-3'>
+                    <div class="form-group">
+                        <label for="enddate">End Date Time</label>
+                        <div id="enddate" class='input-group date datetimepicker'>
+                            <input type='text' class="form-control" data-bind="datetimepicker: endTime" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div>
+            <label>Delivery Type</label>
+            <select data-bind="options: $parent.deliveryTypes, optionsText: 'name', optionsValue: 'value', value: deliveryType "></select>
+        </div>
+
+        <div>
+            <label for="amount">Amount (mL)</label>
+            <input id="amount" data-bind="numeric: amount, value: amount" />
+            <span data-bind="text: $parent.amountOunces() + ' oz'"></span>
+        </div>
+
+        <div>
+            <label>Spit up?</label>
+            <input data-bind="checked: spitUp" type="checkbox" />
+        </div>
+
+
+        <button class="btn btn-default" data-bind="click: $parent.update, enable: $parent.canSave">Save</button>
+        <button class="btn btn-default" data-bind="click: $parent.cancel">Cancel</button>
+    </div>
+</div>
 <div>
     <h1>Feedings</h1>
 
     <!-- ko foreach: feedings -->
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading" data-bind="attr: spitUp ? { style: 'background-color: yellow'} : ''">
+            <div class="panel-heading" data-bind="attr: spitUp() ? { style: 'background-color: yellow'} : ''">
 
-                <span class="panel-title" data-bind="text: moment(endTime).format('hh:mm a MM/DD/YYYY')"></span>
+                <span class="panel-title" data-bind="text: moment(endTime()).format('hh:mm a MM/DD/YYYY')"></span>
 
                 <div class="pull-right">
                     <button class="btn btn-default glyphicon glyphicon-pencil" data-bind="click: $parent.edit"></button>
