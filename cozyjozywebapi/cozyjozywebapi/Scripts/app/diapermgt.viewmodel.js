@@ -67,6 +67,7 @@ function DiaperManagement(app, dataModel) {
     self.edit = function (f) {
         self.diaperChange(f);
         self.isEditing(true);
+        self.isCreatingNew(false);
     }
 
     self.update = function () {

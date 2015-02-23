@@ -35,6 +35,7 @@ function Feeding(app, dataModel) {
             endTime: '',
             dateReported: '',
             spitUp: '',
+            deliveryType: 2,
         });
     }
 
@@ -85,6 +86,7 @@ function Feeding(app, dataModel) {
     self.edit = function(f) {
         self.feeding(f);
         self.isEditing(true);
+        self.isCreatingNew(false);
     }
     
     self.update = function() {
