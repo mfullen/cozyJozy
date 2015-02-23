@@ -3,14 +3,40 @@
 
 <div data-bind="ifnot: feeding">
     <h2>Add New Feeding</h2>
-    <div>
-        <label for="startTime">Start Time</label>
-        <input id="startTime" data-bind="value: startTime" type="text" title="Start Time" />
+    
+    <div class="container">
+        <div class="row">
+            <div class='col-sm-3'>
+                <div class="form-group">
+                    <label for="startdate">Start Date Time</label>
+                    <div id="startdate" class='input-group date datetimepicker'>
+                        <input type='text' class="form-control" data-bind="datetimepicker: startTime" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div>
-        <label for="endime">End Time</label>
-        <input id="endime" data-bind="value: endTime" type="text" title="End Time" />
+    
+    <div class="container">
+        <div class="row">
+            <div class='col-sm-3'>
+                <div class="form-group">
+                    <label for="enddate">End Date Time</label>
+                    <div id="enddate" class='input-group date datetimepicker'>
+                        <input type='text' class="form-control" data-bind="datetimepicker: endTime" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+   
 
     <div>
         <label>Delivery Type</label>
@@ -39,14 +65,40 @@
         <label for="feedingId" data-bind="visible: false">Id</label>
         <label id="feedingId" data-bind="text: feeding().id, visible: false"></label>
     </div>
-    <div>
-        <label for="startTime">Start Time</label>
-        <input id="startTime" data-bind="value: feeding().startTime" type="text" title="Start Time" />
+ 
+    <div class="container">
+        <div class="row">
+            <div class='col-sm-3'>
+                <div class="form-group">
+                    <label for="startdate">Start Date Time</label>
+                    <div id="startdate" class='input-group date datetimepicker'>
+                        <input type='text' class="form-control" data-bind="datetimepicker: feeding().startTime" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div>
-        <label for="endime">End Time</label>
-        <input id="endime" data-bind="value: feeding().endTime" type="text" title="End Time" />
+
+    <div class="container">
+        <div class="row">
+            <div class='col-sm-3'>
+                <div class="form-group">
+                    <label for="enddate">End Date Time</label>
+                    <div id="enddate" class='input-group date datetimepicker'>
+                        <input type='text' class="form-control" data-bind="datetimepicker: feeding().endTime" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+
 
     <div>
         <label>Delivery Type</label>

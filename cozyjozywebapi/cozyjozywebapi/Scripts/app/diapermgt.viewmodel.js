@@ -1,29 +1,43 @@
-﻿function DiaperManagement(app, dataModel) {
+﻿function DC(data) {
+    this.id = ko.observable(data.id);
+    this.occurredOn = ko.observable(data.occurredOn).extend({ required: true });
+    this.notes = ko.observable(data.notes);
+    this.urine = ko.observable(data.urine);
+    this.stool = ko.observable(data.stool);
+    this.childId = ko.observable(data.childId);
+}
+
+function DiaperManagement(app, dataModel) {
     var self = this;
 
-    self.id = ko.observable("");
-    self.occurredOn = ko.observable("").extend({ required: true });
-    self.notes = ko.observable("");
-    self.urine = ko.observable(false);
-    self.stool = ko.observable(false);
 
-    self.diaperChange = ko.observable();
+
+    self.diaperChange = ko.observable(new DC({
+        id: 0,
+        occurredOn: '',
+        notes: '',
+        urine: false,
+        stool: false
+    }));
+
     self.diaperChanges = ko.observableArray();
+
+    self.isEditing = ko.observable(false);
+    self.isCreatingNew = ko.observable(false);
 
     self.canSave = function () {
 
     }
 
-    self.create = function () {
-        var dc2Send = {
-            occurredOn: self.occurredOn,
-            notes: self.notes,
-            urine: self.urine,
-            stool: self.stool,
-            childId: app.selectedChild().id
-        };
+    self.openNew = function () {
+        self.isEditing(false);
+        self.isCreatingNew(true);
+    }
 
-        self.diaperChange(dc2Send);
+    self.create = function () {
+     
+        self.diaperChange().childId(app.selectedChild().id);
+    
         console.log("ko.toJson.Diaper", ko.toJSON(self.diaperChange));
         console.log("self.diaperChange", self.diaperChange());
         $.ajax({
@@ -32,9 +46,9 @@
             type: 'POST',
             contentType: 'application/json',
             headers: dataModel.getSecurityHeaders(),
-            data: ko.toJSON(self.diaperChange),
+            data: ko.toJSON(self.diaperChange()),
             success: function (data) {
-                self.diaperChanges.push(data);
+                self.diaperChanges.push(new DC(data));
                 self.reset();
             }
         });
@@ -45,22 +59,20 @@
     }
 
     self.reset = function () {
-        self.id("");
-        self.occurredOn("");
-        self.notes("");
-        self.urine(false);
-        self.stool(false);
         self.diaperChange(null);
+        self.isEditing(false);
+        self.isCreatingNew(false);
     }
 
     self.edit = function (f) {
         self.diaperChange(f);
+        self.isEditing(true);
     }
 
     self.update = function () {
         var dc = self.diaperChange();
         $.ajax({
-            url: 'api/diaperchanges/' + dc.id,
+            url: 'api/diaperchanges/' + dc.id(),
             cache: 'false',
             type: 'PUT',
             contentType: 'application/json',
@@ -83,7 +95,7 @@
     self.delete = function (f) {
         if (confirm('Are you sure you want to Delete this diaper change?')) {
             $.ajax({
-                url: 'api/diaperchanges/' + f.id,
+                url: 'api/diaperchanges/' + f.id(),
                 cache: 'false',
                 type: 'DELETE',
                 contentType: 'application/json',
@@ -105,7 +117,9 @@
         data: { childId: app.selectedChild().id },
         contentType: 'json',
         success: function (data) {
-            self.diaperChanges(data);
+            for (var i = 0; i < data.length; i++) {
+                self.diaperChanges.push(new DC(data[i]));
+            }
         }
     });
 

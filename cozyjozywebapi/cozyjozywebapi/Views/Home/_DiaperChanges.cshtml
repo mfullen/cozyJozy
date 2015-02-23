@@ -1,52 +1,86 @@
 ﻿<!-- ko with: diapermgt -->
-<div data-bind="ifnot: diaperChange">
-    <h2>Add New Diaper Changing</h2>
-    <div>
-        <label for="date">Date Time of Occurrence</label>
-        <input id="date" data-bind="value: occurredOn" type="text" title="Changed on" />
-    </div>
-    <div>
-        <label for="urine">Contained Urine?</label>
-        <input id="urine" data-bind="checked: urine" type="checkbox" title="Pee" />
-    </div>
-    <div>
-        <label for="stool">Contained Stool?</label>
-        <input id="stool" data-bind="checked: stool" type="checkbox" title="Poop" />
-    </div>
 
-    <textarea data-bind='value: notes' rows='5' cols='60'> </textarea>
-
-    <button class="btn btn-default" data-bind="click: create, enable: canSave">Save</button>
-    <button class="btn btn-default" data-bind="click: cancel">Cancel</button>
+<div>
+    <button class="btn btn-default glyphicon glyphicon-plus" data-bind="click: openNew"></button>
 </div>
 
-<div data-bind="if: diaperChange">
-    <h2>Update Diaper Change</h2>
-    <div>
-        <label for="dcId" data-bind="visible: false">Id</label>
-        <label id="dcId" data-bind="text: diaperChange().id, visible: false"></label>
-    </div>
-    
-    <div>
-        <label for="date">Date Time of Occurrence</label>
-        <input id="date" data-bind="value: diaperChange().occurredOn" type="text" title="Changed on" />
-    </div>
-    <div>
-        <label for="urine">Contained Urine?</label>
-        <input id="urine" data-bind="checked: diaperChange().urine" type="checkbox" title="Pee" />
-    </div>
-    <div>
-        <label for="stool">Contained Stool?</label>
-        <input id="stool" data-bind="checked: diaperChange().stool" type="checkbox" title="Poop" />
-    </div>
+<div data-bind="if: isCreatingNew">
+    <div data-bind=" with: diaperChange">
+        <h2>Add New Diaper Changing</h2>
 
-    <textarea data-bind='value: diaperChange().notes' rows='5' cols='60'> </textarea>
+        <div class="container">
+            <div class="row">
+                <div class='col-sm-3'>
+                    <div class="form-group">
+                        <label for="date">Date Time of Occurrence</label>
+                        <div id="date" class='input-group date datetimepicker'>
+                            <input type='text' class="form-control" data-bind="datetimepicker: occurredOn" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div>
+            <label for="urine">Contained Urine?</label>
+            <input id="urine" data-bind="checked: urine" type="checkbox" title="Pee" />
+        </div>
+        <div>
+            <label for="stool">Contained Stool?</label>
+            <input id="stool" data-bind="checked: stool" type="checkbox" title="Poop" />
+        </div>
 
-    <button class="btn btn-default" data-bind="click: update">Save</button>
-    <button class="btn btn-default" data-bind="click: cancel">Cancel</button>
+        <textarea data-bind='value: notes' rows='5' cols='60'> </textarea>
+
+        <button class="btn btn-default" data-bind="click: $parent.create, enable: $parent.canSave">Save</button>
+        <button class="btn btn-default" data-bind="click: $parent.cancel">Cancel</button>
+    </div>
 </div>
 
+<div data-bind="if: isEditing">
+    <div data-bind=" with: diaperChange">
+        <h2>Update Diaper Change</h2>
+        <div>
+            <label for="dcId" data-bind="visible: false">Id</label>
+            <label id="dcId" data-bind="text: id, visible: false"></label>
+        </div>
+
+
+        <div class="container">
+            <div class="row">
+                <div class='col-sm-3'>
+                    <div class="form-group">
+                        <label for="date">Date Time of Occurrence</label>
+                        <div id="date" class='input-group date datetimepicker'>
+                            <input type='text' class="form-control" data-bind="datetimepicker: occurredOn" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <label for="urine">Contained Urine?</label>
+            <input id="urine" data-bind="checked: urine" type="checkbox" title="Pee" />
+        </div>
+        <div>
+            <label for="stool">Contained Stool?</label>
+            <input id="stool" data-bind="checked: stool" type="checkbox" title="Poop" />
+        </div>
+
+        <textarea data-bind='value: notes' rows='5' cols='60'> </textarea>
+
+
+        <button class="btn btn-default" data-bind="click: $parent.update">Save</button>
+        <button class="btn btn-default" data-bind="click: $parent.cancel">Cancel</button>
+    </div>
+</div>
 <div>
     <h1>Diaper Changes</h1>
 
@@ -55,7 +89,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
 
-                <span class="panel-title" data-bind="text: moment(occurredOn).format('hh:mm a MM/DD/YYYY')"></span>
+                <span class="panel-title" data-bind="text: moment(occurredOn()).format('hh:mm a MM/DD/YYYY')"></span>
 
                 <div class="pull-right">
                     <button class="btn btn-default glyphicon glyphicon-pencil" data-bind="click: $parent.edit"></button>
@@ -71,6 +105,4 @@
     </div>
     <!-- /ko -->
 </div>
-
-
 <!-- /ko -->
