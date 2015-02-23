@@ -12,32 +12,22 @@
 
         <div class="container">
             <div class="row">
-                <div class='col-sm-3'>
                     <div class="form-group">
                         <label for="startdate">Start Date Time</label>
                         <div id="startdate" class='input-group date datetimepicker'>
                             <input type='text' class="form-control" data-bind="datetimepicker: startTime" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
 
         <div class="container">
             <div class="row">
-                <div class='col-sm-3'>
                     <div class="form-group">
                         <label for="enddate">End Date Time</label>
                         <div id="enddate" class='input-group date datetimepicker'>
                             <input type='text' class="form-control" data-bind="datetimepicker: endTime" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -46,7 +36,7 @@
 
         <div>
             <label>Delivery Type</label>
-            <select data-bind="options: $parent.deliveryTypes, optionsText: 'name', optionsValue: 'value', value: deliveryType "></select>
+            <select class="form-control" data-bind="options: $parent.deliveryTypes, optionsText: 'name', optionsValue: 'value', value: deliveryType "></select>
         </div>
 
         <div>
@@ -76,33 +66,23 @@
 
         <div class="container">
             <div class="row">
-                <div class='col-sm-3'>
                     <div class="form-group">
                         <label for="startdate">Start Date Time</label>
                         <div id="startdate" class='input-group date datetimepicker'>
                             <input type='text' class="form-control" data-bind="datetimepicker: startTime" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
 
         <div class="container">
             <div class="row">
-                <div class='col-sm-3'>
                     <div class="form-group">
                         <label for="enddate">End Date Time</label>
                         <div id="enddate" class='input-group date datetimepicker'>
                             <input type='text' class="form-control" data-bind="datetimepicker: endTime" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
 
@@ -110,7 +90,7 @@
 
         <div>
             <label>Delivery Type</label>
-            <select data-bind="options: $parent.deliveryTypes, optionsText: 'name', optionsValue: 'value', value: deliveryType "></select>
+            <select class="form-control" data-bind="options: $parent.deliveryTypes, optionsText: 'name', optionsValue: 'value', value: deliveryType "></select>
         </div>
 
         <div>
