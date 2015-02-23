@@ -135,6 +135,25 @@
         return +(Math.round((self.feeding().amount * 0.033814) + "e+2") + "e-2");
     }, self);
 
+    self.getText = function(d) {
+        //60 mL (2 oz) @ 2/22/2015 7:45 pm  - 2/22/2015 8:00 pm 
+        var amountText = '';
+        if (d.amount) {
+            var amountOz = +(Math.round((d.amount * 0.033814) + "e+2") + "e-2");
+            amountText = amountText + d.amount + ' mL (' + amountOz + ' oz) from ';
+        }
+
+        var rowText = amountText  + self.getDeliveryType(d.deliveryType) + ' @ ';
+        rowText = rowText + moment(d.startTime).format('hh:mm a') + ' for ' + self.getTimeDiff(d) + ' minutes';
+        return rowText;
+    }
+
+    self.getTimeDiff = function(d) {
+        var sd = moment(d.startTime);
+        var ed = moment(d.endTime);
+        return ed.diff(sd, 'minutes');
+    }
+
     $.ajax({
         url: 'api/feeding',
         cache: false,
