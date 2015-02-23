@@ -33,7 +33,7 @@ namespace cozyjozywebapi.Controllers
                 pagesize = MaxPageSize;
             }
 
-            var data = context.Feedings.Where(x => authorthizedChildren.Contains(x.ChildId)).OrderBy(v => v.StartTime).Skip(page * pagesize).Take(pagesize);
+            var data = context.Feedings.Where(x => authorthizedChildren.Contains(x.ChildId)).OrderByDescending(v => v.StartTime).Skip(page * pagesize).Take(pagesize);
 
             if (childId > 0)
             {

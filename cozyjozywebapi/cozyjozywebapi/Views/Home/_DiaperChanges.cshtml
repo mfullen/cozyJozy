@@ -47,24 +47,30 @@
     <button class="btn btn-default" data-bind="click: cancel">Cancel</button>
 </div>
 
-
-<div class="row">
+<div>
     <h1>Diaper Changes</h1>
-    <table>
-        <tbody data-bind="foreach: diaperChanges">
-            <tr>
-                <td data-bind="text: id"></td>
-                <td data-bind="text: occurredOn"></td>
-                <td data-bind="text: urine"></td>
-                <td data-bind="text: stool"></td>
-                <td data-bind="text: notes"></td>
-                <td>
+
+    <!-- ko foreach: diaperChanges -->
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+
+                <span class="panel-title" data-bind="text: moment(occurredOn).format('hh:mm a MM/DD/YYYY')"></span>
+
+                <div class="pull-right">
                     <button class="btn btn-default" data-bind="click: $parent.edit">Edit</button>
                     <button class="btn btn-default" data-bind="click: $parent.delete">Delete</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                </div>
+            </div>
+            <div class="panel-body">
+                <p data-bind="visible:urine, text: 'Pee'"></p>
+                <p data-bind="visible:stool, text: 'Poop'"></p>
+                <p data-bind="visible:notes, text: notes"></p>
+            </div>
+        </div>
+    </div>
+    <!-- /ko -->
 </div>
+
 
 <!-- /ko -->
