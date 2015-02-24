@@ -43,12 +43,13 @@ namespace cozyjozywebapi
                 "~/Scripts/bootstrap.js",
                 "~/Scripts/moment.js",
                  "~/Scripts/bootstrap-datetimepicker.js",
-                  "~/Scripts/mydatepicker.js",
+                 "~/Scripts/bootstrap-slider.js",
                 "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                  "~/Content/bootstrap.css",
                  "~/Content/bootstrap-datetimepicker.css",
+                 "~/Content/bootstrap-slider/bootstrap-slider.css",
                  "~/Content/Site.css"));
         }
     }

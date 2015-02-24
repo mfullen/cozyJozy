@@ -43,6 +43,7 @@
             <label for="amount">Amount (mL)</label>
             <input id="amount" data-bind="value: amount" />
             <span data-bind="text: $parent.amountOunces() + ' oz'"></span>
+            <input type="text" class="slider form-control" data-bind="sliderValue: {value: amount, min:0, max: 400, step: 1}" />
         </div>
 
         <div>
@@ -96,6 +97,7 @@
         <div>
             <label for="amount">Amount (mL)</label>
             <input id="amount" data-bind="value: amount" />
+            <input type="text" class="slider form-control" data-bind="sliderValue: {value: amount, min:0, max: 400, step: 1}" />
             <span data-bind="text: $parent.amountOunces() + ' oz'"></span>
         </div>
 
@@ -112,7 +114,7 @@
 <div>
     <h1>Feedings</h1>
 
-    <!-- ko foreach: feedings -->
+    <!-- ko foreach: sortedFeedingsByDate -->
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading" data-bind="attr: spitUp() ? { style: 'background-color: yellow'} : ''">

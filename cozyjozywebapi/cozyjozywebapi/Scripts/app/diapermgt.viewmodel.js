@@ -31,6 +31,13 @@ function DiaperManagement(app, dataModel) {
 
     }
 
+    self.sortedByDate = ko.computed(function () {
+        var s = self.diaperChanges.slice(0).sort(function (l, r) {
+            return moment(l.occurredOn()).isBefore(moment(r.occurredOn()));;
+        });
+        return s;
+    }, self);
+
     self.openNew = function () {
         self.isEditing(false);
         self.diaperChange(newDc());
@@ -65,7 +72,7 @@ function DiaperManagement(app, dataModel) {
     }
 
     self.edit = function (f) {
-        self.diaperChange(f);
+        self.diaperChange(new DC(ko.toJS(f)));
         self.isEditing(true);
         self.isCreatingNew(false);
     }
@@ -80,11 +87,11 @@ function DiaperManagement(app, dataModel) {
             headers: dataModel.getSecurityHeaders(),
             data: ko.toJSON(dc),
             success: function (data) {
-                var temp = ko.observableArray();
-                temp(self.diaperChanges().slice(0));
-                self.diaperChanges.removeAll();
-                self.diaperChanges(temp());
+                var target = ko.utils.arrayFirst(self.diaperChanges(), function (item) {
+                    return item.id() === data.id;
+                });
 
+                self.diaperChanges.replace(target, new DC(data));
                 self.reset();
             },
             failure: function (xhr, textStatus, err) {

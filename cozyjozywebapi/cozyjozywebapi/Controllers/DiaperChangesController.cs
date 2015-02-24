@@ -93,7 +93,7 @@ namespace cozyjozywebapi.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(diaperChanges);
         }
 
         // POST: api/DiaperChanges

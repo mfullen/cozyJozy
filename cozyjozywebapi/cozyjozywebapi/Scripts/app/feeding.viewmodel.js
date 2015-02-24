@@ -56,6 +56,13 @@ function Feeding(app, dataModel) {
         self.isCreatingNew(true);
     }
 
+    self.sortedFeedingsByDate = ko.computed(function() {
+        var s = self.feedings.slice(0).sort(function(l, r) {
+            return moment(l.startTime()).isBefore(moment(r.startTime()));;
+        });
+        return s;
+    }, self);
+
     self.create = function () {
         self.feeding().childId(app.selectedChild().id);
 
@@ -84,7 +91,7 @@ function Feeding(app, dataModel) {
     }
 
     self.edit = function(f) {
-        self.feeding(f);
+        self.feeding(new FEED(ko.toJS(f)));
         self.isEditing(true);
         self.isCreatingNew(false);
     }
@@ -99,11 +106,11 @@ function Feeding(app, dataModel) {
             headers: dataModel.getSecurityHeaders(),
             data: ko.toJSON(feed),
             success: function (data) {
-                var temp = ko.observableArray();
-                temp(self.feedings().slice(0));
-                self.feedings.removeAll();
-                self.feedings(temp());
+                var target = ko.utils.arrayFirst(self.feedings(), function(item) {
+                    return item.id() === data.id;
+                });
 
+                self.feedings.replace(target, new FEED(data));
                 self.reset();
             },
             failure: function (xhr, textStatus, err) {
