@@ -33,7 +33,7 @@ function DiaperManagement(app, dataModel) {
 
     self.sortedByDate = ko.computed(function () {
         var s = self.diaperChanges.slice(0).sort(function (l, r) {
-            return moment(l.occurredOn()).isBefore(moment(r.occurredOn()));
+            return moment(r.occurredOn()).isBefore(moment(l.occurredOn())) ? -1 : 1;
         });
         return s;
     }, self);

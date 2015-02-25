@@ -57,8 +57,8 @@ function Feeding(app, dataModel) {
     }
 
     self.sortedFeedingsByDate = ko.computed(function() {
-        var s = self.feedings.slice(0).sort(function(l, r) {
-            return moment(l.startTime()).isBefore(moment(r.startTime()));;
+        var s = self.feedings().slice(0).sort(function(l, r) {
+            return moment(r.startTime()).isBefore(moment(l.startTime())) ? -1 : 1;
         });
         return s;
     }, self);
