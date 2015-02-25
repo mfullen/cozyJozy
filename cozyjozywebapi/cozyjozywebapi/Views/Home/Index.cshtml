@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>My ASP.NET Application</title>
+    <title>CozyJozy - Record your child's growth!</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width" />
     @Styles.Render("~/Content/css")
@@ -28,7 +28,7 @@
                 </div>
                 <div data-bind="if: loggedIn" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><select data-bind="options: availableChildren, optionsText: function(item) { return item.firstName + ' ' + item.middleName + ' ' + item.lastName;}, value: selectedChild"></select></li>
+                        <li><select class="form-control" data-bind="options: availableChildren, optionsText: function(item) { return item.firstName + ' ' + item.middleName + ' ' + item.lastName;}, value: selectedChild"></select></li>
                         <li><a href="#" data-bind="click: navigateToHome">Home</a></li>
                         <li><a href="#" data-bind="click: navigateToChildManagement">Child Management</a></li>
                         <li><a href="#" data-bind="click: navigateToFeeding">Feeding</a></li>
