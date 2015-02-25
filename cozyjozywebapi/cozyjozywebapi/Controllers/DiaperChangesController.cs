@@ -33,13 +33,13 @@ namespace cozyjozywebapi.Controllers
                 pagesize = MaxPageSize;
             }
 
-            var data = context.DiaperChanges.Where(x => authorthizedChildren.Contains(x.ChildId)).OrderByDescending(v => v.OccurredOn).Skip(page * pagesize).Take(pagesize);
+            var data = context.DiaperChanges.OrderByDescending(v => v.OccurredOn).Where(x => authorthizedChildren.Contains(x.ChildId));
 
             if (childId > 0)
             {
                 data = data.Where(c => c.ChildId == childId);
             }
-            return Ok(data.ToList());
+            return Ok(data.Skip(page * pagesize).Take(pagesize).ToList());
         }
 
         // GET: api/DiaperChanges/5

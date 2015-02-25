@@ -33,13 +33,14 @@ namespace cozyjozywebapi.Controllers
                 pagesize = MaxPageSize;
             }
 
-            var data = context.Feedings.Where(x => authorthizedChildren.Contains(x.ChildId)).OrderByDescending(v => v.StartTime).Skip(page * pagesize).Take(pagesize);
+            var data = context.Feedings.OrderByDescending(v => v.EndTime).Where(x => authorthizedChildren.Contains(x.ChildId));
 
             if (childId > 0)
             {
                 data = data.Where(c => c.ChildId == childId);
             }
-            return Ok(data.ToList());
+            var results = data.Skip(page * pagesize).Take(pagesize).ToList();
+            return Ok(results);
         }
 
         // GET api/<controller>/5
@@ -64,7 +65,7 @@ namespace cozyjozywebapi.Controllers
             var newFeeding = new Feedings()
             {
                 Amount = feeding.Amount,
-                Child = context.Child.FirstOrDefault(f=> f.Id == feeding.ChildId),
+                Child = context.Child.FirstOrDefault(f => f.Id == feeding.ChildId),
                 DateReported = DateTime.Now,
                 SpitUp = feeding.SpitUp,
                 StartTime = feeding.StartTime,
