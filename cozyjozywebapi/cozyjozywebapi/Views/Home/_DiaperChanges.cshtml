@@ -5,7 +5,7 @@
 </div>
 
 <div data-bind="if: isCreatingNew">
-    <div data-bind=" with: diaperChange">
+    <div data-bind=" with: item">
         <h2>Add New Diaper Changing</h2>
 
         <div class="container">
@@ -35,13 +35,13 @@
 
         <textarea data-bind='value: notes' rows='5' cols='60'> </textarea>
 
-        <button class="btn btn-default" data-bind="click: $parent.create, enable: $parent.canSave">Save</button>
-        <button class="btn btn-default" data-bind="click: $parent.cancel">Cancel</button>
+        <button class="btn btn-default" data-bind="click: create, enable: canSave">Save</button>
+        <button class="btn btn-default" data-bind="click: cancel">Cancel</button>
     </div>
 </div>
 
 <div data-bind="if: isEditing">
-    <div data-bind=" with: diaperChange">
+    <div data-bind=" with: item">
         <h2>Update Diaper Change</h2>
         <div>
             <label for="dcId" data-bind="visible: false">Id</label>
@@ -77,8 +77,8 @@
         <textarea data-bind='value: notes' rows='5' cols='60'> </textarea>
 
 
-        <button class="btn btn-default" data-bind="click: $parent.update">Save</button>
-        <button class="btn btn-default" data-bind="click: $parent.cancel">Cancel</button>
+        <button class="btn btn-default" data-bind="click: update">Save</button>
+        <button class="btn btn-default" data-bind="click: cancel">Cancel</button>
     </div>
 </div>
 <div>
@@ -92,8 +92,8 @@
                 <span class="panel-title" data-bind="text: moment(occurredOn()).format('hh:mm a MM/DD/YYYY')"></span>
 
                 <div class="pull-right">
-                    <button class="btn btn-default glyphicon glyphicon-pencil" data-bind="click: $parent.edit"></button>
-                    <button class="btn btn-default glyphicon glyphicon-remove" data-bind="click: $parent.delete"></button>
+                    <button class="btn btn-default glyphicon glyphicon-pencil" data-bind="click: edit"></button>
+                    <button class="btn btn-default glyphicon glyphicon-remove" data-bind="click: deleteItem"></button>
                 </div>
             </div>
             <div class="panel-body">
