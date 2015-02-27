@@ -48,6 +48,11 @@
         <div data-bind="foreach: errors" class="padding-error">
             <p class="text-danger" data-bind="text: $data"></p>
         </div>
+
+        <div id='loadingDiv'>
+            Please wait...
+            <img src="~/Content/images/ajax-loader.gif" alt="loading" />
+        </div>
         @Html.Partial("_Home")
         @Html.Partial("_ChildMgt")
         @Html.Partial("_Feeding")
@@ -73,6 +78,13 @@
                 $(this).datetimepicker();
             });
 
+            $(document).ajaxStart(function () {
+                $('#loadingDiv').show();
+            });
+            $(document).ajaxStop(function () {
+                $('#loadingDiv').hide();
+            });
+
             ko.bindingHandlers.datetimepicker = {
                 init: function (element, valueAccessor, allBindings) {
                     var options = {
@@ -87,7 +99,7 @@
                         if (evntObj.timeStamp !== undefined) {
                             var picker = $(this).data("DateTimePicker");
                             var d = picker.date();
-                       
+
                             if (d !== null) {
                                 var date = d.format(options.format);
                                 observable(date);

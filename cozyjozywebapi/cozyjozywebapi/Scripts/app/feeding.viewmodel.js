@@ -113,7 +113,7 @@ function Feeding(app, dataModel) {
                 self.feedings.replace(target, new FEED(data));
                 self.reset();
             },
-            failure: function (xhr, textStatus, err) {
+            error: function (xhr, textStatus, err) {
                 console.log("Error", xhr, textStatus, err);
             }
         });
@@ -130,7 +130,7 @@ function Feeding(app, dataModel) {
                 success: function (data) {
                     self.feedings.remove(f);
                 },
-                failure: function (xhr, textStatus, err) {
+                error: function (xhr, textStatus, err) {
                     console.log("Error", xhr, textStatus, err);
                 }
             });

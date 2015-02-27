@@ -10,7 +10,7 @@
 function DiaperManagement(app, dataModel) {
     var self = this;
 
-    var newDc = function() {
+    var newDc = function () {
         return new DC({
             id: 0,
             occurredOn: '',
@@ -18,6 +18,14 @@ function DiaperManagement(app, dataModel) {
             urine: false,
             stool: false
         });
+    }
+
+    var clearErrors = function () {
+        app.errors.removeAll();
+    }
+
+    var addError = function (error) {
+        app.errors.push(error);
     }
 
     self.diaperChange = ko.observable(newDc());
@@ -57,6 +65,9 @@ function DiaperManagement(app, dataModel) {
             success: function (data) {
                 self.diaperChanges.push(new DC(data));
                 self.reset();
+            },
+            error: function (xhr, textStatus, err) {
+                addError("Failed to create diaper log. Please try again!");
             }
         });
     }
@@ -69,6 +80,7 @@ function DiaperManagement(app, dataModel) {
         self.diaperChange(newDc());
         self.isEditing(false);
         self.isCreatingNew(false);
+        clearErrors();
     }
 
     self.edit = function (f) {
@@ -94,7 +106,8 @@ function DiaperManagement(app, dataModel) {
                 self.diaperChanges.replace(target, new DC(data));
                 self.reset();
             },
-            failure: function (xhr, textStatus, err) {
+            error: function (xhr, textStatus, err) {
+                addError("Failed to update diaper log. Please try again!");
                 console.log("Error", xhr, textStatus, err);
             }
         });
@@ -111,7 +124,8 @@ function DiaperManagement(app, dataModel) {
                 success: function (data) {
                     self.diaperChanges.remove(f);
                 },
-                failure: function (xhr, textStatus, err) {
+                error: function (xhr, textStatus, err) {
+                    addError("Failed to delete the record.");
                     console.log("Error", xhr, textStatus, err);
                 }
             });
@@ -128,6 +142,10 @@ function DiaperManagement(app, dataModel) {
             for (var i = 0; i < data.length; i++) {
                 self.diaperChanges.push(new DC(data[i]));
             }
+        },
+        error: function (xhr, textStatus, err) {
+            addError("Failed to grab diaper log. Please try again!");
+            console.log("Error", xhr, textStatus, err);
         }
     });
 
