@@ -9,8 +9,9 @@
     this.spitUp = ko.observable(data.spitUp);
 }
 
-function Feeding(app, dataModel) {
+function Feeding(app, dataModel, options) {
     var self = this;
+    BaseVm.call(self, app, dataModel, options);
 
     self.deliveryTypes = [
         { value: 0, name: "Left Breast", code: "LB" },
@@ -28,119 +29,26 @@ function Feeding(app, dataModel) {
         return null;
     };
 
-    var newFeed = function() {
-        return new FEED({
-            id: 0,
-            startTime: '',
-            endTime: '',
-            dateReported: '',
-            spitUp: '',
-            deliveryType: 2,
-        });
-    }
+   
 
-    self.feeding = ko.observable(newFeed());
-
-    self.feedings = ko.observableArray();
-
-    self.isEditing = ko.observable(false);
-    self.isCreatingNew = ko.observable(false);
 
     self.canSave = function () {
 
     }
 
-    self.openNew = function () {
-        self.isEditing(false);
-        self.feeding(newFeed());
-        self.isCreatingNew(true);
-    }
-
     self.sortedFeedingsByDate = ko.computed(function() {
-        var s = self.feedings().slice(0).sort(function(l, r) {
+        var s = self.items().slice(0).sort(function(l, r) {
             return moment(r.startTime()).isBefore(moment(l.startTime())) ? -1 : 1;
         });
         return s;
     }, self);
 
-    self.create = function () {
-        self.feeding().childId(app.selectedChild().id);
-
-        $.ajax({
-            url: 'api/feeding',
-            cache: 'false',
-            type: 'POST',
-            contentType: 'application/json',
-            headers: dataModel.getSecurityHeaders(),
-            data: ko.toJSON(self.feeding()),
-            success: function (data) {
-                self.feedings.push(new FEED(data));
-                self.reset();
-            }
-        });
-    }
-
-    self.cancel = function () {
-        self.reset();
-    }
-
-    self.reset = function() {
-        self.feeding(newFeed());
-        self.isEditing(false);
-        self.isCreatingNew(false);
-    }
-
-    self.edit = function(f) {
-        self.feeding(new FEED(ko.toJS(f)));
-        self.isEditing(true);
-        self.isCreatingNew(false);
-    }
-    
-    self.update = function() {
-        var feed = self.feeding();
-        $.ajax({
-            url: 'api/feeding',
-            cache: 'false',
-            type: 'PUT',
-            contentType: 'application/json',
-            headers: dataModel.getSecurityHeaders(),
-            data: ko.toJSON(feed),
-            success: function (data) {
-                var target = ko.utils.arrayFirst(self.feedings(), function(item) {
-                    return item.id() === data.id;
-                });
-
-                self.feedings.replace(target, new FEED(data));
-                self.reset();
-            },
-            error: function (xhr, textStatus, err) {
-                console.log("Error", xhr, textStatus, err);
-            }
-        });
-    }
-
-    self.delete = function(f) {
-        if (confirm('Are you sure you want to Delete this feeding?')) {
-            $.ajax({
-                url: 'api/feeding/' + f.id(),
-                cache: 'false',
-                type: 'DELETE',
-                contentType: 'application/json',
-                headers: dataModel.getSecurityHeaders(),
-                success: function (data) {
-                    self.feedings.remove(f);
-                },
-                error: function (xhr, textStatus, err) {
-                    console.log("Error", xhr, textStatus, err);
-                }
-            });
-        }
-    }
+   
 
     self.amountOunces = ko.computed(function () {
-        if (!self.feeding() || !self.feeding().amount() || self.feeding().amount() < 0)
+        if (!self.item() || !self.item().amount() || self.item().amount() < 0)
             return 0;
-        return +(Math.round((self.feeding().amount() * 0.033814) + "e+2") + "e-2");
+        return +(Math.round((self.item().amount() * 0.033814) + "e+2") + "e-2");
     }, self);
 
     self.getText = function(d) {
@@ -162,18 +70,7 @@ function Feeding(app, dataModel) {
         return ed.diff(sd, 'minutes');
     }
 
-    $.ajax({
-        url: 'api/feeding',
-        cache: false,
-        headers: dataModel.getSecurityHeaders(),
-        data: { childId: app.selectedChild().id },
-        contentType: 'json',
-        success: function (data) {
-            for (var i = 0; i < data.length; i++) {
-                self.feedings.push(new FEED(data[i]));
-            }
-        }
-    });
+    self.fetchItems();
 }
 
 //ko.bindingHandlers.numeric = {
@@ -203,5 +100,26 @@ function Feeding(app, dataModel) {
 app.addViewModel({
     name: "Feeding",
     bindingMemberName: "feedingMgt",
-    factory: Feeding
+    factory: function (app, dataModel) {
+        var newFeed = function () {
+            return new FEED({
+                id: 0,
+                startTime: '',
+                endTime: '',
+                dateReported: '',
+                spitUp: '',
+                deliveryType: 2,
+            });
+        }
+
+        var options = {
+            modelFunc: FEED,
+            newItem: newFeed,
+            url: 'api/feeding',
+            itemName: 'feeding'
+        };
+        Feeding.prototype = new BaseVm(app, dataModel, options);
+        Feeding.prototype.constructor = Feeding;
+        return Feeding(app, dataModel, options);
+    }
 });

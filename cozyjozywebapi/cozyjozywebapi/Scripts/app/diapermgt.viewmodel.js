@@ -9,17 +9,12 @@
 
 function DiaperManagement(app, dataModel,options) {
     var self = this;
-
-   
     BaseVm.call(self, app, dataModel, options);
 
-    self.testMe();
-   
     self.canSave = function () {
 
     }
 
-    
     self.sortedByDate = ko.computed(function () {
         var s = self.items.slice(0).sort(function (l, r) {
             return moment(r.occurredOn()).isBefore(moment(l.occurredOn())) ? -1 : 1;
