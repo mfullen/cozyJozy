@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Web.WebPages;
 using cozyjozywebapi.Entity;
 using cozyjozywebapi.Models;
 using Microsoft.AspNet.Identity;
@@ -20,7 +22,7 @@ namespace cozyjozywebapi
             PublicClientId = "self";
 
             UserManagerFactory = () => new UserManager<IdentityUser>(new UserStore<IdentityUser>(new CozyJozyContext()));
-           
+
 
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
@@ -58,9 +60,15 @@ namespace cozyjozywebapi
             //    consumerKey: "",
             //    consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //    appId: "",
-            //    appSecret: "");
+            var fbsecret = ConfigurationManager.AppSettings["facebookSecretKey"];
+            var fbconsumer = ConfigurationManager.AppSettings["facebookConsumerKey"];
+            
+            if (!(fbconsumer.IsEmpty() && fbsecret.IsEmpty()))
+            {
+                app.UseFacebookAuthentication(
+               appId: fbconsumer,
+               appSecret: fbsecret);
+            }
 
             //app.UseGoogleAuthentication();
         }
