@@ -62,7 +62,11 @@ function HomeViewModel(app, dataModel) {
     }, self);
 
     self.convertToOz = function(v) {
-        return +(Math.round((v * 0.033814) + "e+2") + "e-2");
+        return self.round2Decimals(v * 0.033814)
+    }
+
+    self.round2Decimals = function(v) {
+        return +(Math.round((v) + "e+2") + "e-2");
     }
 
 

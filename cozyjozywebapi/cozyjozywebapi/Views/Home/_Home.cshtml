@@ -56,11 +56,14 @@
         </div>
         <div>
             <label>Amount per Feed in last 24 hours</label>
-            <span data-bind="text: recentAmountPerFeed"></span>
+            <span data-bind="text: $parent.round2Decimals(recentAmountPerFeed()) + ' mL'"></span>
+            <span> or </span>
+            <span data-bind="text: $parent.convertToOz(recentAmountPerFeed()) + ' oz'"></span>
+
         </div>
         <div>
             <label>Total Amount per Feed</label>
-            <span data-bind="text: totalAmountPerFeed() + ' mL'"></span>
+            <span data-bind="text: $parent.round2Decimals(totalAmountPerFeed()) + ' mL'"></span>
             <span> or </span>
             <span data-bind="text: $parent.convertToOz(totalAmountPerFeed()) + ' oz'"></span>
         </div>
