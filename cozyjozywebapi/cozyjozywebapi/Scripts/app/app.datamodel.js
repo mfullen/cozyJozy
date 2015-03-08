@@ -94,15 +94,25 @@
     }
 
     self.fetchChildren = function() {
-        $.ajax({
+        //$.ajax({
+        //    url: 'api/children',
+        //    cache: false,
+        //    headers: self.getSecurityHeaders(),
+        //    contentType: 'json',
+        //    success: function (data) {
+        //        self.setChildren(data);
+        //    }
+        //});
+
+        var childrenData = JSON.parse($.ajax({
             url: 'api/children',
             cache: false,
             headers: self.getSecurityHeaders(),
             contentType: 'json',
-            success: function (data) {
-                self.setChildren(data);
-            }
-        });
+            async: false
+        }).responseText);
+        self.setChildren(childrenData);
+
     }
 
     // Data access operations

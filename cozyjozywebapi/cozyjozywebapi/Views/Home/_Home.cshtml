@@ -1,29 +1,85 @@
 ﻿<!-- ko with: home -->
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+    <h1>CozyJozy.net!</h1>
+    <p class="lead">Welcome to CozyJozy, a place to document your child's growth.</p>
+    @*<p><a href="http://asp.net" class="btn btn-primary btn-large">Learn more &raquo;</a></p>*@
 </div>
 <div class="row">
     <div class="col-md-4">
         <h2>Getting started</h2>
         <p>
-            ASP.NET Single Page Application (SPA) helps you build applications that include significant client-side interactions using HTML, CSS, and JavaScript.
-            It's now easier than ever before to getting started writing highly interactive web applications.
+            To begin you must enter a child in which statistics will be kept. Visit the child management page.
         </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=273732">Learn more &raquo;</a></p>
+        <p><a class="btn btn-default" data-bind="click: app.navigateToChildManagement">Learn more &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        <h2>Enter Feedings</h2>
+        <p>You can enter in when where and how your baby ate!</p>
+        <p><a class="btn btn-default" data-bind="click: app.navigateToFeeding">Learn more &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        <h2>Enter Diaper Changes</h2>
+        <p>Enter in when your baby needed a diaper change</p>
+        <p><a class="btn btn-default" data-bind="click: app.navigateToDiaper">Learn more &raquo;</a></p>
+    </div>
+</div>
+
+<div class="row" data-bind="with: stats">
+    <div class="col-md-4">
+        <h2>Birth Stats</h2>
+        <div>
+            <label>Date of Birth</label>
+            <span data-bind="text: $parent.dob"></span>
+        </div>
+        <div>
+            <label>Time Since Birth</label>
+            <span data-bind="text: $parent.timeSinceBirth"></span>
+        </div>
+        <div>
+            <label>Time Till Birthday</label>
+            <span data-bind="text: $parent.timeTillBirthday"></span>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h2>Feeding Stats</h2>
+        <div>
+            <label>Time Since Last feeding</label>
+            <span data-bind="text: $parent.timeSinceLastFeeding"></span>
+        </div>
+        <div>
+            <label>Number of Feedings in last 24 hours</label>
+            <span data-bind="text: numberOfRecentFeedings"></span>
+        </div>
+        <div>
+            <label>Total Feedings</label>
+            <span data-bind="text: totalFeedings"></span>
+        </div>
+        <div>
+            <label>Amount per Feed in last 24 hours</label>
+            <span data-bind="text: recentAmountPerFeed"></span>
+        </div>
+        <div>
+            <label>Total Amount per Feed</label>
+            <span data-bind="text: totalAmountPerFeed() + ' mL'"></span>
+            <span> or </span>
+            <span data-bind="text: $parent.convertToOz(totalAmountPerFeed()) + ' oz'"></span>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h2>Diaper Stats</h2>
+        <div>
+            <label>Time Since Last Diaper</label>
+            <span data-bind="text: $parent.timeSinceLastDiaperChange"></span>
+        </div>
+        <div>
+            <label>Number of Diaper Changes in last 24 hours</label>
+            <span data-bind="text: numberOfRecentDiaperChanges"></span>
+        </div>
+        <div>
+            <label>Total Diaper Changes</label>
+            <span data-bind="text: totalDiaperChanges"></span>
+        </div>
     </div>
 </div>
 
 <!-- /ko -->
-

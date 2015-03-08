@@ -207,6 +207,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ChildrenController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DiaperChangesController.cs" />
     <Compile Include="Controllers\FeedingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -224,6 +225,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Child.cs" />
     <Compile Include="Models\ChildPermissions.cs" />
+    <Compile Include="Models\Stats\DashboardStatistics.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\DiaperChanges.cs" />
     <Compile Include="Models\Feedings.cs" />
