@@ -44,7 +44,8 @@ namespace cozyjozywebapi.Controllers
                 NumberOfRecentDiaperChanges = _context.DiaperChanges.Where(c=>c.ChildId == childId).Count(d => d.OccurredOn > recent),
                 NumberOfRecentFeedings = _context.Feedings.Where(c => c.ChildId == childId).Count(d => d.EndTime > recent),
                 RecentAmountPerFeed = recentAmountPerFeed != null ? recentAmountPerFeed.Value / _context.Feedings.Where(c => c.ChildId == childId).Count(d => d.EndTime > recent) : 0,
-                TotalAmountPerFeed = totalAmountPerFeed != null ? totalAmountPerFeed.Value / _context.Feedings.Count(c => c.ChildId == childId) : 0
+                TotalAmountPerFeed = totalAmountPerFeed != null ? totalAmountPerFeed.Value / _context.Feedings.Count(c => c.ChildId == childId) : 0,
+                TotalRecentAmount = recentAmountPerFeed != null ? recentAmountPerFeed.Value : 0
             };
 
 

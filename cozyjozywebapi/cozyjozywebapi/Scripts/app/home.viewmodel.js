@@ -8,6 +8,7 @@
     this.numberOfRecentDiaperChanges = ko.observable(data.numberOfRecentDiaperChanges);
     this.recentAmountPerFeed = ko.observable(data.recentAmountPerFeed);
     this.totalAmountPerFeed = ko.observable(data.totalAmountPerFeed);
+    this.totalRecentAmount = ko.observable(data.totalRecentAmount);
     this.childId = ko.observable(data.childId);
 }
 

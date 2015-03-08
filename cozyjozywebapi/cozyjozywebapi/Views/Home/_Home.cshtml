@@ -67,6 +67,14 @@
             <span> or </span>
             <span data-bind="text: $parent.convertToOz(totalAmountPerFeed()) + ' oz'"></span>
         </div>
+        
+        <div>
+            <label>Total Amount in last 24 hours</label>
+            <span data-bind="text: $parent.round2Decimals(totalRecentAmount()) + ' mL'"></span>
+            <span> or </span>
+            <span data-bind="text: $parent.convertToOz(totalRecentAmount()) + ' oz'"></span>
+        </div>
+
     </div>
     <div class="col-md-4">
         <h2>Diaper Stats</h2>
