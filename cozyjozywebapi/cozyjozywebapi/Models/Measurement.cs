@@ -12,8 +12,9 @@ namespace cozyjozywebapi.Models
         public int Id { get; set; }
         public double? Height { get; set; }
         public double? Weight { get; set; }
+        public double? HeadCircumference { get; set; }
+        public DateTime DateRecorded { get; set; }
         public int ChildId { get; set; }
-        [ForeignKey("Id")]
         [JsonIgnore]
         public virtual Child Child { get; set; }
     }

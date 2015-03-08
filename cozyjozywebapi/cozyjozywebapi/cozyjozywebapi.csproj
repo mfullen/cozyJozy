@@ -211,6 +211,7 @@
     <Compile Include="Controllers\DiaperChangesController.cs" />
     <Compile Include="Controllers\FeedingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MeasurementController.cs" />
     <Compile Include="Entity\CozyJozyContext.cs" />
     <Compile Include="Filters\ChildPermissionFilter.cs" />
     <Compile Include="Global.asax.cs">
@@ -219,6 +220,22 @@
     <Compile Include="Migrations\201502222026496_toazure.cs" />
     <Compile Include="Migrations\201502222026496_toazure.Designer.cs">
       <DependentUpon>201502222026496_toazure.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503081925598_trackHeadCircumference.cs" />
+    <Compile Include="Migrations\201503081925598_trackHeadCircumference.Designer.cs">
+      <DependentUpon>201503081925598_trackHeadCircumference.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503081927166_MeasurementDateRecorded.cs" />
+    <Compile Include="Migrations\201503081927166_MeasurementDateRecorded.Designer.cs">
+      <DependentUpon>201503081927166_MeasurementDateRecorded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503081958141_MeasurementDateRecorded1.cs" />
+    <Compile Include="Migrations\201503081958141_MeasurementDateRecorded1.Designer.cs">
+      <DependentUpon>201503081958141_MeasurementDateRecorded1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503082013017_MeasurementPrimaryKeyToAutoInc.cs" />
+    <Compile Include="Migrations\201503082013017_MeasurementPrimaryKeyToAutoInc.Designer.cs">
+      <DependentUpon>201503082013017_MeasurementPrimaryKeyToAutoInc.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -261,6 +278,7 @@
     <Content Include="Scripts\app\childmgt.viewmodel.js" />
     <Content Include="Scripts\app\diapermgt.viewmodel.js" />
     <Content Include="Scripts\app\feeding.viewmodel.js" />
+    <Content Include="Scripts\app\measurements.viewmodel.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap-slider.js" />
@@ -334,6 +352,7 @@
     <Content Include="Views\Home\_ChildMgt.cshtml" />
     <Content Include="Views\Home\_Feeding.cshtml" />
     <Content Include="Views\Home\_DiaperChanges.cshtml" />
+    <Content Include="Views\Home\_Measurements.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -345,6 +364,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201502222026496_toazure.resx">
       <DependentUpon>201502222026496_toazure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503081925598_trackHeadCircumference.resx">
+      <DependentUpon>201503081925598_trackHeadCircumference.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503081927166_MeasurementDateRecorded.resx">
+      <DependentUpon>201503081927166_MeasurementDateRecorded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503081958141_MeasurementDateRecorded1.resx">
+      <DependentUpon>201503081958141_MeasurementDateRecorded1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503082013017_MeasurementPrimaryKeyToAutoInc.resx">
+      <DependentUpon>201503082013017_MeasurementPrimaryKeyToAutoInc.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

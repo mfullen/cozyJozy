@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -17,14 +16,14 @@ using Microsoft.AspNet.Identity;
 
 namespace cozyjozywebapi.Controllers
 {
-    [ChildPermissionFilter]
-    public class DiaperChangesController : ApiController
+     [ChildPermissionFilter]
+    public class MeasurementController : ApiController
     {
         private CozyJozyContext context = new CozyJozyContext();
         private const int MaxPageSize = 100;
         private const string Authorthizedchildren = "authorthizedChildren";
 
-        // GET: api/DiaperChanges
+        // GET: api/Measurement
         public IHttpActionResult Get(int pagesize = 25, int page = 0, int childId = 0)
         {
             var authorthizedChildren = HttpContext.Current.Items[Authorthizedchildren] as List<int>;
@@ -34,7 +33,7 @@ namespace cozyjozywebapi.Controllers
                 pagesize = MaxPageSize;
             }
 
-            var data = context.DiaperChanges.OrderByDescending(v => v.OccurredOn).Where(x => authorthizedChildren.Contains(x.ChildId));
+            var data = context.Measurements.OrderByDescending(v => v.DateRecorded).Where(x => authorthizedChildren.Contains(x.ChildId));
 
             if (childId > 0)
             {
@@ -43,40 +42,39 @@ namespace cozyjozywebapi.Controllers
             return Ok(data.Skip(page * pagesize).Take(pagesize).ToList());
         }
 
-        // GET: api/DiaperChanges/5
-        [ResponseType(typeof(DiaperChanges))]
-        public async Task<IHttpActionResult> GetDiaperChanges(int id)
+        // GET: api/Measurement/5
+        [ResponseType(typeof(Measurement))]
+        public async Task<IHttpActionResult> GetMeasurement(int id)
         {
             var authorthizedChildren = HttpContext.Current.Items[Authorthizedchildren] as List<int>;
 
-            DiaperChanges diaperChanges = await context.DiaperChanges.FindAsync(id);
-            if (diaperChanges == null || !authorthizedChildren.Contains(diaperChanges.ChildId))
+            Measurement items = await context.Measurements.FindAsync(id);
+            if (items == null || !authorthizedChildren.Contains(items.ChildId))
             {
                 return NotFound();
             }
 
-            return Ok(diaperChanges);
+            return Ok(items);
         }
 
-        // PUT: api/DiaperChanges/5
+        // PUT: api/Measurement/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutDiaperChanges(int id, DiaperChanges diaperChanges)
+        public async Task<IHttpActionResult> PutMeasurement(int id, Measurement measurement)
         {
             var authorthizedChildren = HttpContext.Current.Items[Authorthizedchildren] as List<int>;
 
-            if (!ModelState.IsValid || !authorthizedChildren.Contains(diaperChanges.ChildId))
+            if (!ModelState.IsValid || !authorthizedChildren.Contains(measurement.ChildId))
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != diaperChanges.Id)
+            if (id != measurement.Id)
             {
                 return BadRequest();
             }
-            var userId = HttpContext.Current.User.Identity.GetUserId();
-            diaperChanges.UserId = userId;
+          
 
-            context.Entry(diaperChanges).State = EntityState.Modified;
+            context.Entry(measurement).State = EntityState.Modified;
 
             try
             {
@@ -84,7 +82,7 @@ namespace cozyjozywebapi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!DiaperChangesExists(id))
+                if (!MeasurementExists(id))
                 {
                     return NotFound();
                 }
@@ -94,23 +92,22 @@ namespace cozyjozywebapi.Controllers
                 }
             }
 
-            return Ok(diaperChanges);
+            return Ok(measurement);
         }
 
-        // POST: api/DiaperChanges
-        [ResponseType(typeof(DiaperChanges))]
-        public async Task<IHttpActionResult> PostDiaperChanges(DiaperChanges diaperChanges)
+        // POST: api/Measurement
+        [ResponseType(typeof(Measurement))]
+        public async Task<IHttpActionResult> PostMeasurement(Measurement measurement)
         {
             var authorthizedChildren = HttpContext.Current.Items[Authorthizedchildren] as List<int>;
 
-            if (!ModelState.IsValid || !authorthizedChildren.Contains(diaperChanges.ChildId))
+            if (!ModelState.IsValid || !authorthizedChildren.Contains(measurement.ChildId))
             {
                 return BadRequest(ModelState);
             }
 
-            var userId = HttpContext.Current.User.Identity.GetUserId();
-            diaperChanges.UserId = userId;
-            context.DiaperChanges.Add(diaperChanges);
+       
+            context.Measurements.Add(measurement);
 
             try
             {
@@ -118,7 +115,7 @@ namespace cozyjozywebapi.Controllers
             }
             catch (DbUpdateException e)
             {
-                if (DiaperChangesExists(diaperChanges.Id))
+                if (MeasurementExists(measurement.Id))
                 {
                     return Conflict();
                 }
@@ -128,25 +125,25 @@ namespace cozyjozywebapi.Controllers
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = diaperChanges.Id }, diaperChanges);
+            return CreatedAtRoute("DefaultApi", new { id = measurement.Id }, measurement);
         }
 
-        // DELETE: api/DiaperChanges/5
-        [ResponseType(typeof(DiaperChanges))]
-        public async Task<IHttpActionResult> DeleteDiaperChanges(int id)
+        // DELETE: api/Measurement/5
+        [ResponseType(typeof(Measurement))]
+        public async Task<IHttpActionResult> DeleteMeasurement(int id)
         {
             var authorthizedChildren = HttpContext.Current.Items[Authorthizedchildren] as List<int>;
 
-            DiaperChanges diaperChanges = await context.DiaperChanges.FindAsync(id);
-            if (diaperChanges == null || !authorthizedChildren.Contains(diaperChanges.ChildId))
+            Measurement measurement = await context.Measurements.FindAsync(id);
+            if (measurement == null || !authorthizedChildren.Contains(measurement.ChildId))
             {
                 return NotFound();
             }
 
-            context.DiaperChanges.Remove(diaperChanges);
+            context.Measurements.Remove(measurement);
             await context.SaveChangesAsync();
 
-            return Ok(diaperChanges);
+            return Ok(measurement);
         }
 
         protected override void Dispose(bool disposing)
@@ -158,9 +155,9 @@ namespace cozyjozywebapi.Controllers
             base.Dispose(disposing);
         }
 
-        private bool DiaperChangesExists(int id)
+        private bool MeasurementExists(int id)
         {
-            return context.DiaperChanges.Count(e => e.Id == id) > 0;
+            return context.Measurements.Count(e => e.Id == id) > 0;
         }
     }
 }

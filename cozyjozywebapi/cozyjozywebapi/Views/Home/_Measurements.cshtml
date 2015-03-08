@@ -1,0 +1,146 @@
+﻿<!-- ko with: measurementMgt -->
+
+<div>
+    <button class="btn btn-default glyphicon glyphicon-plus" data-bind="click: openNew"></button>
+</div>
+
+
+<div data-bind="if: isCreatingNew">
+    <div data-bind=" with: item">
+        <h2>Add New Measurement</h2>
+
+        <div class="container">
+            <div class="row">
+                <div class='col-sm-3'>
+                    <div class="form-group">
+                        <label for="date">Measurement Date</label>
+                        <div id="date" class='input-group date datetimepicker'>
+                            <input type='text' class="form-control" data-bind="datetimepicker: dateRecorded" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div>
+            <label for="height">Height (in)</label>
+            <input id="height" data-bind="value: height" />
+            <span data-bind="text: height() + ' in'"></span>
+            <input type="text" class="slider form-control" data-bind="sliderValue: {value: height, min:0, max: 400, step: 1}" />
+        </div>
+        
+
+        <div>
+            <label for="weight">Weight (lb)</label>
+            <input id="weight" data-bind="value: weight" />
+            <span data-bind="text: weight() + ' in'"></span>
+            <input type="text" class="slider form-control" data-bind="sliderValue: {value: weight, min:0, max: 400, step: 1}" />
+        </div>
+        
+        
+        <div>
+            <label for="headCircumference">Head Circumference (cm)</label>
+            <input id="headCircumference" data-bind="value: headCircumference" />
+            <span data-bind="text: headCircumference() + ' cm'"></span>
+            <input type="text" class="slider form-control" data-bind="sliderValue: {value: headCircumference, min:0, max: 400, step: 1}" />
+        </div>
+
+        <button class="btn btn-default" data-bind="click: create, enable: canSave">Save</button>
+        <button class="btn btn-default" data-bind="click: cancel">Cancel</button>
+    </div>
+</div>
+
+<div data-bind="if: isEditing">
+    <div data-bind=" with: item">
+        <h2>Update Feeding</h2>
+        <div>
+            <label for="measurementId" data-bind="visible: false">Id</label>
+            <label id="measurementId" data-bind="text: id, visible: false"></label>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class='col-sm-3'>
+                    <div class="form-group">
+                        <label for="date">Measurement Date</label>
+                        <div id="date" class='input-group date datetimepicker'>
+                            <input type='text' class="form-control" data-bind="datetimepicker: dateRecorded" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div>
+            <label for="height">Height (in)</label>
+            <input id="height" data-bind="value: height" />
+            <span data-bind="text: height() + ' in'"></span>
+            <input type="text" class="slider form-control" data-bind="sliderValue: {value: height, min:0, max: 400, step: 1}" />
+        </div>
+
+
+        <div>
+            <label for="weight">Weight (lb)</label>
+            <input id="weight" data-bind="value: weight" />
+            <span data-bind="text: weight() + ' in'"></span>
+            <input type="text" class="slider form-control" data-bind="sliderValue: {value: weight, min:0, max: 400, step: 1}" />
+        </div>
+
+
+        <div>
+            <label for="headCircumference">Head Circumference (cm)</label>
+            <input id="headCircumference" data-bind="value: headCircumference" />
+            <span data-bind="text: headCircumference() + ' cm'"></span>
+            <input type="text" class="slider form-control" data-bind="sliderValue: {value: headCircumference, min:0, max: 400, step: 1}" />
+        </div>
+
+
+
+        <button class="btn btn-default" data-bind="click: update, enable: canSave">Save</button>
+        <button class="btn btn-default" data-bind="click: cancel">Cancel</button>
+    </div>
+</div>
+<div>
+    <h1>Measurements</h1>
+
+    <!-- ko foreach: sortedByDate -->
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+
+                <span class="panel-title" data-bind="text: moment(dateRecorded()).format('hh:mm a MM/DD/YYYY')"></span>
+
+                <div class="pull-right">
+                    <button class="btn btn-default glyphicon glyphicon-pencil" data-bind="click: edit"></button>
+                    <button class="btn btn-default glyphicon glyphicon-remove" data-bind="click: deleteItem"></button>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div data-bind="if: height">
+                    <h2>Height</h2>
+                    <span data-bind="text: height"></span>
+                </div>
+                
+                <div data-bind="if: weight">
+                    <h2>Weight</h2>
+                    <span data-bind="text: weight"></span>
+                </div>
+                
+                <div data-bind="if: headCircumference">
+                    <h2>HeadCircumference</h2>
+                    <span data-bind="text: headCircumference"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /ko -->
+</div>
+<!-- /ko -->

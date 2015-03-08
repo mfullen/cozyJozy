@@ -33,6 +33,7 @@
                         <li><a href="#" data-bind="click: navigateToChildManagement">Child Management</a></li>
                         <li><a href="#" data-bind="click: navigateToFeeding">Feeding</a></li>
                         <li><a href="#" data-bind="click: navigateToDiaper">Diaper</a></li>
+                        <li><a href="#" data-bind="click: navigateToMeasurements">Measurements</a></li>
                         <li>@Html.ActionLink("API", "Index", "Help", new { area = "HelpPage" }, null)</li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right" data-bind="with: user">
@@ -57,6 +58,7 @@
         @Html.Partial("_ChildMgt")
         @Html.Partial("_Feeding")
         @Html.Partial("_DiaperChanges")
+        @Html.Partial("_Measurements")
         @Html.Partial("_Login")
         @Html.Partial("_Register")
         @Html.Partial("_RegisterExternal")
