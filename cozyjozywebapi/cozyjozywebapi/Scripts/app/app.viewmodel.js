@@ -124,7 +124,11 @@
 
         dataModel.fetchChildren();
         self.user(new UserInfoViewModel(self, userName, dataModel));
-        self.navigateToHome();
+        if (dataModel.children().length === 0) {
+            self.navigateToChildManagement();
+        } else {
+            self.navigateToHome();
+        }
     };
 
     self.navigateToLoggedOff = function () {

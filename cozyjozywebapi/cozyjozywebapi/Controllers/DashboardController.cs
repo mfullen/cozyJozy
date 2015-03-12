@@ -29,22 +29,30 @@ namespace cozyjozywebapi.Controllers
 
             var recent = DateTime.Now.AddDays(-1);
 
-            var recentAmountPerFeed =
-                _context.Feedings.Where(c => c.ChildId == childId).Where(d => d.EndTime > recent).Sum(s => s.Amount);
+            var filteredFeedings = _context.Feedings.Where(c => c.ChildId == childId);
+            var filteredDiapers = _context.DiaperChanges.Where(c => c.ChildId == childId);
 
-            var totalAmountPerFeed = _context.Feedings.Where(c => c.ChildId == childId).Sum(s => s.Amount);
+            var recentAmountPerFeed = filteredFeedings.Where(d => d.EndTime > recent).Sum(s => s.Amount);
+
+            var totalAmountPerFeed = filteredFeedings.Sum(s => s.Amount);
+
+            var lastFeed =
+                filteredFeedings.OrderByDescending(o => o.EndTime);
+
+            var lastDiaper = filteredDiapers.OrderByDescending(o => o.OccurredOn);
+
             var stats = new DashboardStatistics
             {
                 DateOfBirth = _context.Child.Where(x => x.Id == childId).Select(x => x.DateOfBirth).FirstOrDefault(),
-                LastFeeding = _context.Feedings.OrderByDescending(o => o.EndTime).Where(c => c.ChildId == childId).Take(1).First().EndTime,
-                LastDiaperChange = _context.DiaperChanges.OrderByDescending(o => o.OccurredOn).Take(1).First().OccurredOn,
-                TotalFeedings = _context.Feedings.Count(c => c.ChildId == childId),
-                TotalDiaperChanges = _context.DiaperChanges.Count(c => c.ChildId == childId),
+                LastFeeding = lastFeed.Any() ? lastFeed.Take(1).First().EndTime : (DateTime?) null,
+                LastDiaperChange = lastDiaper.Any() ? lastDiaper.Take(1).First().OccurredOn : (DateTime?)null,
+                TotalFeedings = filteredFeedings.Count(c => c.ChildId == childId),
+                TotalDiaperChanges = filteredDiapers.Count(c => c.ChildId == childId),
                 ChildId = childId,
-                NumberOfRecentDiaperChanges = _context.DiaperChanges.Where(c=>c.ChildId == childId).Count(d => d.OccurredOn > recent),
-                NumberOfRecentFeedings = _context.Feedings.Where(c => c.ChildId == childId).Count(d => d.EndTime > recent),
-                RecentAmountPerFeed = recentAmountPerFeed != null ? recentAmountPerFeed.Value / _context.Feedings.Where(c => c.ChildId == childId).Count(d => d.EndTime > recent) : 0,
-                TotalAmountPerFeed = totalAmountPerFeed != null ? totalAmountPerFeed.Value / _context.Feedings.Count(c => c.ChildId == childId) : 0,
+                NumberOfRecentDiaperChanges = filteredDiapers.Count(d => d.OccurredOn > recent),
+                NumberOfRecentFeedings = filteredFeedings.Count(d => d.EndTime > recent),
+                RecentAmountPerFeed = recentAmountPerFeed != null ? recentAmountPerFeed.Value / filteredFeedings.Count(d => d.EndTime > recent) : 0,
+                TotalAmountPerFeed = totalAmountPerFeed != null ? totalAmountPerFeed.Value / filteredFeedings.Count() : 0,
                 TotalRecentAmount = recentAmountPerFeed != null ? recentAmountPerFeed.Value : 0
             };
 

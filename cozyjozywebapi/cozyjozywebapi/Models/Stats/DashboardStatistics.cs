@@ -14,11 +14,11 @@ namespace cozyjozywebapi.Models.Stats
         /// <summary>
         /// DateTime of the last feeding
         /// </summary>
-        public DateTime LastFeeding { get; set; }
+        public DateTime? LastFeeding { get; set; }
         /// <summary>
         /// DateTime of the last DiaperChange
         /// </summary>
-        public DateTime LastDiaperChange { get; set; }
+        public DateTime? LastDiaperChange { get; set; }
         /// <summary>
         /// Total Feedings since birth
         /// </summary>

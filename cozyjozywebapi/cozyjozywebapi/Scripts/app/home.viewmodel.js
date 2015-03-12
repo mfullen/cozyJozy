@@ -43,14 +43,20 @@ function HomeViewModel(app, dataModel) {
 
     self.timeSinceLastFeeding = ko.computed(function () {
         if (self.stats()) {
-            return moment(self.stats().lastFeeding()).fromNow();
+            if (self.stats().lastFeeding()) {
+                return moment(self.stats().lastFeeding()).fromNow();
+            }
+            return "None";
         }
         return null;
     }, self);
 
     self.timeSinceLastDiaperChange = ko.computed(function () {
         if (self.stats()) {
-            return moment(self.stats().lastDiaperChange()).fromNow();
+            if (self.stats().lastDiaperChange()) {
+                return moment(self.stats().lastDiaperChange()).fromNow();
+            }
+            return "None";
         }
         return null;
     }, self);
@@ -62,11 +68,11 @@ function HomeViewModel(app, dataModel) {
         return null;
     }, self);
 
-    self.convertToOz = function(v) {
+    self.convertToOz = function (v) {
         return self.round2Decimals(v * 0.033814)
     }
 
-    self.round2Decimals = function(v) {
+    self.round2Decimals = function (v) {
         return +(Math.round((v) + "e+2") + "e-2");
     }
 
