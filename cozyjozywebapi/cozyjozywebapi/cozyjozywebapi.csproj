@@ -213,10 +213,16 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MeasurementController.cs" />
     <Compile Include="Entity\CozyJozyContext.cs" />
+    <Compile Include="Entity\Repositories\FeedingRepository.cs" />
     <Compile Include="Filters\ChildPermissionFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\CozyJozyUnitOfWork.cs" />
+    <Compile Include="Infrastructure\IFeedingRepository.cs" />
+    <Compile Include="Infrastructure\IRepository.cs" />
+    <Compile Include="Infrastructure\IUnitOfWork.cs" />
+    <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Migrations\201502222026496_toazure.cs" />
     <Compile Include="Migrations\201502222026496_toazure.Designer.cs">
       <DependentUpon>201502222026496_toazure.cs</DependentUpon>
