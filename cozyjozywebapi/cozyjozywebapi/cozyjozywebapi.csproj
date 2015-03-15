@@ -110,6 +110,14 @@
       <Private>True</Private>
       <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Ninject.Web.Common.3.2.0.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+    </Reference>
     <Reference Include="Owin">
       <Private>True</Private>
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -180,6 +188,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivatorEx">
+      <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -188,6 +199,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -213,15 +225,23 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MeasurementController.cs" />
     <Compile Include="Entity\CozyJozyContext.cs" />
+    <Compile Include="Entity\Repositories\ChildPermissionsRepository.cs" />
+    <Compile Include="Entity\Repositories\ChildRepository.cs" />
+    <Compile Include="Entity\Repositories\DiaperChangesRepository.cs" />
     <Compile Include="Entity\Repositories\FeedingRepository.cs" />
+    <Compile Include="Entity\Repositories\IdentityRoleRepository.cs" />
     <Compile Include="Filters\ChildPermissionFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\Core\IRepository.cs" />
+    <Compile Include="Infrastructure\Core\IUnitOfWork.cs" />
     <Compile Include="Infrastructure\CozyJozyUnitOfWork.cs" />
+    <Compile Include="Infrastructure\IDiaperChangesRepository.cs" />
+    <Compile Include="Infrastructure\IChildPermissionsRepository.cs" />
+    <Compile Include="Infrastructure\IChildRepository.cs" />
     <Compile Include="Infrastructure\IFeedingRepository.cs" />
-    <Compile Include="Infrastructure\IRepository.cs" />
-    <Compile Include="Infrastructure\IUnitOfWork.cs" />
+    <Compile Include="Infrastructure\IRoleRepository.cs" />
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Migrations\201502222026496_toazure.cs" />
     <Compile Include="Migrations\201502222026496_toazure.Designer.cs">

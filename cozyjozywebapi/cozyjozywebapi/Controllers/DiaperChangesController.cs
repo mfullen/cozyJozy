@@ -12,6 +12,8 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using cozyjozywebapi.Entity;
 using cozyjozywebapi.Filters;
+using cozyjozywebapi.Infrastructure;
+using cozyjozywebapi.Infrastructure.Core;
 using cozyjozywebapi.Models;
 using Microsoft.AspNet.Identity;
 
@@ -20,9 +22,14 @@ namespace cozyjozywebapi.Controllers
     [ChildPermissionFilter]
     public class DiaperChangesController : ApiController
     {
-        private CozyJozyContext context = new CozyJozyContext();
+        private readonly IUnitOfWork _unitOfWork;
         private const int MaxPageSize = 100;
         private const string Authorthizedchildren = "authorthizedChildren";
+
+        public DiaperChangesController(IUnitOfWork uow)
+        {
+            _unitOfWork = uow;
+        }
 
         // GET: api/DiaperChanges
         public IHttpActionResult Get(int pagesize = 25, int page = 0, int childId = 0)
@@ -34,7 +41,7 @@ namespace cozyjozywebapi.Controllers
                 pagesize = MaxPageSize;
             }
 
-            var data = context.DiaperChanges.OrderByDescending(v => v.OccurredOn).Where(x => authorthizedChildren.Contains(x.ChildId));
+            var data = _unitOfWork.DiaperChangesRepository.All().OrderByDescending(v => v.OccurredOn).Where(x => authorthizedChildren.Contains(x.ChildId));
 
             if (childId > 0)
             {
@@ -49,7 +56,7 @@ namespace cozyjozywebapi.Controllers
         {
             var authorthizedChildren = HttpContext.Current.Items[Authorthizedchildren] as List<int>;
 
-            DiaperChanges diaperChanges = await context.DiaperChanges.FindAsync(id);
+            DiaperChanges diaperChanges = await _unitOfWork.DiaperChangesRepository.FindAsync(c=> c.Id == id);
             if (diaperChanges == null || !authorthizedChildren.Contains(diaperChanges.ChildId))
             {
                 return NotFound();
@@ -76,11 +83,12 @@ namespace cozyjozywebapi.Controllers
             var userId = HttpContext.Current.User.Identity.GetUserId();
             diaperChanges.UserId = userId;
 
-            context.Entry(diaperChanges).State = EntityState.Modified;
+            _unitOfWork.DiaperChangesRepository.Update(diaperChanges, d=> d.Id);
+            
 
             try
             {
-                await context.SaveChangesAsync();
+                await _unitOfWork.CommitAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -110,11 +118,11 @@ namespace cozyjozywebapi.Controllers
 
             var userId = HttpContext.Current.User.Identity.GetUserId();
             diaperChanges.UserId = userId;
-            context.DiaperChanges.Add(diaperChanges);
+            _unitOfWork.DiaperChangesRepository.Add(diaperChanges);
 
             try
             {
-                await context.SaveChangesAsync();
+               await _unitOfWork.CommitAsync();
             }
             catch (DbUpdateException e)
             {
@@ -137,14 +145,15 @@ namespace cozyjozywebapi.Controllers
         {
             var authorthizedChildren = HttpContext.Current.Items[Authorthizedchildren] as List<int>;
 
-            DiaperChanges diaperChanges = await context.DiaperChanges.FindAsync(id);
+            DiaperChanges diaperChanges = await _unitOfWork.DiaperChangesRepository.FindAsync(d=> d.Id == id);
             if (diaperChanges == null || !authorthizedChildren.Contains(diaperChanges.ChildId))
             {
                 return NotFound();
             }
 
-            context.DiaperChanges.Remove(diaperChanges);
-            await context.SaveChangesAsync();
+            _unitOfWork.DiaperChangesRepository.Delete(diaperChanges);
+
+            await _unitOfWork.CommitAsync();
 
             return Ok(diaperChanges);
         }
@@ -153,14 +162,14 @@ namespace cozyjozywebapi.Controllers
         {
             if (disposing)
             {
-                context.Dispose();
+                _unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool DiaperChangesExists(int id)
         {
-            return context.DiaperChanges.Count(e => e.Id == id) > 0;
+            return _unitOfWork.DiaperChangesRepository.All().Count(e => e.Id == id) > 0;
         }
     }
 }

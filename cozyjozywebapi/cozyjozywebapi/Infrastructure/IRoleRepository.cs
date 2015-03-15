@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using cozyjozywebapi.Infrastructure.Core;
-using cozyjozywebapi.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace cozyjozywebapi.Infrastructure
 {
-    public interface IFeedingRepository : IRepository<Feedings>
+    public interface IRoleRepository : IRepository<IdentityRole>
     {
     }
 }

@@ -11,6 +11,8 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using cozyjozywebapi.Entity;
+using cozyjozywebapi.Infrastructure;
+using cozyjozywebapi.Infrastructure.Core;
 using cozyjozywebapi.Models;
 using Microsoft.AspNet.Identity;
 
@@ -18,20 +20,25 @@ namespace cozyjozywebapi.Controllers
 {
     public class ChildrenController : ApiController
     {
-        private CozyJozyContext db = new CozyJozyContext();
+        private readonly IUnitOfWork _unitOfWork;
+
+        public ChildrenController(IUnitOfWork uow)
+        {
+            _unitOfWork = uow;
+        }
 
         // GET: api/Children
         public IQueryable<Child> GetChild()
         {
             var userId = HttpContext.Current.User.Identity.GetUserId();
-            return db.ChildPermissions.Where(c => c.IdentityUserId == userId).Select(c => c.Child);
+            return _unitOfWork.ChildPermissionsRepository.All().Where(c => c.IdentityUserId == userId).Select(c => c.Child);
         }
 
         // GET: api/Children/5
         [ResponseType(typeof(Child))]
         public async Task<IHttpActionResult> GetChild(int id)
         {
-            Child child = await db.Child.FindAsync(id);
+            Child child = await _unitOfWork.ChildRepository.FindAsync(c=> c.Id == id);
             if (child == null)
             {
                 return NotFound();
@@ -54,11 +61,11 @@ namespace cozyjozywebapi.Controllers
                 return BadRequest();
             }
 
-            db.Entry(child).State = EntityState.Modified;
+            _unitOfWork.ChildRepository.Update(child, c=> c.Id);
 
             try
             {
-                await db.SaveChangesAsync();
+                await _unitOfWork.CommitAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -84,16 +91,16 @@ namespace cozyjozywebapi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var savedChild = db.Child.Add(child);
-            await db.SaveChangesAsync();
+            var savedChild = _unitOfWork.ChildRepository.Add(child);
+            await _unitOfWork.CommitAsync();
             var userId = HttpContext.Current.User.Identity.GetUserId();
-            db.ChildPermissions.Add(new ChildPermissions()
+            _unitOfWork.ChildPermissionsRepository.Add(new ChildPermissions()
             {
                 ChildId = child.Id,
-                Role = db.Roles.FirstOrDefault(c => c.Id == "PARENT"),
+                Role = _unitOfWork.RoleRepository.All().FirstOrDefault(c => c.Id == "PARENT"),
                 IdentityUserId = userId
             });
-            await db.SaveChangesAsync();
+            await _unitOfWork.CommitAsync();
             return CreatedAtRoute("DefaultApi", new { id = child.Id }, child);
         }
 
@@ -101,14 +108,14 @@ namespace cozyjozywebapi.Controllers
         [ResponseType(typeof(Child))]
         public async Task<IHttpActionResult> DeleteChild(int id)
         {
-            Child child = await db.Child.FindAsync(id);
+            Child child = await _unitOfWork.ChildRepository.FindAsync(c=> c.Id == id);
             if (child == null)
             {
                 return NotFound();
             }
 
-            db.Child.Remove(child);
-            await db.SaveChangesAsync();
+            _unitOfWork.ChildRepository.Delete(child);
+            await _unitOfWork.CommitAsync();
 
             return Ok(child);
         }
@@ -117,14 +124,14 @@ namespace cozyjozywebapi.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool ChildExists(int id)
         {
-            return db.Child.Count(e => e.Id == id) > 0;
+            return _unitOfWork.ChildRepository.All().Count(e => e.Id == id) > 0;
         }
     }
 }
