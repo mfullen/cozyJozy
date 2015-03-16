@@ -263,6 +263,10 @@
     <Compile Include="Migrations\201503082013017_MeasurementPrimaryKeyToAutoInc.Designer.cs">
       <DependentUpon>201503082013017_MeasurementPrimaryKeyToAutoInc.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503162024438_ReadonlyPermission.cs" />
+    <Compile Include="Migrations\201503162024438_ReadonlyPermission.Designer.cs">
+      <DependentUpon>201503162024438_ReadonlyPermission.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -402,6 +406,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503082013017_MeasurementPrimaryKeyToAutoInc.resx">
       <DependentUpon>201503082013017_MeasurementPrimaryKeyToAutoInc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503162024438_ReadonlyPermission.resx">
+      <DependentUpon>201503162024438_ReadonlyPermission.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
