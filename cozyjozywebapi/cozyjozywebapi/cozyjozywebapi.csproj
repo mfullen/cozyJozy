@@ -225,6 +225,7 @@
     <Compile Include="Controllers\FeedingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MeasurementController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Entity\CozyJozyContext.cs" />
     <Compile Include="Entity\Repositories\ChildPermissionsRepository.cs" />
     <Compile Include="Entity\Repositories\ChildRepository.cs" />
@@ -298,6 +299,8 @@
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap-slider\bootstrap-slider.css" />
     <Content Include="Content\bootstrap-slider\bootstrap-slider.min.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\ajax-loader.gif" />
@@ -331,11 +334,18 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
     <None Include="Properties\PublishProfiles\cozyJozy-winhost.pubxml" />
     <None Include="Properties\PublishProfiles\cozyjozy.pubxml" />
     <None Include="Properties\PublishProfiles\cozyjozyazure.pubxml" />
     <None Include="Properties\PublishProfiles\cozyJozymikefullen.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\bootstrap3-typeahead.js" />
+    <Content Include="Scripts\bootstrap3-typeahead.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\knockout-3.2.0.debug.js" />
@@ -388,11 +398,9 @@
     <Content Include="Views\Home\_Feeding.cshtml" />
     <Content Include="Views\Home\_DiaperChanges.cshtml" />
     <Content Include="Views\Home\_Measurements.cshtml" />
+    <Content Include="Views\Home\_ChildPermissions.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>

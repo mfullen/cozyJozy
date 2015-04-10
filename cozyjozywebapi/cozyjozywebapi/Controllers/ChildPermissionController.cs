@@ -56,9 +56,11 @@ namespace cozyjozywebapi.Controllers
             {
                 //We only want to select all users who belong to permissions but we don't want to select our own user. This will prevent
                 //the user from accidently deleting their own permissions and eventually not be able to see their child again
-                permissions.AddRange(_unitOfWork.ChildPermissionsRepository.All()
-                    .Where(c => c.ChildId == childId)
-                    .Where(c => c.IdentityUserId != userId).Select(cp => Convert(cp)).ToList());
+
+                 _unitOfWork.ChildPermissionsRepository.All()
+                   .Where(c => c.ChildId == childId)
+                   .Where(c => c.IdentityUserId != userId).ToList()
+                   .ForEach(c => permissions.Add(Convert(c)));
             }
 
             var results = permissions.Skip(page * pagesize).Take(pagesize);
