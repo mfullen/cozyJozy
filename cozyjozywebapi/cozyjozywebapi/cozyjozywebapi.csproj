@@ -225,7 +225,6 @@
     <Compile Include="Controllers\FeedingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MeasurementController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Entity\CozyJozyContext.cs" />
     <Compile Include="Entity\Repositories\ChildPermissionsRepository.cs" />
     <Compile Include="Entity\Repositories\ChildRepository.cs" />
@@ -344,8 +343,6 @@
     <None Include="Properties\PublishProfiles\cozyjozyazure.pubxml" />
     <None Include="Properties\PublishProfiles\cozyJozymikefullen.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\bootstrap3-typeahead.js" />
-    <Content Include="Scripts\bootstrap3-typeahead.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\knockout-3.2.0.debug.js" />
