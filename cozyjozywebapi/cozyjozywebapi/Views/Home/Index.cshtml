@@ -28,7 +28,7 @@
                 </div>
                 <div data-bind="if: loggedIn" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><select class="form-control" data-bind="options: availableChildren, optionsText: function(item) { return item.firstName + ' ' + item.middleName + ' ' + item.lastName;}, value: selectedChild"></select></li>
+                        <li><select class="form-control" data-bind="options: availableChildren, optionsText: function(item) { return item.child().firstName() + ' ' + item.child().middleName() + ' ' + item.child().lastName();}, value: selectedChild"></select></li>
                         <li><a href="#" data-bind="click: navigateToHome">Home</a></li>
                         <li><a href="#" data-bind="click: navigateToChildManagement">Child Management</a></li>
                         <li><a href="#" data-bind="click: navigateToFeeding">Feeding</a></li>

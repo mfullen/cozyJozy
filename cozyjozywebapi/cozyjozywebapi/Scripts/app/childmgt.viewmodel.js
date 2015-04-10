@@ -1,91 +1,108 @@
-﻿function ChildManagement(app, dataModel) {
+﻿
+
+function ChildManagement(app, dataModel) {
     var self = this;
 
-    self.id = ko.observable("");
-    self.dob = ko.observable("").extend({ required: true });
-    self.firstName = ko.observable("").extend({ required: true });
-    self.middleName = ko.observable("");
-    self.lastName = ko.observable("");
-    self.male = ko.observable(false);
+    var newChild = function() {
+        return new ChildClass({
+            id: 0,
+            male: false,
+            lastName: '',
+            middleName: ''
+        });
+    };
 
-    self.child = ko.observable();
-    self.children = ko.observableArray(dataModel.getChildren());
-
-    self.reset = function () {
-        self.dob("");
-        self.firstName("");
-        self.lastName("");
-        self.middleName("");
-        self.male(false);
-        self.child(null);
+    var clearErrors = function () {
+        app.errors.removeAll();
     }
 
+    var addError = function (error) {
+        app.errors.push(error);
+    }
+
+    self.item = ko.observable(newChild());
+    self.items = ko.observableArray(dataModel.getChildren());
+
+    self.isEditing = ko.observable(false);
+    self.isCreatingNew = ko.observable(false);
+
+    self.reset = function () {
+        self.item(newChild());
+        self.isEditing(false);
+        self.isCreatingNew(false);
+        clearErrors();
+    }
+
+    self.openNew = function () {
+        self.isEditing(false);
+        self.item(newChild());
+        self.isCreatingNew(true);
+    }
+
+
     self.create = function () {
-        var childObj = {
-            firstName: self.firstName,
-            lastName: self.lastName,
-            dateOfBirth: self.dob,
-            middleName: self.middleName,
-            male: self.male
-        };
-
-        self.child(childObj);
-
         $.ajax({
             url: 'api/children',
             cache: 'false',
             type: 'POST',
             contentType: 'application/json',
             headers: dataModel.getSecurityHeaders(),
-            data: ko.toJSON(self.child),
+            data: ko.toJSON(self.item()),
             success: function (data) {
-                self.children.push(data);
+                self.items.push(new ChildPermission(data));
                 self.reset();
-                dataModel.setChildren(self.children());
+                dataModel.setChildren(self.items());
+            },
+            error: function (xhr, textStatus, err) {
+                addError("Failed to create " + itemName + ". Please try again!");
+                console.log("Error", xhr, textStatus, err);
             }
         });
     }
 
     self.edit = function (c) {
-        self.child(c);
+        self.item(new ChildClass(ko.toJS(c.child)));
+        self.isEditing(true);
+        self.isCreatingNew(false);
     }
 
     self.update = function () {
-        var uChild = self.child();
+        var uChild = self.item();
         $.ajax({
-            url: 'api/children/' + uChild.id,
+            url: 'api/children/' + uChild.id(),
             cache: 'false',
             type: 'PUT',
             contentType: 'application/json',
             headers: dataModel.getSecurityHeaders(),
             data: ko.toJSON(uChild),
             success: function (data) {
-                var tempChildren = ko.observableArray();
-                tempChildren(self.children().slice(0));
-                self.children.removeAll();
-                self.children(tempChildren());
+                var target = ko.utils.arrayFirst(self.items(), function (titem) {
+                    return titem.child().id() === data.child.id;
+                });
 
+                self.items.replace(target, new ChildPermission(data));
                 self.reset();
-                dataModel.setChildren(self.children());
+                dataModel.setChildren(self.items());
             },
-            failure: function (xhr, textStatus, err) {
+            error: function (xhr, textStatus, err) {
+                addError("Failed to update Please try again!");
                 console.log("Error", xhr, textStatus, err);
             }
         });
     }
 
-    self.delete = function(c) {
-        
-        if (confirm('Are you sure you want to Delete ' + c.firstName + ' ?')) {
+    self.deleteItem = function (c) {
+        var theChild = c.child();
+        if (confirm('Are you sure you want to Delete ' + theChild.firstName() + ' ?')) {
             $.ajax({
-                url: 'api/children/' + c.id,
+                url: 'api/children/' + theChild.id(),
                 cache: 'false',
                 type: 'DELETE',
                 contentType: 'application/json',
                 headers: dataModel.getSecurityHeaders(),
                 success: function (data) {
-                    self.children.remove(c);
-                    dataModel.setChildren(self.children());
+                    self.items.remove(c);
+                    dataModel.setChildren(self.items());
                 },
                 failure: function (xhr, textStatus, err) {
                     console.log("Error", xhr, textStatus, err);
@@ -98,21 +115,10 @@
         self.reset();
     }
 
-    self.canSave = ko.computed(function () {
-        return (self.firstName() != "" && self.dob() != "");
-    });
+    self.canSave = function () {
+        
+    }
 
-    //$.ajax({
-    //    url: 'api/children',
-    //    cache: false,
-    //    headers: dataModel.getSecurityHeaders(),
-    //    contentType: 'json',
-    //    success: function (data) {
-    //        //var vm = ko.mapping.fromJS(data);
-    //        //self.children(vm());
-    //        self.children(data);
-    //    }
-    //});
 }
 
 app.addViewModel({

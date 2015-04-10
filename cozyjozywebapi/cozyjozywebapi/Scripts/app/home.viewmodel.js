@@ -81,7 +81,7 @@ function HomeViewModel(app, dataModel) {
         url: 'api/dashboard',
         cache: false,
         headers: dataModel.getSecurityHeaders(),
-        data: { childId: app.selectedChild().id },
+        data: { childId: app.selectedChild().child().id() },
         contentType: 'json',
         success: function (data) {
             self.stats(new DashboardStats(data));

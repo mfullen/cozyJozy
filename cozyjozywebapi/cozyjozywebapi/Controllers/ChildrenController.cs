@@ -27,28 +27,32 @@ namespace cozyjozywebapi.Controllers
             public bool ReadOnly { get; set; }
         }
 
+
         protected IQueryable<ChildPermissions> FilteredChildren()
         {
             var userId = HttpContext.Current.User.Identity.GetUserId();
             return _unitOfWork.ChildPermissionsRepository.All().Where(c => c.IdentityUserId == userId);
-            //.Select(c => new ChildResponse
-            //{
-            //    Child = c.Child,
-            //    ReadOnly = c.ReadOnly
-            //});
         }
 
         // GET: api/Children
-        public IQueryable<Child> GetChild()
+        public IQueryable<ChildResponse> GetChild()
         {
-            return FilteredChildren().Select(c => c.Child);
+            return FilteredChildren().Select(c => new ChildResponse
+            {
+                Child = c.Child,
+                ReadOnly = c.ReadOnly
+            });
         }
 
         // GET: api/Children/5
-        [ResponseType(typeof(Child))]
+        [ResponseType(typeof(ChildResponse))]
         public async Task<IHttpActionResult> GetChild(int id)
         {
-            Child child =  await FilteredChildren().Where(c=> c.ChildId == id).Select(c=> c.Child).FirstAsync();
+            var child = await FilteredChildren().Where(c => c.ChildId == id).Select(c => new ChildResponse
+            {
+                Child = c.Child,
+                ReadOnly = c.ReadOnly
+            }).FirstAsync();
             if (child == null)
             {
                 return NotFound();
@@ -58,7 +62,7 @@ namespace cozyjozywebapi.Controllers
         }
 
         // PUT: api/Children/5
-        [ResponseType(typeof(void))]
+        [ResponseType(typeof(ChildResponse))]
         public async Task<IHttpActionResult> PutChild(int id, Child child)
         {
             if (!ModelState.IsValid)
@@ -71,16 +75,17 @@ namespace cozyjozywebapi.Controllers
                 return BadRequest();
             }
 
-            if(!FilteredChildren().Any(c => c.ChildId == id))
+            if (!FilteredChildren().Any(c => c.ChildId == id))
             {
                 return BadRequest();
             }
 
-            _unitOfWork.ChildRepository.Update(child, c=> c.Id);
+            _unitOfWork.ChildRepository.Update(child, c => c.Id);
 
             try
             {
                 await _unitOfWork.CommitAsync();
+                return await GetChild(child.Id);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -98,7 +103,7 @@ namespace cozyjozywebapi.Controllers
         }
 
         // POST: api/Children
-        [ResponseType(typeof(Child))]
+        [ResponseType(typeof(ChildResponse))]
         public async Task<IHttpActionResult> PostChild(Child child)
         {
             if (!ModelState.IsValid)
@@ -109,18 +114,22 @@ namespace cozyjozywebapi.Controllers
             var savedChild = _unitOfWork.ChildRepository.Add(child);
             await _unitOfWork.CommitAsync();
             var userId = HttpContext.Current.User.Identity.GetUserId();
-            _unitOfWork.ChildPermissionsRepository.Add(new ChildPermissions()
-            {
-                ChildId = child.Id,
-                ReadOnly = false,
-                IdentityUserId = userId
-            });
+            var cp = _unitOfWork.ChildPermissionsRepository.Add(new ChildPermissions()
+             {
+                 ChildId = savedChild.Id,
+                 ReadOnly = false,
+                 IdentityUserId = userId
+             });
             await _unitOfWork.CommitAsync();
-            return CreatedAtRoute("DefaultApi", new { id = child.Id }, child);
+            return CreatedAtRoute("DefaultApi", new { id = cp.ChildId }, new ChildResponse
+            {
+                Child = cp.Child,
+                ReadOnly = cp.ReadOnly
+            });
         }
 
         // DELETE: api/Children/5
-        [ResponseType(typeof(Child))]
+        [ResponseType(typeof(ChildResponse))]
         public async Task<IHttpActionResult> DeleteChild(int id)
         {
             if (!FilteredChildren().Any(c => c.ChildId == id))
@@ -128,7 +137,7 @@ namespace cozyjozywebapi.Controllers
                 return BadRequest();
             }
 
-            Child child = await _unitOfWork.ChildRepository.FindAsync(c=> c.Id == id);
+            Child child = await _unitOfWork.ChildRepository.FindAsync(c => c.Id == id);
             if (child == null)
             {
                 return NotFound();
@@ -137,7 +146,11 @@ namespace cozyjozywebapi.Controllers
             _unitOfWork.ChildRepository.Delete(child);
             await _unitOfWork.CommitAsync();
 
-            return Ok(child);
+            return Ok(new ChildResponse
+            {
+                Child = child,
+                ReadOnly = true
+            });
         }
 
         protected override void Dispose(bool disposing)

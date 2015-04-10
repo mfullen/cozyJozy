@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 
 namespace cozyjozywebapi.Infrastructure.Core
 {
@@ -12,5 +13,6 @@ namespace cozyjozywebapi.Infrastructure.Core
         IChildPermissionsRepository ChildPermissionsRepository { get; }
         IDiaperChangesRepository DiaperChangesRepository { get; }
         IRoleRepository RoleRepository { get; }
+        IUserRepository UserRepository { get;  }
     }
 }

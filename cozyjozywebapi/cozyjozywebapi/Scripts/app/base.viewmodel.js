@@ -35,7 +35,7 @@
     }
 
     self.create = function () {
-        self.item().childId(app.selectedChild().id);
+        self.item().childId(app.selectedChild().child().id());
 
         $.ajax({
             url: baseUrl,
@@ -120,7 +120,7 @@
             url: baseUrl,
             cache: false,
             headers: dataModel.getSecurityHeaders(),
-            data: { childId: app.selectedChild().id },
+            data: { childId: app.selectedChild().child().id() },
             contentType: 'json',
             success: function (data) {
                 for (var i = 0; i < data.length; i++) {

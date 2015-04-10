@@ -80,6 +80,12 @@ namespace cozyjozywebapi.Controllers
                 EndTime = feeding.EndTime,
                 DeliveryType = feeding.DeliveryType
             };
+
+            if (!HasWritePermission(newFeeding.Child.Id))
+            {
+                return BadRequest();
+            }
+
             newFeeding.ChildId = newFeeding.Child.Id;
             var userId = HttpContext.Current.User.Identity.GetUserId();
             newFeeding.UserId = userId;
@@ -106,7 +112,12 @@ namespace cozyjozywebapi.Controllers
                 return Post(feeding);
             }
 
-            _feedingRepository.Update(feeding, f=> f.Id);
+            if (!HasWritePermission(existingFeed.ChildId))
+            {
+                return BadRequest();
+            }
+
+            _feedingRepository.Update(feeding, f => f.Id);
             _unitOfWork.Commit();
             return Ok(existingFeed);
         }
@@ -120,9 +131,25 @@ namespace cozyjozywebapi.Controllers
             if (existingFeed == null || !authorthizedChildren.Contains(existingFeed.ChildId))
                 return NotFound();
 
+          
+            if (!HasWritePermission(existingFeed.ChildId))
+            {
+                return BadRequest();
+            }
+
             _feedingRepository.Delete(existingFeed);
             _unitOfWork.Commit();
             return Ok();
         }
+
+        public bool HasWritePermission(int childId)
+        {
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+            var hasWritePermission = _unitOfWork.ChildPermissionsRepository
+               .Where(c => c.ChildId == childId)
+               .Where(c => c.IdentityUserId == userId).Any(c => c.ReadOnly == false);
+            return hasWritePermission;
+        }
+
     }
 }
