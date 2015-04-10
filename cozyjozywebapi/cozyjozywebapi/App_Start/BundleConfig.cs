@@ -20,6 +20,7 @@ namespace cozyjozywebapi
 
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
                 "~/Scripts/app/ajaxPrefilters.js",
+                "~/Scripts/app/app.models.js",
                  "~/Scripts/app/base.viewmodel.js",
                 "~/Scripts/app/app.bindings.js",
                 "~/Scripts/app/app.datamodel.js",

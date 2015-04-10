@@ -307,8 +307,10 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\app\app.models.js" />
     <Content Include="Scripts\app\base.viewmodel.js" />
     <Content Include="Scripts\app\childmgt.viewmodel.js" />
+    <Content Include="Scripts\app\childPermission.viewmodel.js" />
     <Content Include="Scripts\app\diapermgt.viewmodel.js" />
     <Content Include="Scripts\app\feeding.viewmodel.js" />
     <Content Include="Scripts\app\measurements.viewmodel.js" />

@@ -1,15 +1,4 @@
-﻿function FEED(data) {
-    this.id = ko.observable(data.id);
-    this.startTime = ko.observable(data.startTime).extend({ required: true });
-    this.endTime = ko.observable(data.endTime).extend({ required: true });
-    this.deliveryType = ko.observable(data.deliveryType);
-    this.amount = ko.observable(data.amount).extend({ numeric: 2 });
-    this.dateReported = ko.observable(data.dateReported);
-    this.childId = ko.observable(data.childId);
-    this.spitUp = ko.observable(data.spitUp);
-}
-
-function Feeding(app, dataModel, options) {
+﻿function Feeding(app, dataModel, options) {
     var self = this;
     BaseVm.call(self, app, dataModel, options);
 

@@ -1,18 +1,4 @@
-﻿function DashboardStats(data) {
-    this.dateOfBirth = ko.observable(data.dateOfBirth);
-    this.lastFeeding = ko.observable(data.lastFeeding);
-    this.lastDiaperChange = ko.observable(data.lastDiaperChange);
-    this.totalFeedings = ko.observable(data.totalFeedings);
-    this.totalDiaperChanges = ko.observable(data.totalDiaperChanges);
-    this.numberOfRecentFeedings = ko.observable(data.numberOfRecentFeedings);
-    this.numberOfRecentDiaperChanges = ko.observable(data.numberOfRecentDiaperChanges);
-    this.recentAmountPerFeed = ko.observable(data.recentAmountPerFeed);
-    this.totalAmountPerFeed = ko.observable(data.totalAmountPerFeed);
-    this.totalRecentAmount = ko.observable(data.totalRecentAmount);
-    this.childId = ko.observable(data.childId);
-}
-
-function HomeViewModel(app, dataModel) {
+﻿function HomeViewModel(app, dataModel) {
     var self = this;
 
     self.stats = ko.observable();

@@ -1,18 +1,4 @@
-﻿function ChildClass(data) {
-    this.id = ko.observable(data.id);
-    this.dateOfBirth = ko.observable(data.dateOfBirth).extend({ required: true });
-    this.firstName = ko.observable(data.firstName).extend({ required: true });
-    this.middleName = ko.observable(data.middleName);
-    this.lastName = ko.observable(data.lastName);
-    this.male = ko.observable(data.male);
-}
-
-function ChildPermission(data) {
-    this.child = ko.observable(new ChildClass(data.child));
-    this.readOnly = data.readOnly;
-}
-
-function AppDataModel() {
+﻿function AppDataModel() {
     var self = this,
         // Routes
         addExternalLoginUrl = "/api/Account/AddExternalLogin",

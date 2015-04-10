@@ -1,13 +1,4 @@
-﻿function MeasurementClass(data) {
-    this.id = ko.observable(data.id);
-    this.dateRecorded = ko.observable(data.dateRecorded).extend({ required: true });
-    this.height = ko.observable(data.height);
-    this.weight = ko.observable(data.weight);
-    this.childId = ko.observable(data.childId);
-    this.headCircumference = ko.observable(data.headCircumference);
-}
-
-function Measurement(app, dataModel, options) {
+﻿function Measurement(app, dataModel, options) {
     var self = this;
     BaseVm.call(self, app, dataModel, options);
 
