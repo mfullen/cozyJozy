@@ -1,6 +1,6 @@
 ﻿function ChildPermissionViewModel(app, dataModel, options) {
+    BaseVm.apply(this, arguments);
     var self = this;
-    BaseVm.call(self, app, dataModel, options);
 
     self.canSave = function () {
 
@@ -34,9 +34,9 @@ app.addViewModel({
             url: 'api/childpermission',
             itemName: 'Permission'
         };
-        ChildPermissionViewModel.prototype = new BaseVm(app, dataModel, options);
+        ChildPermissionViewModel.prototype = new BaseVm();
         ChildPermissionViewModel.prototype.constructor = ChildPermissionViewModel;
 
-        return ChildPermissionViewModel(app, dataModel, options);
+        return new ChildPermissionViewModel(app, dataModel, options);
     }
 });

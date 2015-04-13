@@ -1,12 +1,7 @@
 ﻿function BaseVm(app, dataModel, options) {
+    if (arguments.length == 0) return;
     var self = this;
 
-    //options = options || {
-    //    newItem: function () {
-    //     return;
-    //    },
-    //    url: 'api/test',
-    //itemName: 'testName'};
     var modelFunction = options.modelFunc;
     var newItemFunction = options.newItem;
     var baseUrl = options.url;

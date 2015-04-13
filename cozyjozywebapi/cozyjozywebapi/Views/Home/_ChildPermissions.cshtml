@@ -17,8 +17,8 @@
             <input class="typeahead" id="stool" data-bind="value: id" type="text" title="userId" />
         </div>
 
-        <button class="btn btn-default" data-bind="click: create, enable: canSave">Save</button>
-        <button class="btn btn-default" data-bind="click: cancel">Cancel</button>
+        <button class="btn btn-default" data-bind="click: $parent.create, enable: $parent.canSave">Save</button>
+        <button class="btn btn-default" data-bind="click: $parent.cancel">Cancel</button>
     </div>
 </div>
 
@@ -40,8 +40,8 @@
             <input class="typeahead" data-bind="value: id" type="text" title="userId" />
         </div>
 
-        <button class="btn btn-default" data-bind="click: update">Save</button>
-        <button class="btn btn-default" data-bind="click: cancel">Cancel</button>
+        <button class="btn btn-default" data-bind="click: $parent.update">Save</button>
+        <button class="btn btn-default" data-bind="click: $parent.cancel">Cancel</button>
     </div>
 </div>
 <div>
@@ -55,8 +55,8 @@
                 <span class="panel-title" data-bind="text: 'hi'"></span>
 
                 <div class="pull-right">
-                    <button class="btn btn-default glyphicon glyphicon-pencil" data-bind="click: edit"></button>
-                    <button class="btn btn-default glyphicon glyphicon-remove" data-bind="click: deleteItem"></button>
+                    <button class="btn btn-default glyphicon glyphicon-pencil" data-bind="click: $parent.edit"></button>
+                    <button class="btn btn-default glyphicon glyphicon-remove" data-bind="click: $parent.deleteItem"></button>
                 </div>
             </div>
             <div class="panel-body">

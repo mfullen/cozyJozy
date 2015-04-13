@@ -1,6 +1,6 @@
 ﻿function Measurement(app, dataModel, options) {
+    BaseVm.apply(this, arguments);
     var self = this;
-    BaseVm.call(self, app, dataModel, options);
 
     self.canSave = function () {
 
@@ -36,6 +36,6 @@ app.addViewModel({
         };
         Measurement.prototype = new BaseVm(app, dataModel, options);
         Measurement.prototype.constructor = Measurement;
-        return Measurement(app, dataModel, options);
+        return new Measurement(app, dataModel, options);
     }
 });
