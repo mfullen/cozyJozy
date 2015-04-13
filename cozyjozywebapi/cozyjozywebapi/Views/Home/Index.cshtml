@@ -31,7 +31,7 @@
                         <li><select class="form-control" data-bind="options: availableChildren, optionsText: function(item) { return item.child().firstName() + ' ' + item.child().middleName() + ' ' + item.child().lastName();}, value: selectedChild"></select></li>
                         <li><a href="#" data-bind="click: navigateToHome">Home</a></li>
                         <li><a href="#" data-bind="click: navigateToChildManagement">Child Management</a></li>
-                        <li><a href="#" data-bind="click: navigateToChildPermissionViewModel">Child Permissions</a></li>
+                        <li><a href="#" data-bind="visible: !selectedChild().readOnly, click: navigateToChildPermissionViewModel">Permissions</a></li>
                         <li><a href="#" data-bind="click: navigateToFeeding">Feeding</a></li>
                         <li><a href="#" data-bind="click: navigateToDiaper">Diaper</a></li>
                         <li><a href="#" data-bind="click: navigateToMeasurements">Measurements</a></li>

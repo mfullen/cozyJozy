@@ -1,10 +1,9 @@
 ﻿@using cozyjozywebapi.Models
 <!-- ko with: feedingMgt -->
 
-<div>
+<div data-bind="visible: canAdd">
     <button class="btn btn-default glyphicon glyphicon-plus" data-bind="click: openNew"></button>
 </div>
-
 
 <div data-bind="if: isCreatingNew">
     <div data-bind=" with: item">
@@ -12,22 +11,22 @@
 
         <div class="container">
             <div class="row">
-                    <div class="form-group">
-                        <label for="startdate">Start Date Time</label>
-                        <div id="startdate" class='input-group date datetimepicker'>
-                            <input type='text' class="form-control" data-bind="datetimepicker: startTime" />
-                        </div>
+                <div class="form-group">
+                    <label for="startdate">Start Date Time</label>
+                    <div id="startdate" class='input-group date datetimepicker'>
+                        <input type='text' class="form-control" data-bind="datetimepicker: startTime" />
                     </div>
+                </div>
             </div>
         </div>
 
         <div class="container">
             <div class="row">
-                    <div class="form-group">
-                        <label for="enddate">End Date Time</label>
-                        <div id="enddate" class='input-group date datetimepicker'>
-                            <input type='text' class="form-control" data-bind="datetimepicker: endTime" />
-                        </div>
+                <div class="form-group">
+                    <label for="enddate">End Date Time</label>
+                    <div id="enddate" class='input-group date datetimepicker'>
+                        <input type='text' class="form-control" data-bind="datetimepicker: endTime" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -122,8 +121,8 @@
                 <span class="panel-title" data-bind="text: moment(endTime()).format('hh:mm a MM/DD/YYYY')"></span>
 
                 <div class="pull-right">
-                    <button class="btn btn-default glyphicon glyphicon-pencil" data-bind="click: edit"></button>
-                    <button class="btn btn-default glyphicon glyphicon-remove" data-bind="click: deleteItem"></button>
+                    <button class="btn btn-default glyphicon glyphicon-pencil" data-bind="visible: canEdit, click: edit"></button>
+                    <button class="btn btn-default glyphicon glyphicon-remove" data-bind="visible: canDelete, click: deleteItem"></button>
                 </div>
             </div>
             <div class="panel-body">

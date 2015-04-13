@@ -133,6 +133,18 @@
             }
         });
     }
+
+    self.canAdd = ko.computed(function() {
+        return !app.selectedChild().readOnly;
+    }, self);
+
+    self.canEdit = ko.computed(function () {
+        return !app.selectedChild().readOnly;
+    }, self);
+
+    self.canDelete = ko.computed(function () {
+        return !app.selectedChild().readOnly;
+    }, self);
    
     self.testMe = function() {
         console.log("TEST ME WORKS AS BASE CLASS");

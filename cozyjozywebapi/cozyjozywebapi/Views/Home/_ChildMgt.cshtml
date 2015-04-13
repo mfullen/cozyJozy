@@ -106,8 +106,8 @@
                 <td data-bind="text: child().lastName"></td>
                 <td data-bind="text: child().dateOfBirth"></td>
                 <td>
-                    <button class="btn btn-default" data-bind="click: $parent.edit">Edit</button>
-                    <button class="btn btn-default" data-bind="click: $parent.deleteItem">Delete</button>
+                    <button class="btn btn-default" data-bind="visible: !readOnly, click: $parent.edit">Edit</button>
+                    <button class="btn btn-default" data-bind="visible: !readOnly, click: $parent.deleteItem">Delete</button>
                 </td>
             </tr>
 
