@@ -85,7 +85,7 @@
 
     //app specific
     self.children = ko.observableArray();
-    self.setChildren = function(c) {
+    self.setChildren = function (c) {
         self.children(c);
     }
 
@@ -111,7 +111,14 @@
             contentType: 'json',
             async: false
         }).responseText);
-        self.setChildren(childrenData);
+
+        var cTemp = [];
+       
+        for (var i = 0; i < childrenData.length; i++) {
+            cTemp.push(new ChildPermission(childrenData[i]));
+        }
+
+        self.setChildren(cTemp);
 
     }
 

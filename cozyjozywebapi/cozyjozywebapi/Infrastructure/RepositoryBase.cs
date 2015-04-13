@@ -85,7 +85,7 @@ namespace cozyjozywebapi.Infrastructure
             return _dbset;
         }
 
-        public virtual IQueryable<T> Many(Expression<Func<T, bool>> where)
+        public virtual IQueryable<T> Where(Expression<Func<T, bool>> where)
         {
             return _dbset.Where(where);
         }
@@ -95,10 +95,10 @@ namespace cozyjozywebapi.Infrastructure
             return await _dbset.ToListAsync();
         }
 
-        public T Where(Expression<Func<T, bool>> where)
-        {
-            return _dbset.Where(where).FirstOrDefault();
-        }
+        //public T Where(Expression<Func<T, bool>> where)
+        //{
+        //    return _dbset.Where(where).FirstOrDefault();
+        //}
 
        
 

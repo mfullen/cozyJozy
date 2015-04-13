@@ -28,9 +28,10 @@
                 </div>
                 <div data-bind="if: loggedIn" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><select class="form-control" data-bind="options: availableChildren, optionsText: function(item) { return item.firstName + ' ' + item.middleName + ' ' + item.lastName;}, value: selectedChild"></select></li>
+                        <li><select class="form-control" data-bind="options: availableChildren, optionsText: function(item) { return item.child().firstName() + ' ' + item.child().middleName() + ' ' + item.child().lastName();}, value: selectedChild"></select></li>
                         <li><a href="#" data-bind="click: navigateToHome">Home</a></li>
                         <li><a href="#" data-bind="click: navigateToChildManagement">Child Management</a></li>
+                        <li><a href="#" data-bind="visible: !selectedChild().readOnly, click: navigateToChildPermissionViewModel">Permissions</a></li>
                         <li><a href="#" data-bind="click: navigateToFeeding">Feeding</a></li>
                         <li><a href="#" data-bind="click: navigateToDiaper">Diaper</a></li>
                         <li><a href="#" data-bind="click: navigateToMeasurements">Measurements</a></li>
@@ -45,7 +46,7 @@
                 </div>
             </div>
         </div>
-
+        
         <div data-bind="foreach: errors" class="padding-error">
             <p class="text-danger" data-bind="text: $data"></p>
         </div>
@@ -56,6 +57,7 @@
         </div>
         @Html.Partial("_Home")
         @Html.Partial("_ChildMgt")
+        @Html.Partial("_ChildPermissions")
         @Html.Partial("_Feeding")
         @Html.Partial("_DiaperChanges")
         @Html.Partial("_Measurements")
@@ -68,7 +70,7 @@
             <p>&copy; @DateTime.Now.Year - CozyJozy</p>
         </footer>
     </div>
-
+    
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/knockout")
     @Scripts.Render("~/bundles/app")
@@ -156,7 +158,6 @@
                 }
             };
 
-
         });
     </script>
     <script>
@@ -171,7 +172,6 @@
         ga('send', 'pageview');
 
     </script>
-
 
 </body>
 </html>

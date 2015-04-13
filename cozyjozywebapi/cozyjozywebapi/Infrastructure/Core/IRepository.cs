@@ -14,9 +14,9 @@ namespace cozyjozywebapi.Infrastructure.Core
         IQueryable<T> Delete(Expression<Func<T, bool>> where);
         T GetById(long id);
         T GetById(string id);
-        T Where(Expression<Func<T, bool>> where);
+        //T Where(Expression<Func<T, bool>> where);
         IQueryable<T> All();
-        IQueryable<T> Many(Expression<Func<T, bool>> where);
+        IQueryable<T> Where(Expression<Func<T, bool>> where);
 
         /**ASYNC SUPPORT **/
         //Task<T> AddAsync(T t);

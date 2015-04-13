@@ -1,13 +1,4 @@
-﻿function DC(data) {
-    this.id = ko.observable(data.id);
-    this.occurredOn = ko.observable(data.occurredOn).extend({ required: true });
-    this.notes = ko.observable(data.notes);
-    this.urine = ko.observable(data.urine);
-    this.stool = ko.observable(data.stool);
-    this.childId = ko.observable(data.childId);
-}
-
-function DiaperManagement(app, dataModel,options) {
+﻿function DiaperManagement(app, dataModel,options) {
     var self = this;
     BaseVm.call(self, app, dataModel, options);
 

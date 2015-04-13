@@ -1,0 +1,75 @@
+﻿<!-- ko with: cpvm -->
+<div>
+    <button class="btn btn-default glyphicon glyphicon-plus" data-bind="click: openNew"></button>
+</div>
+
+
+<div data-bind="if: isCreatingNew">
+    <div data-bind=" with: item">
+        <h2>Add New Child Permission</h2>
+
+        <div>
+            <label for="urine">Read Only?</label>
+            <input id="urine" data-bind="checked: readOnly" type="checkbox" title="ReadOnly" />
+        </div>
+        <div data-bind="with: user">
+            <label for="stool">UserId</label>
+            <input class="typeahead" id="stool" data-bind="value: id" type="text" title="userId" />
+        </div>
+
+        <button class="btn btn-default" data-bind="click: create, enable: canSave">Save</button>
+        <button class="btn btn-default" data-bind="click: cancel">Cancel</button>
+    </div>
+</div>
+
+<div data-bind="if: isEditing">
+    <div data-bind=" with: item">
+        <h2>Update Child Permission</h2>
+        <div>
+            <label for="dcId" data-bind="visible: false">Id</label>
+            <label id="dcId" data-bind="text: id, visible: false"></label>
+        </div>
+
+
+        <div>
+            <label for="urine">Read Only?</label>
+            <input id="urine" data-bind="checked: readOnly" type="checkbox" title="ReadOnly" />
+        </div>
+        <div data-bind="with: user" class="ui-widget">
+            <label for="stool">UserId</label>
+            <input class="typeahead" data-bind="value: id" type="text" title="userId" />
+        </div>
+
+        <button class="btn btn-default" data-bind="click: update">Save</button>
+        <button class="btn btn-default" data-bind="click: cancel">Cancel</button>
+    </div>
+</div>
+<div>
+    <h1>Permissions</h1>
+
+    <!-- ko foreach: sortedByDate -->
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+
+                <span class="panel-title" data-bind="text: 'hi'"></span>
+
+                <div class="pull-right">
+                    <button class="btn btn-default glyphicon glyphicon-pencil" data-bind="click: edit"></button>
+                    <button class="btn btn-default glyphicon glyphicon-remove" data-bind="click: deleteItem"></button>
+                </div>
+            </div>
+            <div class="panel-body">
+                
+                <!-- ko with: user -->
+                <p data-bind="text: userName"></p>
+                <p data-bind="text: id"></p>
+                <!-- /ko -->
+                <p data-bind="text: readOnly"></p>
+
+            </div>
+        </div>
+    </div>
+    <!-- /ko -->
+</div>
+<!-- /ko -->
