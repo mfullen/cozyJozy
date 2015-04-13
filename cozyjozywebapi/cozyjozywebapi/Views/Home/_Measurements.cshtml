@@ -49,8 +49,8 @@
             <input type="text" class="slider form-control" data-bind="sliderValue: {value: headCircumference, min:0, max: 400, step: 1}" />
         </div>
 
-        <button class="btn btn-default" data-bind="click: create, enable: canSave">Save</button>
-        <button class="btn btn-default" data-bind="click: cancel">Cancel</button>
+        <button class="btn btn-default" data-bind="click: $parent.create, enable: $parent.canSave">Save</button>
+        <button class="btn btn-default" data-bind="click: $parent.cancel">Cancel</button>
     </div>
 </div>
 
@@ -104,8 +104,8 @@
 
 
 
-        <button class="btn btn-default" data-bind="click: update, enable: canSave">Save</button>
-        <button class="btn btn-default" data-bind="click: cancel">Cancel</button>
+        <button class="btn btn-default" data-bind="click: $parent.update, enable: $parent.canSave">Save</button>
+        <button class="btn btn-default" data-bind="click: $parent.cancel">Cancel</button>
     </div>
 </div>
 <div>
@@ -119,8 +119,8 @@
                 <span class="panel-title" data-bind="text: moment(dateRecorded()).format('hh:mm a MM/DD/YYYY')"></span>
 
                 <div class="pull-right">
-                    <button class="btn btn-default glyphicon glyphicon-pencil" data-bind="visible: canEdit, click: edit"></button>
-                    <button class="btn btn-default glyphicon glyphicon-remove" data-bind="visible: canDelete, click: deleteItem"></button>
+                    <button class="btn btn-default glyphicon glyphicon-pencil" data-bind="visible: $parent.canEdit, click: $parent.edit"></button>
+                    <button class="btn btn-default glyphicon glyphicon-remove" data-bind="visible: $parent.canDelete, click: $parent.deleteItem"></button>
                 </div>
             </div>
             <div class="panel-body">

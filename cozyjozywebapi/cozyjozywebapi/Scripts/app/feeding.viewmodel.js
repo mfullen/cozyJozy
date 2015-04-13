@@ -1,7 +1,8 @@
 ﻿function Feeding(app, dataModel, options) {
-    var self = this;
-    BaseVm.call(self, app, dataModel, options);
+   
+    BaseVm.apply(this, arguments);
 
+    var self = this;
     self.deliveryTypes = [
         { value: 0, name: "Left Breast", code: "LB" },
         { value: 1, name: "Right Breast", code: "RB" },
@@ -107,8 +108,8 @@ app.addViewModel({
             url: 'api/feeding',
             itemName: 'feeding'
         };
-        Feeding.prototype = new BaseVm(app, dataModel, options);
+        Feeding.prototype = new BaseVm();
         Feeding.prototype.constructor = Feeding;
-        return Feeding(app, dataModel, options);
+        return new Feeding(app, dataModel, options);
     }
 });

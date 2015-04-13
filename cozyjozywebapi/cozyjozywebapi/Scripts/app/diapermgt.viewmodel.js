@@ -1,6 +1,6 @@
-﻿function DiaperManagement(app, dataModel,options) {
+﻿function DiaperManagement(app, dataModel, options) {
+    BaseVm.apply(this, arguments);
     var self = this;
-    BaseVm.call(self, app, dataModel, options);
 
     self.canSave = function () {
 
@@ -38,6 +38,6 @@ app.addViewModel({
         DiaperManagement.prototype = new BaseVm(app, dataModel, options);
         DiaperManagement.prototype.constructor = DiaperManagement;
 
-        return DiaperManagement(app, dataModel, options);
+        return new DiaperManagement(app, dataModel, options);
     }
 });
