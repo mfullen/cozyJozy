@@ -102,11 +102,11 @@ namespace cozyjozywebapi.Controllers
 
             var p = Convert(entity);
 
-            var myUri = Request.RequestUri + p.Id.ToString();
+            var myUri = Request.RequestUri + "/" + p.Id;
             return Created(myUri, p);
         }
 
-        public Permission Convert(ChildPermissions cp)
+        protected Permission Convert(ChildPermissions cp)
         {
             var p = new Permission()
             {
@@ -122,7 +122,7 @@ namespace cozyjozywebapi.Controllers
             return p;
         }
 
-        public ChildPermissions Convert(String userId, int childId, bool readO)
+        protected ChildPermissions Convert(String userId, int childId, bool readO)
         {
             var newCp = new ChildPermissions()
             {
@@ -171,9 +171,16 @@ namespace cozyjozywebapi.Controllers
         // DELETE api/<controller>/5
         public IHttpActionResult Delete(int id)
         {
+            var permission = _unitOfWork.ChildPermissionsRepository.Where(d => d.Id == id).FirstOrDefault();
+
+            if (permission == null)
+            {
+                return NotFound();
+            }
+
             var userId = HttpContext.Current.User.Identity.GetUserId();
             var hasWritePermission = _unitOfWork.ChildPermissionsRepository
-                .Where(c => c.Id == id)
+                .Where(c => c.ChildId == permission.ChildId)
                 .Where(c => c.IdentityUserId == userId).Any(c => c.ReadOnly == false);
 
             if (!hasWritePermission)

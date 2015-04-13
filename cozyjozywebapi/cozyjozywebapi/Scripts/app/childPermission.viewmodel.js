@@ -29,7 +29,7 @@ app.addViewModel({
         });
         };
         var options = {
-            modelFunc: DC,
+            modelFunc: Permission,
             newItem: newDc,
             url: 'api/childpermission',
             itemName: 'Permission'

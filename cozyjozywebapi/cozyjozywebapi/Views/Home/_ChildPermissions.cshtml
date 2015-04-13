@@ -52,7 +52,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
 
-                <span class="panel-title" data-bind="text: moment(occurredOn()).format('hh:mm a MM/DD/YYYY')"></span>
+                <span class="panel-title" data-bind="text: 'hi'"></span>
 
                 <div class="pull-right">
                     <button class="btn btn-default glyphicon glyphicon-pencil" data-bind="click: edit"></button>
@@ -60,9 +60,13 @@
                 </div>
             </div>
             <div class="panel-body">
-                <p data-bind="visible:urine, text: 'Pee'"></p>
-                <p data-bind="visible:stool, text: 'Poop'"></p>
-                <p data-bind="visible:notes, text: notes"></p>
+                
+                <!-- ko with: user -->
+                <p data-bind="text: userName"></p>
+                <p data-bind="text: id"></p>
+                <!-- /ko -->
+                <p data-bind="text: readOnly"></p>
+
             </div>
         </div>
     </div>
