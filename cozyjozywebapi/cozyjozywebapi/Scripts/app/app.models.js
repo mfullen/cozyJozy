@@ -10,6 +10,7 @@ function FEED(data) {
     this.dateReported = ko.observable(data.dateReported);
     this.childId = ko.observable(data.childId);
     this.spitUp = ko.observable(data.spitUp);
+    this.notes = ko.observable(data.notes);
 }
 
 /**

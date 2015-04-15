@@ -270,6 +270,10 @@
     <Compile Include="Migrations\201503162024438_ReadonlyPermission.Designer.cs">
       <DependentUpon>201503162024438_ReadonlyPermission.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504152000206_FeedingNotes.cs" />
+    <Compile Include="Migrations\201504152000206_FeedingNotes.Designer.cs">
+      <DependentUpon>201504152000206_FeedingNotes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -419,6 +423,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503162024438_ReadonlyPermission.resx">
       <DependentUpon>201503162024438_ReadonlyPermission.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504152000206_FeedingNotes.resx">
+      <DependentUpon>201504152000206_FeedingNotes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
