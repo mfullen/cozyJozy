@@ -78,7 +78,8 @@ namespace cozyjozywebapi.Controllers
                 SpitUp = feeding.SpitUp,
                 StartTime = feeding.StartTime,
                 EndTime = feeding.EndTime,
-                DeliveryType = feeding.DeliveryType
+                DeliveryType = feeding.DeliveryType,
+                Notes = feeding.Notes
             };
 
             if (!HasWritePermission(newFeeding.Child.Id))

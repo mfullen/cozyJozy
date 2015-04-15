@@ -1,5 +1,5 @@
 ﻿function Feeding(app, dataModel, options) {
-   
+
     BaseVm.apply(this, arguments);
 
     var self = this;
@@ -9,7 +9,7 @@
         { value: 2, name: "Bottle", code: "B" }
     ];
 
-    self.getDeliveryType = function(f) {
+    self.getDeliveryType = function (f) {
         for (var i = 0; i < self.deliveryTypes.length; i++) {
             var dt = self.deliveryTypes[i];
             if (f === dt.value) {
@@ -19,21 +19,21 @@
         return null;
     };
 
-   
+
 
 
     self.canSave = function () {
 
     }
 
-    self.sortedFeedingsByDate = ko.computed(function() {
-        var s = self.items().slice(0).sort(function(l, r) {
+    self.sortedFeedingsByDate = ko.computed(function () {
+        var s = self.items().slice(0).sort(function (l, r) {
             return moment(r.startTime()).isBefore(moment(l.startTime())) ? -1 : 1;
         });
         return s;
     }, self);
 
-   
+
 
     self.amountOunces = ko.computed(function () {
         if (!self.item() || !self.item().amount() || self.item().amount() < 0)
@@ -41,7 +41,7 @@
         return +(Math.round((self.item().amount() * 0.033814) + "e+2") + "e-2");
     }, self);
 
-    self.getText = function(d) {
+    self.getText = function (d) {
         //60 mL (2 oz) @ 2/22/2015 7:45 pm  - 2/22/2015 8:00 pm 
         var amountText = '';
         if (d.amount()) {
@@ -49,12 +49,13 @@
             amountText = amountText + d.amount() + ' mL (' + amountOz + ' oz) from ';
         }
 
-        var rowText = amountText  + self.getDeliveryType(d.deliveryType()) + ' @ ';
-        rowText = rowText + moment(d.startTime()).format('hh:mm a') + ' for ' + self.getTimeDiff(d) + ' minutes';
+        var rowText = amountText + self.getDeliveryType(d.deliveryType());
+        rowText = rowText + ' for ' + self.getTimeDiff(d) + ' minutes';
+
         return rowText;
     }
 
-    self.getTimeDiff = function(d) {
+    self.getTimeDiff = function (d) {
         var sd = moment(d.startTime());
         var ed = moment(d.endTime());
         return ed.diff(sd, 'minutes');

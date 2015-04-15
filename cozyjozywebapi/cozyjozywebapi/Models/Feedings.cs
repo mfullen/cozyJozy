@@ -24,6 +24,7 @@ namespace cozyjozywebapi.Models
         public double? Amount { get; set; }
         public DateTime DateReported { get; set; }
         public bool SpitUp { get; set; }
+        public string Notes { get; set; }
         public int ChildId { get; set; }
         [JsonIgnore]
         public virtual Child Child { get; set; }
