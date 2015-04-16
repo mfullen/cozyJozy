@@ -13,7 +13,7 @@ namespace cozyjozywebapi.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201504152108433_TitleAssociation"; }
+            get { return "201504160054056_TitleAssociation"; }
         }
         
         string IMigrationMetadata.Source

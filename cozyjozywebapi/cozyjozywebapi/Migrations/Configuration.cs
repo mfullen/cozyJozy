@@ -1,4 +1,5 @@
 using cozyjozywebapi.Models;
+using WebGrease.Css.Extensions;
 
 namespace cozyjozywebapi.Migrations
 {
@@ -41,7 +42,20 @@ namespace cozyjozywebapi.Migrations
                 new Title { Name = "Aunt" },
                 new Title { Name = "Cousin" },
                 new Title { Name = "Babysitter" },
-                new Title { Name = "Parent/Guardian" });
+                new Title { Name = "Parent/Guardian" }
+                );
+            context.SaveChanges();
+            var pg = context.Title.FirstOrDefault(t => t.Name == "Parent/Guardian");
+
+            context.ChildPermissions.ForEach(r =>
+            {
+                if (r.TitleId == null)
+                {
+                    r.TitleId = pg.Id;
+                }
+            });
+            context.SaveChanges();
+            //context.Title.FirstOrDefault(t => t.Name == "Parent/Guardian")
         }
     }
 }

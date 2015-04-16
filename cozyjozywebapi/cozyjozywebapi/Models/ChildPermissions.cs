@@ -35,7 +35,7 @@ namespace cozyjozywebapi.Models
         /// <summary>
         /// The title identifier
         /// </summary>
-        public int TitleId { get; set; }
+        public int? TitleId { get; set; }
         /// <summary>
         /// Virtual Object to allow navigation to the Title table
         /// </summary>

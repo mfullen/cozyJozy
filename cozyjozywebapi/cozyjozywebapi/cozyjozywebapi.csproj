@@ -277,13 +277,9 @@
     <Compile Include="Migrations\201504152000206_FeedingNotes.Designer.cs">
       <DependentUpon>201504152000206_FeedingNotes.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201504152108433_TitleAssociation.cs" />
-    <Compile Include="Migrations\201504152108433_TitleAssociation.Designer.cs">
-      <DependentUpon>201504152108433_TitleAssociation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201504152122188_TitleAssociation2.cs" />
-    <Compile Include="Migrations\201504152122188_TitleAssociation2.Designer.cs">
-      <DependentUpon>201504152122188_TitleAssociation2.cs</DependentUpon>
+    <Compile Include="Migrations\201504160054056_TitleAssociation.cs" />
+    <Compile Include="Migrations\201504160054056_TitleAssociation.Designer.cs">
+      <DependentUpon>201504160054056_TitleAssociation.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -439,11 +435,8 @@
     <EmbeddedResource Include="Migrations\201504152000206_FeedingNotes.resx">
       <DependentUpon>201504152000206_FeedingNotes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201504152108433_TitleAssociation.resx">
-      <DependentUpon>201504152108433_TitleAssociation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201504152122188_TitleAssociation2.resx">
-      <DependentUpon>201504152122188_TitleAssociation2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201504160054056_TitleAssociation.resx">
+      <DependentUpon>201504160054056_TitleAssociation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

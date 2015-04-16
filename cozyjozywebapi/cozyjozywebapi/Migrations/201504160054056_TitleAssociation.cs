@@ -19,9 +19,6 @@ namespace cozyjozywebapi.Migrations
             AddColumn("dbo.ChildPermissions", "TitleId", c => c.Int());
             CreateIndex("dbo.ChildPermissions", "TitleId");
             AddForeignKey("dbo.ChildPermissions", "TitleId", "dbo.Titles", "Id");
-            
-            Sql(@"UPDATE dbo.ChildPermissions SET TitleId = (SELECT TOP 1 Id FROM dbo.Titles WHERE Name = 'Parent/Guardian')
-              where TitleId IS NULL");
         }
         
         public override void Down()
