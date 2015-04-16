@@ -19,6 +19,7 @@ namespace cozyjozywebapi.Entity
         public DbSet<DiaperChanges> DiaperChanges { get; set; }
         public DbSet<Measurement> Measurements { get; set; }
         public DbSet<ChildPermissions> ChildPermissions { get; set; }
+        public DbSet<Title> Title { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

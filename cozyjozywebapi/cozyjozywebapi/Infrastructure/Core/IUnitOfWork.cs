@@ -14,5 +14,6 @@ namespace cozyjozywebapi.Infrastructure.Core
         IDiaperChangesRepository DiaperChangesRepository { get; }
         IRoleRepository RoleRepository { get; }
         IUserRepository UserRepository { get;  }
+        ITitleRepository TitleRepository { get; }
     }
 }

@@ -54,6 +54,7 @@ function Permission(data) {
     this.child = ko.observable(new ChildClass(data.child));
     this.readOnly = ko.observable(data.readOnly);
     this.childId = ko.observable(data.childId);
+    this.title = ko.observable(data.title);
 }
 
 /**

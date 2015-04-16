@@ -16,6 +16,9 @@
             <label for="stool">UserId</label>
             <input class="typeahead" id="stool" data-bind="value: id" type="text" title="userId" />
         </div>
+        
+        <select class="form-control" data-bind="options: $parent.availableTitles, value: title"></select>
+
 
         <button class="btn btn-default" data-bind="click: $parent.create, enable: $parent.canSave">Save</button>
         <button class="btn btn-default" data-bind="click: $parent.cancel">Cancel</button>
@@ -39,6 +42,8 @@
             <label for="stool">UserId</label>
             <input class="typeahead" data-bind="value: id" type="text" title="userId" />
         </div>
+        
+        <select class="form-control" data-bind="options: $parent.availableTitles, value: title"></select>
 
         <button class="btn btn-default" data-bind="click: $parent.update">Save</button>
         <button class="btn btn-default" data-bind="click: $parent.cancel">Cancel</button>
@@ -66,6 +71,7 @@
                 <p data-bind="text: id"></p>
                 <!-- /ko -->
                 <p data-bind="text: readOnly"></p>
+                <p data-bind="text: title"></p>
 
             </div>
         </div>

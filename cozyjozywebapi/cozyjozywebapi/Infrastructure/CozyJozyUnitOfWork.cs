@@ -17,6 +17,7 @@ namespace cozyjozywebapi.Infrastructure
         private readonly IDiaperChangesRepository _diaperChangesRepository;
         private readonly IRoleRepository _roleRepository;
         private readonly IUserRepository _userRepository;
+        private readonly ITitleRepository _titleRepository;
 
         public CozyJozyUnitOfWork(DbContext context, 
             IFeedingRepository feedingRepository, 
@@ -24,7 +25,8 @@ namespace cozyjozywebapi.Infrastructure
             IChildPermissionsRepository childPermissionsRepository,
             IDiaperChangesRepository diaperChangesRepository,
             IRoleRepository roleRepository,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            ITitleRepository titleRepository)
         {
             _context = context;
             _feedingRepository = feedingRepository;
@@ -33,6 +35,7 @@ namespace cozyjozywebapi.Infrastructure
             _diaperChangesRepository = diaperChangesRepository;
             _roleRepository = roleRepository;
             _userRepository = userRepository;
+            _titleRepository = titleRepository;
         }
 
         public void Commit()
@@ -71,6 +74,11 @@ namespace cozyjozywebapi.Infrastructure
         public IUserRepository UserRepository
         {
             get { return _userRepository; }
+        }
+
+        public ITitleRepository TitleRepository
+        {
+            get { return _titleRepository; }
         }
     }
 

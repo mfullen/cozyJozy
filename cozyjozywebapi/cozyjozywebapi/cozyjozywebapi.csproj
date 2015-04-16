@@ -225,12 +225,14 @@
     <Compile Include="Controllers\FeedingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MeasurementController.cs" />
+    <Compile Include="Controllers\TitleController.cs" />
     <Compile Include="Entity\CozyJozyContext.cs" />
     <Compile Include="Entity\Repositories\ChildPermissionsRepository.cs" />
     <Compile Include="Entity\Repositories\ChildRepository.cs" />
     <Compile Include="Entity\Repositories\DiaperChangesRepository.cs" />
     <Compile Include="Entity\Repositories\FeedingRepository.cs" />
     <Compile Include="Entity\Repositories\IdentityRoleRepository.cs" />
+    <Compile Include="Entity\Repositories\TitleRepository.cs" />
     <Compile Include="Entity\Repositories\UserRepository.cs" />
     <Compile Include="Filters\ChildPermissionFilter.cs" />
     <Compile Include="Global.asax.cs">
@@ -244,6 +246,7 @@
     <Compile Include="Infrastructure\IChildRepository.cs" />
     <Compile Include="Infrastructure\IFeedingRepository.cs" />
     <Compile Include="Infrastructure\IRoleRepository.cs" />
+    <Compile Include="Infrastructure\ITitleRepository.cs" />
     <Compile Include="Infrastructure\IUserRepository.cs" />
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Migrations\201502222026496_toazure.cs" />
@@ -274,12 +277,17 @@
     <Compile Include="Migrations\201504152000206_FeedingNotes.Designer.cs">
       <DependentUpon>201504152000206_FeedingNotes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504160054056_TitleAssociation.cs" />
+    <Compile Include="Migrations\201504160054056_TitleAssociation.Designer.cs">
+      <DependentUpon>201504160054056_TitleAssociation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Child.cs" />
     <Compile Include="Models\ChildPermissions.cs" />
     <Compile Include="Models\Stats\DashboardStatistics.cs" />
+    <Compile Include="Models\Title.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\DiaperChanges.cs" />
     <Compile Include="Models\Feedings.cs" />
@@ -426,6 +434,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504152000206_FeedingNotes.resx">
       <DependentUpon>201504152000206_FeedingNotes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504160054056_TitleAssociation.resx">
+      <DependentUpon>201504160054056_TitleAssociation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -32,5 +32,13 @@ namespace cozyjozywebapi.Models
         /// This user can only read the associated childs records. False value allows created / edit / delete.
         /// </summary>
         public bool ReadOnly { get; set; }
+        /// <summary>
+        /// The title identifier
+        /// </summary>
+        public int? TitleId { get; set; }
+        /// <summary>
+        /// Virtual Object to allow navigation to the Title table
+        /// </summary>
+        public virtual Title Title { get; set; }
     }
 }

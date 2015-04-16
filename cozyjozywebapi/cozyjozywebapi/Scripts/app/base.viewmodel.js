@@ -7,7 +7,6 @@
     var baseUrl = options.url;
     var itemName = options.itemName;
 
-
     var clearErrors = function () {
         app.errors.removeAll();
     }
