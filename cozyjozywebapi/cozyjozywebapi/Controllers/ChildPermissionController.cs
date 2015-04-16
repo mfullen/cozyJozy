@@ -34,6 +34,7 @@ namespace cozyjozywebapi.Controllers
 
             public Child Child { get; set; }
             public bool ReadOnly { get; set; }
+            public string Title { get; set; }
         }
 
         public IHttpActionResult Get(int childId, int pagesize = 25, int page = 0)
@@ -95,7 +96,14 @@ namespace cozyjozywebapi.Controllers
                 return BadRequest();
             }
 
-            var newCp = Convert(userToGivePermission.Id, child.Id, permission.ReadOnly);
+            var permisionAlreadyExists =_unitOfWork.ChildPermissionsRepository.Where(c => c.ChildId == child.Id).Any(u => u.IdentityUserId == userToGivePermission.Id);
+
+            if (permisionAlreadyExists)
+            {
+                return StatusCode(HttpStatusCode.Conflict);
+            }
+
+            var newCp = Convert(userToGivePermission.Id, child.Id, permission.ReadOnly, permission.Title);
 
             var entity = _unitOfWork.ChildPermissionsRepository.Add(newCp);
             _unitOfWork.Commit();
@@ -117,18 +125,20 @@ namespace cozyjozywebapi.Controllers
                 {
                     Id = cp.IdentityUser.Id,
                     UserName = cp.IdentityUser.UserName
-                }
+                },
+                Title = cp.Title.Name
             };
             return p;
         }
 
-        protected ChildPermissions Convert(String userId, int childId, bool readO)
+        protected ChildPermissions Convert(String userId, int childId, bool readO, string title)
         {
             var newCp = new ChildPermissions()
             {
                 ChildId = childId,
                 IdentityUserId = userId,
-                ReadOnly = readO
+                ReadOnly = readO,
+                Title = _unitOfWork.TitleRepository.Where(t => t.Name == title).FirstOrDefault()
             };
             return newCp;
         }
@@ -162,6 +172,7 @@ namespace cozyjozywebapi.Controllers
             existingFeed.ChildId = permission.Child.Id;
             existingFeed.IdentityUserId = permission.User.Id;
             existingFeed.ReadOnly = permission.ReadOnly;
+            existingFeed.Title = _unitOfWork.TitleRepository.Where(t => t.Name == permission.Title).FirstOrDefault();
 
             _unitOfWork.ChildPermissionsRepository.Update(existingFeed, f => f.Id);
             _unitOfWork.Commit();

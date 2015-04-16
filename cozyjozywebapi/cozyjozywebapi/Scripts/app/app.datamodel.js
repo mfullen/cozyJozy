@@ -122,6 +122,18 @@
 
     }
 
+    self.fetchTitles = function(callbackFunc) {
+        $.ajax({
+            url: 'api/title',
+            cache: true,
+            headers: self.getSecurityHeaders(),
+            contentType: 'json',
+            success: function (data) {
+                callbackFunc(data);
+            }
+        });
+    }
+
     // Data access operations
     self.addExternalLogin = function (data) {
         return $.ajax(addExternalLoginUrl, {

@@ -2,10 +2,13 @@
     BaseVm.apply(this, arguments);
     var self = this;
 
+    self.availableTitles = app.availableTitles();
+
     self.canSave = function () {
 
     }
 
+   
     self.sortedByDate = ko.computed(function () {
         var s = self.items.slice(0).sort(function (l, r) {
             return r.user().userName().compare(l.user().userName()) ? -1 : 1;

@@ -75,6 +75,12 @@
         return dataModel.getChildren();
     });
 
+    self.availableTitles = ko.observableArray();
+
+    self.setAvailableTitles = function(t) {
+        self.availableTitles(t);
+    }
+
     // UI state
     self.errors = ko.observableArray();
     self.user = ko.observable(null);
@@ -124,6 +130,9 @@
 
         dataModel.fetchChildren();
         self.user(new UserInfoViewModel(self, userName, dataModel));
+
+        dataModel.fetchTitles(function (d) { return self.availableTitles(d); });
+
         if (dataModel.children().length === 0) {
             self.navigateToChildManagement();
         } else {
