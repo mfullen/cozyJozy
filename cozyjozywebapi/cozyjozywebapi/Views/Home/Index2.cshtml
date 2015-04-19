@@ -1,0 +1,178 @@
+﻿
+@{
+    Layout = null;
+    Response.Headers["X-UA-Compatible"] = "IE=10";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>CozyJozy - Record your child's growth!</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div data-bind="visible: loading">Loading...</div>
+    <div style="display: none" data-bind="visible: true" class="container body-content">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <p class="navbar-brand" data-bind="if: !loggedIn()">CozyJozy</p>
+                    <a href="#" class="navbar-brand" data-bind="if: loggedIn, click: navigateToHome">CozyJozy</a>
+                </div>
+                <div data-bind="if: loggedIn" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><select class="form-control" data-bind="options: availableChildren, optionsText: function(item) { return item.child().firstName() + ' ' + item.child().middleName() + ' ' + item.child().lastName();}, value: selectedChild"></select></li>
+                        <li><a href="#" data-bind="click: navigateToHome">Home</a></li>
+                        <li><a href="#" data-bind="click: navigateToChildManagement">Child Management</a></li>
+                        <li><a href="#" data-bind="visible: !selectedChild().readOnly, click: navigateToChildPermissionViewModel">Permissions</a></li>
+                        <li><a href="#" data-bind="click: navigateToFeeding">Feeding</a></li>
+                        <li><a href="#" data-bind="click: navigateToDiaper">Diaper</a></li>
+                        <li><a href="#" data-bind="click: navigateToMeasurements">Measurements</a></li>
+                        <li>@Html.ActionLink("API", "Index", "Help", new { area = "HelpPage" }, null)</li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right" data-bind="with: user">
+                        <li>
+                            <span class="navbar-text nofloat">Hello, <a href="#" class="navbar-link" data-bind="text: name, click: manage"></a>!</span>
+                        </li>
+                        <li><a href="#" data-bind="click: logOff">Log off</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div data-bind="foreach: errors" class="padding-error">
+            <p class="text-danger" data-bind="text: $data"></p>
+        </div>
+
+        <div id='loadingDiv'>
+            Please wait...
+            <img src="~/Content/images/ajax-loader.gif" alt="loading" />
+        </div>
+        @Html.Partial("_Home")
+        @Html.Partial("_ChildMgt")
+        @Html.Partial("_ChildPermissions")
+        @Html.Partial("_Feeding")
+        @Html.Partial("_DiaperChanges")
+        @Html.Partial("_Measurements")
+        @Html.Partial("_Login")
+        @Html.Partial("_Register")
+        @Html.Partial("_RegisterExternal")
+        @Html.Partial("_Manage")
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - CozyJozy</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/app")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <script>
+        $(document).ready(function () {
+            $(document).on('focus', '.datetimepicker', function () {
+                $(this).datetimepicker();
+            });
+
+            $(document).ajaxStart(function () {
+                $('#loadingDiv').show();
+            });
+            $(document).ajaxStop(function () {
+                $('#loadingDiv').hide();
+            });
+
+            ko.bindingHandlers.datetimepicker = {
+                init: function (element, valueAccessor, allBindings) {
+                    var options = {
+                        format: 'MM/DD/YYYY hh:mm A',
+                        defaultDate: ko.unwrap(valueAccessor())
+                    };
+
+                    ko.utils.extend(options, allBindings.dateTimePickerOptions);
+
+                    $(element).datetimepicker(options).on("dp.change", function (evntObj) {
+                        var observable = valueAccessor();
+                        if (evntObj.timeStamp !== undefined) {
+                            var picker = $(this).data("DateTimePicker");
+                            var d = picker.date();
+
+                            if (d !== null) {
+                                var date = d.format(options.format);
+                                observable(date);
+                            } else {
+                                observable(d);
+                            }
+                        }
+                    });
+                },
+                update: function (element, valueAccessor) {
+                    var value = ko.unwrap(valueAccessor());
+                    $(element).datetimepicker('date', value || '');
+                }
+            };
+
+            ko.bindingHandlers.sliderValue = {
+                init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+                    var params = valueAccessor();
+
+                    // Check whether the value observable is either placed directly or in the paramaters object.
+                    if (!(ko.isObservable(params) || params['value']))
+                        throw "You need to define an observable value for the sliderValue. Either pass the observable directly or as the 'value' field in the parameters.";
+
+                    // Identify the value and initialize the slider
+                    var valueObservable;
+                    if (ko.isObservable(params)) {
+                        valueObservable = params;
+                        $(element).slider({ value: ko.unwrap(params) });
+                    }
+                    else {
+                        valueObservable = params['value'];
+                        // Replace the 'value' field in the options object with the actual value
+                        params['value'] = ko.unwrap(valueObservable);
+                        $(element).slider(params);
+                    }
+
+                    // Make sure we update the observable when changing the slider value
+                    $(element).on('slide', function (ev) {
+                        valueObservable(ev.value);
+                    });
+
+                },
+                update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+                    var modelValue = valueAccessor();
+                    var valueObservable;
+                    if (ko.isObservable(modelValue))
+                        valueObservable = modelValue;
+                    else
+                        valueObservable = modelValue['value'];
+
+                    $(element).slider('setValue', parseFloat(valueObservable()));
+                }
+            };
+
+        });
+    </script>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-47205009-2', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+</body>
+</html>

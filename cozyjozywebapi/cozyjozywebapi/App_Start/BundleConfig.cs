@@ -40,21 +40,48 @@ namespace cozyjozywebapi
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                "~/Scripts/modernizr-*"));
+            //bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
+            //    "~/Scripts/modernizr-*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+            //bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+            //    "~/Scripts/bootstrap.js",
+            //    "~/Scripts/moment.js",
+            //     "~/Scripts/bootstrap-datetimepicker.js",
+            //     "~/Scripts/bootstrap-slider.js",
+            //    "~/Scripts/respond.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/materialThemeJs").Include(
                 "~/Scripts/bootstrap.js",
                 "~/Scripts/moment.js",
-                 "~/Scripts/bootstrap-datetimepicker.js",
-                 "~/Scripts/bootstrap-slider.js",
-                "~/Scripts/respond.js"));
+                "~/Scripts/fullcalendar.js",
+                "~/Scripts/jquery.simpleWeather.js",
+                "~/Scripts/jquery.nicescroll.js",
+                "~/Scripts/bootstrap-growl.js",
+                "~/Scripts/waves.js",
+                "~/Scripts/jquery.flot.js",
+                "~/Scripts/jquery.flot.resize.js",
+                "~/Scripts/curvedLines.js",
+                "~/Scripts/jquery.easypiechart.js",
+                "~/Scripts/jquery.sparkline.js",
+                "~/Scripts/bootstrap-datetimepicker.js",
+                "~/Scripts/bootstrap-slider.js",
+                "~/Scripts/charts.js",
+                "~/Scripts/functions.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                 "~/Content/bootstrap.css",
-                 "~/Content/bootstrap-datetimepicker.css",
-                 "~/Content/bootstrap-slider/bootstrap-slider.css",
-                 "~/Content/Site.css"));
+            bundles.Add(new StyleBundle("~/Content/material/materialThemecss").Include(
+               "~/Content/material/fullcalendar.css",
+               "~/Content/material/animate.css",
+               "~/Content/material/sweet-alert.css",
+               "~/Content/bootstrap-slider/bootstrap-slider.css",
+               "~/Content/material/app.css"
+               ));
+
+            //bundles.Add(new StyleBundle("~/Content/css").Include(
+            //     "~/Content/bootstrap.css",
+            //     "~/Content/bootstrap-datetimepicker.css",
+            //     "~/Content/bootstrap-slider/bootstrap-slider.css",
+            //     "~/Content/Site.css"
+            //     ));
         }
     }
 }
