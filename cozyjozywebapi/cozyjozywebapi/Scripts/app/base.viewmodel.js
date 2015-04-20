@@ -30,7 +30,7 @@
 
     self.create = function () {
         self.item().childId(app.selectedChild().child().id());
-
+        console.log('item', self.item());
         $.ajax({
             url: baseUrl,
             cache: 'false',
@@ -109,12 +109,13 @@
         }
     }
 
-    self.fetchItems = function() {
+    self.fetchItems = function (p) {
+        var pp = p || { childId: app.selectedChild().child().id() };
         $.ajax({
             url: baseUrl,
             cache: false,
             headers: dataModel.getSecurityHeaders(),
-            data: { childId: app.selectedChild().child().id() },
+            data: pp,
             contentType: 'json',
             success: function (data) {
                 for (var i = 0; i < data.length; i++) {

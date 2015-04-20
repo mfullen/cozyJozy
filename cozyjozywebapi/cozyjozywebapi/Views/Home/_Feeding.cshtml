@@ -154,6 +154,24 @@
         <div data-bind="visible: canAdd">
             <button class="btn btn-default glyphicon glyphicon-plus" data-bind="click: openNew"></button>
         </div>
+        
+      
+        <div>
+            <button class="btn bgm-amber btn-icon" data-bind="click: previousDate"><i class="md md-arrow-back"></i></button>
+        </div>
+
+        <div class="col-sm-4 input-group form-group">
+            <span class="input-group-addon"><i class="md md-event"></i></span>
+            <div class="dropdown fg-line">
+                <input type='text' class="form-control" data-bind="datetimepicker: sDate, dateTimePickerOptions: { format: 'MM/DD/YYYY'}" data-toggle="dropdown" placeholder="Click here...">
+            </div>
+        </div>
+        
+        <div>
+            <button class="btn bgm-amber btn-icon" data-bind="click: nextDate"><i class="md md-arrow-forward"></i></button>
+        </div>
+       
+
     </div>
 
     <div class="card-body card-padding">

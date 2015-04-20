@@ -19,8 +19,8 @@
         return null;
     };
 
-
-
+    //The selected date we are looking at for feedings
+    self.sDate = ko.observable();
 
     self.canSave = function () {
 
@@ -61,7 +61,26 @@
         return ed.diff(sd, 'minutes');
     }
 
-    self.fetchItems();
+    self.sDate.subscribe(function (newValue) {
+        self.items.removeAll();
+        self.fetchItems({
+            childId: app.selectedChild().child().id(),
+            startDate: self.sDate(),
+            endDate: self.sDate(),
+        });
+    });
+
+    self.previousDate = function() {
+        var m = moment(self.sDate());
+        self.sDate(m.subtract('days', 1).format('MM/DD/YYYY'));
+    }
+
+    self.nextDate = function () {
+        var m = moment(self.sDate());
+        self.sDate(m.add('days', 1).format('MM/DD/YYYY'));
+    }
+
+    self.sDate(moment().format('MM/DD/YYYY'));
 }
 
 //ko.bindingHandlers.numeric = {

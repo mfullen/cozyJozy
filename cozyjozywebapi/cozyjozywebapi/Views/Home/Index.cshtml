@@ -1166,7 +1166,7 @@
                         defaultDate: ko.unwrap(valueAccessor())
                     };
 
-                    ko.utils.extend(options, allBindings.dateTimePickerOptions);
+                    ko.utils.extend(options, allBindings().dateTimePickerOptions);
 
                     $(element).datetimepicker(options).on("dp.change", function (evntObj) {
                         var observable = valueAccessor();
@@ -1183,9 +1183,18 @@
                         }
                     });
                 },
-                update: function (element, valueAccessor) {
-                    var value = ko.unwrap(valueAccessor());
-                    $(element).datetimepicker('date', value || '');
+                update: function (element, valueAccessor, allBindingsAccessor) {
+                    //var value = ko.unwrap(valueAccessor());
+                    //$(element).datetimepicker('date', value || '');
+
+                    //when the view model is updated, update the widget
+                    if ($(element).data("DateTimePicker")) {
+                        $(element).datetimepicker("remove");
+                        var value = ko.unwrap(valueAccessor());
+                       
+                        $(element).data("DateTimePicker").date(moment(value) || '');
+                    }
+
                 }
             };
 
