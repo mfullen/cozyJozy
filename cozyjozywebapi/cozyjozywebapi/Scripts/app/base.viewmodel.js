@@ -109,7 +109,7 @@
         }
     }
 
-    self.fetchItems = function (p) {
+    self.fetchItems = function (p, sfunc, ffunc) {
         var pp = p || { childId: app.selectedChild().child().id() };
         $.ajax({
             url: baseUrl,
@@ -121,10 +121,17 @@
                 for (var i = 0; i < data.length; i++) {
                     self.items.push(new modelFunction(data[i]));
                 }
+
+                if (sfunc != null) {
+                    sfunc();
+                }
             },
             error: function (xhr, textStatus, err) {
                 addError("Failed to retrieve " + itemName + "s. Please try again!");
                 console.log("Error", xhr, textStatus, err);
+                if (ffunc != null) {
+                    ffunc();
+                }
             }
         });
     }

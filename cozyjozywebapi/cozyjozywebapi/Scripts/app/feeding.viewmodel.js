@@ -33,7 +33,9 @@
         return s;
     }, self);
 
-
+    self.mlToOz = function(ml) {
+        return +(Math.round((ml * 0.033814) + "e+2") + "e-2");
+    }
 
     self.amountOunces = ko.computed(function () {
         if (!self.item() || !self.item().amount() || self.item().amount() < 0)
@@ -61,61 +63,62 @@
         return ed.diff(sd, 'minutes');
     }
 
+    self.previousDateButtonEnabled = ko.observable(true);
+    self.nextDateButtonEnabled = ko.observable(true);
+
+    self.toggleDateButtons = function () {
+        self.previousDateButtonEnabled(!self.previousDateButtonEnabled());
+        self.nextDateButtonEnabled(!self.nextDateButtonEnabled());
+    }
+
     self.sDate.subscribe(function (newValue) {
         self.items.removeAll();
+        self.toggleDateButtons();
         self.fetchItems({
             childId: app.selectedChild().child().id(),
             startDate: self.sDate(),
-            endDate: self.sDate(),
-        });
+            endDate: self.sDate()
+        }, self.toggleDateButtons, self.toggleDateButtons);
     });
 
-    self.previousDate = function() {
+    var dateFormater = 'MM/DD/YYYY';
+    var dateTimeFormater = 'hh:mm a z';
+
+    self.formattedDateTime = function (d, t) {
+        if (t === 'time') {
+            return moment(d).format(dateTimeFormater);
+        } else {
+            return moment(d).format(dateFormater);
+        }
+    }
+
+    self.amountText = function(s) {
+        return self.mlToOz(s.amount()) + ' oz (' + s.amount() + ' ml)';
+    }
+
+    self.previousDate = function () {
         var m = moment(self.sDate());
-        self.sDate(m.subtract('days', 1).format('MM/DD/YYYY'));
+        self.sDate(m.subtract('days', 1).format(dateFormater));
     }
 
     self.nextDate = function () {
         var m = moment(self.sDate());
-        self.sDate(m.add('days', 1).format('MM/DD/YYYY'));
+        self.sDate(m.add('days', 1).format(dateFormater));
     }
 
-    self.sDate(moment().format('MM/DD/YYYY'));
+    self.sDate(moment().format(dateFormater));
 }
-
-//ko.bindingHandlers.numeric = {
-//    init: function (element, valueAccessor) {
-//        $(element).on("keydown", function (event) {
-//            // Allow: backspace, delete, tab, escape, and enter
-//            if (event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 ||
-//                // Allow: Ctrl+A
-//                (event.keyCode == 65 && event.ctrlKey === true) ||
-//                // Allow: . ,
-//                (event.keyCode == 188 || event.keyCode == 190 || event.keyCode == 110) ||
-//                // Allow: home, end, left, right
-//                (event.keyCode >= 35 && event.keyCode <= 39)) {
-//                // let it happen, don't do anything
-//                return;
-//            }
-//            else {
-//                // Ensure that it is a number and stop the keypress
-//                if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105)) {
-//                    event.preventDefault();
-//                }
-//            }
-//        });
-//    }
-//};
 
 app.addViewModel({
     name: "Feeding",
     bindingMemberName: "feedingMgt",
     factory: function (app, dataModel) {
+        var dateFormater = 'MM/DD/YYYY hh:mm a';
         var newFeed = function () {
             return new FEED({
                 id: 0,
-                startTime: '',
-                endTime: '',
+                startTime: moment().format(dateFormater),
+                endTime: moment().add('minutes', 15).format(dateFormater),
                 dateReported: '',
                 spitUp: '',
                 deliveryType: 2,
