@@ -1,52 +1,67 @@
 ﻿<!-- ko with: feedingMgt -->
 <div class="card" data-bind="if: isCreatingNew() || isEditing()">
-    <div class="card-body card-padding">
-        <div data-bind="if: isCreatingNew">
-            <div data-bind=" with: item">
-                <h2>Add New Feeding</h2>
+
+    <div data-bind="if: isCreatingNew">
+        <div data-bind=" with: item">
+
+            <div class="card-header">
+                <h2 class="m-b-20">Add New Feeding</h2>
+            </div>
 
 
-                <div class="col-sm-8">
-                    <p>Start Time</p>
-                    <div class="col-sm-4 input-group form-group">
-                        <span class="input-group-addon"><i class="md md-event"></i></span>
-                        <div class="dropdown fg-line">
+            <div class="card-body card-padding">
+                <div class="row">
+                    <div class="col-sm-4 m-b-20">
+                        <p class="c-black f-500 m-b-20">Start Time</p>
+                        <div class="form-group fg-line">
                             <input type='text' class="form-control" data-bind="datetimepicker: startTime" data-toggle="dropdown" placeholder="Start Time">
                         </div>
                     </div>
-                </div>
-
-                <div class="col-sm-8">
-                    <p>End Time</p>
-                    <div class="col-sm-4 input-group form-group">
-                        <span class="input-group-addon"><i class="md md-event"></i></span>
-                        <div class="dropdown fg-line">
-                            <input type='text' class="form-control" data-bind="datetimepicker: endTime" data-toggle="dropdown" placeholder="Start Time">
+                    <div class="col-sm-4 m-b-20">
+                        <p class="c-black f-500 m-b-20">End Time</p>
+                        <div class="form-group fg-line">
+                            <input type='text' class="form-control" data-bind="datetimepicker: endTime" data-toggle="dropdown" placeholder="End Time">
                         </div>
                     </div>
-                </div>
+
+                    <div class="col-sm-4 m-b-20">
+                        <p class="c-black f-500 m-b-20">Delivery Type</p>
+
+                        <div>
+                            <select class="form-control" data-bind="options: $parent.deliveryTypes, optionsText: 'name', optionsValue: 'value', value: deliveryType "></select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 m-b-20">
+                        <p class="c-black f-500 m-b-20">Amount (ml)</p>
+
+                        <div class="col-sm-3 form-group fg-line">
+                            <input id="amount" class="form-control" data-bind="value: amount" />
+                            <span data-bind="text: $parent.amountOunces() + ' oz'"></span>
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="text" class="slider form-control" data-bind="sliderValue: {value: amount, min:0, max: 400, step: 1}" />
+                        </div>
+
+                    </div>
 
 
-                <div>
-                    <label>Delivery Type</label>
-                    <select class="form-control" data-bind="options: $parent.deliveryTypes, optionsText: 'name', optionsValue: 'value', value: deliveryType "></select>
-                </div>
+                    <div class="col-sm-2 m-b-20 checkbox m-b-15">
+                        <label>
+                            <input type="checkbox" data-bind="checked: spitUp">
+                            <i class=" input-helper"></i>
+                            Was this feeding spit up by the baby?
+                        </label>
+                    </div>
 
-                <div>
-                    <label for="amount">Amount (mL)</label>
-                    <input id="amount" data-bind="value: amount" />
-                    <span data-bind="text: $parent.amountOunces() + ' oz'"></span>
-                    <input type="text" class="slider form-control" data-bind="sliderValue: {value: amount, min:0, max: 400, step: 1}" />
-                </div>
-
-                <div>
-                    <label>Spit up?</label>
-                    <input data-bind="checked: spitUp" type="checkbox" />
-                </div>
-
-                <div>
-                    <label>Notes</label>
-                    <textarea data-bind='value: notes' rows='5' cols='60'> </textarea>
+                    <div class="col-sm-4 m-b-20">
+                        <p class="c-black f-500 m-b-20">Notes</p>
+                        <div class="form-group">
+                            <div class="fg-line">
+                                <textarea class="form-control" data-bind='value: notes' rows="5" placeholder="Enter notes about the feeding here...."></textarea>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
 
@@ -54,57 +69,74 @@
                 <button class="btn bgm-red btn-icon" data-bind="click: $parent.cancel"><i class="md md-close"></i></button>
             </div>
         </div>
+    </div>
 
-        <div data-bind="if: isEditing">
-            <div data-bind=" with: item">
-                <h2>Update Feeding</h2>
-                <div>
-                    <label for="feedingId" data-bind="visible: false">Id</label>
-                    <label id="feedingId" data-bind="text: id, visible: false"></label>
-                </div>
-
-                <div class="col-sm-8">
-                    <p>Start Time</p>
-                    <div class="col-sm-4 input-group form-group">
-                        <span class="input-group-addon"><i class="md md-event"></i></span>
-                        <div class="dropdown fg-line">
+    <div data-bind="if: isEditing">
+        <div data-bind=" with: item">
+            <div class="card-header">
+                <h2 class="m-b-20">Update New Feeding</h2>
+            </div>
+            <div>
+                <label for="feedingId" data-bind="visible: false">Id</label>
+                <label id="feedingId" data-bind="text: id, visible: false"></label>
+            </div>
+            <div class="card-body card-padding">
+                <div class="row">
+                    <div>
+                        <label for="feedingId" data-bind="visible: false">Id</label>
+                        <label id="feedingId" data-bind="text: id, visible: false"></label>
+                    </div>
+                    <div class="col-sm-4 m-b-20">
+                        <p class="c-black f-500 m-b-20">Start Time</p>
+                        <div class="form-group fg-line">
                             <input type='text' class="form-control" data-bind="datetimepicker: startTime" data-toggle="dropdown" placeholder="Start Time">
                         </div>
                     </div>
-                </div>
-
-                <div class="col-sm-8">
-                    <p>End Time</p>
-                    <div class="col-sm-4 input-group form-group">
-                        <span class="input-group-addon"><i class="md md-event"></i></span>
-                        <div class="dropdown fg-line">
-                            <input type='text' class="form-control" data-bind="datetimepicker: endTime" data-toggle="dropdown" placeholder="Start Time">
+                    <div class="col-sm-4 m-b-20">
+                        <p class="c-black f-500 m-b-20">End Time</p>
+                        <div class="form-group fg-line">
+                            <input type='text' class="form-control" data-bind="datetimepicker: endTime" data-toggle="dropdown" placeholder="End Time">
                         </div>
                     </div>
-                </div>
+
+                    <div class="col-sm-4 m-b-20">
+                        <p class="c-black f-500 m-b-20">Delivery Type</p>
+
+                        <div>
+                            <select class="form-control" data-bind="options: $parent.deliveryTypes, optionsText: 'name', optionsValue: 'value', value: deliveryType "></select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 m-b-20">
+                        <p class="c-black f-500 m-b-20">Amount (ml)</p>
+
+                        <div class="col-sm-3 form-group fg-line">
+                            <input id="amount" class="form-control" data-bind="value: amount" />
+                            <span data-bind="text: $parent.amountOunces() + ' oz'"></span>
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="text" class="slider form-control" data-bind="sliderValue: {value: amount, min:0, max: 400, step: 1}" />
+                        </div>
+
+                    </div>
 
 
-                <div>
-                    <label>Delivery Type</label>
-                    <select class="form-control" data-bind="options: $parent.deliveryTypes, optionsText: 'name', optionsValue: 'value', value: deliveryType "></select>
-                </div>
+                    <div class="col-sm-2 m-b-20 checkbox m-b-15">
+                        <label>
+                            <input type="checkbox" data-bind="checked: spitUp">
+                            <i class=" input-helper"></i>
+                            Was this feeding spit up by the baby?
+                        </label>
+                    </div>
 
-                <div>
-                    <label for="amount">Amount (mL)</label>
-                    <input id="amount" data-bind="value: amount" />
-                    <input type="text" class="slider form-control" data-bind="sliderValue: {value: amount, min:0, max: 400, step: 1}" />
-                    <span data-bind="text: $parent.amountOunces() + ' oz'"></span>
-                </div>
-
-                <div>
-                    <label>Spit up?</label>
-                    <input data-bind="checked: spitUp" type="checkbox" />
-                </div>
-
-
-                <div>
-                    <label>Notes</label>
-                    <textarea data-bind='value: notes' rows='5' cols='60'> </textarea>
+                    <div class="col-sm-4 m-b-20">
+                        <p class="c-black f-500 m-b-20">Notes</p>
+                        <div class="form-group">
+                            <div class="fg-line">
+                                <textarea class="form-control" data-bind='value: notes' rows="5" placeholder="Enter notes about the feeding here...."></textarea>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
 
@@ -113,8 +145,8 @@
             </div>
         </div>
     </div>
-
 </div>
+
 
 <div class="block-header">
     <h1>Feedings</h1>
@@ -131,7 +163,7 @@
     </div>
     <div class="card-padding card-header">
         <div class="row">
- 
+
             <div class="col-xs-8">
                 <div class="input-group form-group">
                     <span class="input-group-addon">
@@ -149,42 +181,43 @@
         </div>
     </div>
 
-
-    <table id="data-table-command" class="table table-striped table-vmiddle">
-        <thead>
-            <tr>
-                @*<th data-column-id="startDate" data-order="desc" data-type="datetime">Start Date</th>
-                    <th data-column-id="endDate" data-type="datetime">End Date</th>*@
-                <th data-column-id="startTime" data-order="desc" data-type="datetime">Start Time</th>
-                <th data-column-id="endTime" data-type="datetime">End Time</th>
-                <th data-column-id="duration" data-type="text">Duration</th>
-                <th data-column-id="amount" data-type="numeric">Amount</th>
-                <th data-column-id="source" data-type="text">Source</th>
-                <th data-column-id="notes" data-type="text">Notes</th>
-                <th data-column-id="spitup" data-type="text">Spitup</th>
-                <th data-column-id="commands" data-formatter="commands" data-sortable="false">Commands</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- ko foreach: sortedFeedingsByDate -->
-            <tr data-bind="attr: spitUp() ? { style: 'background-color: yellow'} : ''">
-                @*<td> <span data-bind="text: $parent.formattedDateTime(startTime())"></span></td>
-                    <td>  <span data-bind="text: $parent.formattedDateTime(endTime())"></span></td>*@
-                <td> <span data-bind="text: $parent.formattedDateTime(startTime(), 'time')"></span></td>
-                <td>  <span data-bind="text: $parent.formattedDateTime(endTime(), 'time')"></span></td>
-                <td>  <span data-bind="text: $parent.getTimeDiff($data) + ' minutes'"></span></td>
-                <td> <span data-bind="text: $parent.amountText($data)"></span></td>
-                <td>  <span data-bind="text: $parent.getDeliveryType(deliveryType())"></span></td>
-                <td>  <span data-bind="text: notes"></span></td>
-                <td>  <span data-bind="text: spitUp"></span></td>
-                <td>
-                    <button type="button" class="btn btn-icon command-edit" data-bind="visible: $parent.canEdit, click: $parent.edit"><span class="md md-edit"></span></button>
-                    <button type="button" class="btn btn-icon command-delete" data-bind="visible: $parent.canDelete, click: $parent.deleteItem"><span class="md md-delete"></span></button>
-                </td>
-            </tr>
-            <!-- /ko -->
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table id="data-table-command" class="table table-striped table-vmiddle">
+            <thead>
+                <tr>
+                    @*<th data-column-id="startDate" data-order="desc" data-type="datetime">Start Date</th>
+                        <th data-column-id="endDate" data-type="datetime">End Date</th>*@
+                    <th data-column-id="startTime" data-order="desc" data-type="datetime">Start Time</th>
+                    <th data-column-id="endTime" data-type="datetime">End Time</th>
+                    <th data-column-id="duration" data-type="text">Duration</th>
+                    <th data-column-id="amount" data-type="numeric">Amount</th>
+                    <th data-column-id="source" data-type="text">Source</th>
+                    <th data-column-id="notes" data-type="text">Notes</th>
+                    <th data-column-id="spitup" data-type="text">Spitup</th>
+                    <th data-column-id="commands" data-formatter="commands" data-sortable="false">Commands</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- ko foreach: sortedFeedingsByDate -->
+                <tr data-bind="attr: spitUp() ? { style: 'background-color: yellow'} : ''">
+                    @*<td> <span data-bind="text: $parent.formattedDateTime(startTime())"></span></td>
+                        <td>  <span data-bind="text: $parent.formattedDateTime(endTime())"></span></td>*@
+                    <td> <span data-bind="text: $parent.formattedDateTime(startTime(), 'time')"></span></td>
+                    <td>  <span data-bind="text: $parent.formattedDateTime(endTime(), 'time')"></span></td>
+                    <td>  <span data-bind="text: $parent.getTimeDiff($data) + ' minutes'"></span></td>
+                    <td> <span data-bind="text: $parent.amountText($data)"></span></td>
+                    <td>  <span data-bind="text: $parent.getDeliveryType(deliveryType())"></span></td>
+                    <td>  <span data-bind="text: notes"></span></td>
+                    <td>  <span data-bind="text: spitUp"></span></td>
+                    <td>
+                        <button type="button" class="btn btn-icon command-edit" data-bind="visible: $parent.canEdit, click: $parent.edit"><span class="md md-edit"></span></button>
+                        <button type="button" class="btn btn-icon command-delete" data-bind="visible: $parent.canDelete, click: $parent.deleteItem"><span class="md md-delete"></span></button>
+                    </td>
+                </tr>
+                <!-- /ko -->
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <!-- /ko -->
