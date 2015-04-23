@@ -92,7 +92,10 @@
         }
     }
 
-    self.amountText = function(s) {
+    self.amountText = function (s) {
+        if (!s.amount()) {
+            return null;
+        }
         return self.mlToOz(s.amount()) + ' oz (' + s.amount() + ' ml)';
     }
 

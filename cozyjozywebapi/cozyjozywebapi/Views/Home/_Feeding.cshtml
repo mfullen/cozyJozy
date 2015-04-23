@@ -92,6 +92,7 @@
                             <input type='text' class="form-control" data-bind="datetimepicker: startTime" data-toggle="dropdown" placeholder="Start Time">
                         </div>
                     </div>
+
                     <div class="col-sm-4 m-b-20">
                         <p class="c-black f-500 m-b-20">End Time</p>
                         <div class="form-group fg-line">
@@ -150,74 +151,83 @@
 
 <div class="block-header">
     <h1>Feedings</h1>
-    <div data-bind="visible: canAdd">
-        <button class="btn btn-icon command-edit" data-bind="click: openNew"><span class="md md-note-add"></span></button>
-    </div>
-</div>
 
+    <div class="row">
+        <div class="col-sm-2" data-bind="visible: canAdd">
+            <button class="btn btn-icon command-edit" data-bind="click: openNew"><span class="md md-note-add"></span></button>
+        </div>
 
+        @*<div class="col-sm-8">*@
+        <div class="col-sm-4">
+            <button type="button" class="btn bgm-white btn-icon" data-bind="enable: previousDateButtonEnabled, click: previousDate"><span class="md md-arrow-back c-black"></span></button>
+        </div>
 
-<div class="card">
-
-    <div class="card-header">
-    </div>
-    <div class="card-padding card-header">
-        <div class="row">
-
-            <div class="col-xs-8">
-                <div class="input-group form-group">
-                    <span class="input-group-addon">
-                        <button class="btn bgm-amber btn-icon" data-bind="enable: previousDateButtonEnabled, click: previousDate"><i class="md md-arrow-back"></i></button>
-                    </span>
-                    <span class="input-group-addon"><i class="md md-event"></i></span>
-                    <div class="dropdown fg-line">
-                        <input type='text' class="form-control" data-bind="datetimepicker: sDate, dateTimePickerOptions: { format: 'MM/DD/YYYY'}" data-toggle="dropdown" placeholder="Click here...">
-                    </div>
-                    <span class="input-group-addon">
-                        <button class="btn bgm-amber btn-icon" data-bind="enable: nextDateButtonEnabled, click: nextDate"><i class="md md-arrow-forward"></i></button>
-                    </span>
+        <div class="col-sm-2">
+            <span><i class="md md-event"></i></span>
+            <div class="form-group">
+                <div class="fg-line">
+                    <input type='text' class="form-control bgm-edecec" data-bind="datetimepicker: sDate, dateTimePickerOptions: { format: 'MM/DD/YYYY'}" data-toggle="dropdown" placeholder="Click here...">
                 </div>
             </div>
         </div>
+
+        <div class="col-sm-1">
+
+            <button class="btn bgm-white btn-icon" data-bind="enable: nextDateButtonEnabled, click: nextDate"><i class="md md-arrow-forward c-black"></i></button>
+        </div>
+
+
+        @*</div>*@
+
     </div>
 
-    <div class="table-responsive">
-        <table id="data-table-command" class="table table-striped table-vmiddle">
-            <thead>
-                <tr>
-                    @*<th data-column-id="startDate" data-order="desc" data-type="datetime">Start Date</th>
-                        <th data-column-id="endDate" data-type="datetime">End Date</th>*@
-                    <th data-column-id="startTime" data-order="desc" data-type="datetime">Start Time</th>
-                    <th data-column-id="endTime" data-type="datetime">End Time</th>
-                    <th data-column-id="duration" data-type="text">Duration</th>
-                    <th data-column-id="amount" data-type="numeric">Amount</th>
-                    <th data-column-id="source" data-type="text">Source</th>
-                    <th data-column-id="notes" data-type="text">Notes</th>
-                    <th data-column-id="spitup" data-type="text">Spitup</th>
-                    <th data-column-id="commands" data-formatter="commands" data-sortable="false">Commands</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- ko foreach: sortedFeedingsByDate -->
-                <tr data-bind="attr: spitUp() ? { style: 'background-color: yellow'} : ''">
-                    @*<td> <span data-bind="text: $parent.formattedDateTime(startTime())"></span></td>
-                        <td>  <span data-bind="text: $parent.formattedDateTime(endTime())"></span></td>*@
-                    <td> <span data-bind="text: $parent.formattedDateTime(startTime(), 'time')"></span></td>
-                    <td>  <span data-bind="text: $parent.formattedDateTime(endTime(), 'time')"></span></td>
-                    <td>  <span data-bind="text: $parent.getTimeDiff($data) + ' minutes'"></span></td>
-                    <td> <span data-bind="text: $parent.amountText($data)"></span></td>
-                    <td>  <span data-bind="text: $parent.getDeliveryType(deliveryType())"></span></td>
-                    <td>  <span data-bind="text: notes"></span></td>
-                    <td>  <span data-bind="text: spitUp"></span></td>
-                    <td>
-                        <button type="button" class="btn btn-icon command-edit" data-bind="visible: $parent.canEdit, click: $parent.edit"><span class="md md-edit"></span></button>
-                        <button type="button" class="btn btn-icon command-delete" data-bind="visible: $parent.canDelete, click: $parent.deleteItem"><span class="md md-delete"></span></button>
-                    </td>
-                </tr>
-                <!-- /ko -->
-            </tbody>
-        </table>
+</div>
+
+<div class="card" data-bind="if: sortedFeedingsByDate().length == 0">
+    <div class="card-header">
+        <h2>
+            <span>
+                No feedings for this date.
+            </span>
+
+            <a class="pull-right" data-bind="visible: canAdd, click: openNew, text: 'Add a new feeding'">
+            </a>
+        </h2>
+
     </div>
 </div>
 
+<!-- ko foreach: sortedFeedingsByDate -->
+<div class="card">
+    <div class="card-header bgm-lightblue">
+        <div class="pull-right">
+            <button type="button" class="btn btn-icon command-edit" data-bind="visible: $parent.canEdit, click: $parent.edit"><span class="md md-edit"></span></button>
+            <button type="button" class="btn btn-icon command-delete" data-bind="visible: $parent.canDelete, click: $parent.deleteItem"><span class="md md-delete"></span></button>
+        </div>
+
+        <!-- Please refer the Colors page in User Interface for more color classes -->
+        <h2>
+            <span data-bind="text: $parent.formattedDateTime(startTime(), 'time')"></span> - <span data-bind="text: $parent.formattedDateTime(endTime(), 'time')"></span>
+
+            <small data-bind="text: $parent.getTimeDiff($data) + ' minutes'"></small>
+        </h2>
+
+    </div>
+
+    <div class="card-body card-padding">
+        <span data-bind="if:$parent.amountText($data)">
+            <span data-bind="text: $parent.amountText($data)"></span> from
+        </span>
+        <span data-bind="text: $parent.getDeliveryType(deliveryType())"></span>
+        <div data-bind="if: notes">
+            <hr />
+            <span data-bind="text: notes"></span>
+        </div>
+        <div data-bind="if: spitUp">
+            <hr />
+            <span data-bind="text: 'This feeding came back as spitup.'"></span>
+        </div>
+    </div>
+</div>
+<!-- /ko -->
 <!-- /ko -->
