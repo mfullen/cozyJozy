@@ -12148,8 +12148,9 @@ input:focus {
   font-size: 12px;
   color: #A9A9A9;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  /*text-overflow: ellipsis;
+  white-space: nowrap;*/
+    word-wrap: break-word;
   display: block;
   width: 100%;
 }
@@ -12176,8 +12177,9 @@ input:focus {
 }
 .listview .lv-title {
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  /*text-overflow: ellipsis;
+  white-space: nowrap;*/
+    word-wrap: break-word;
   display: block;
 }
 .listview a.lv-item:hover {
