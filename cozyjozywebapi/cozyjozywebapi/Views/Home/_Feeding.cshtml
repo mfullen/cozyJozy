@@ -1,151 +1,85 @@
 ﻿<!-- ko with: feedingMgt -->
 <div class="card" data-bind="if: isCreatingNew() || isEditing()">
 
-    <div data-bind="if: isCreatingNew">
-        <div data-bind=" with: item">
 
-            <div class="card-header">
-                <h2 class="m-b-20">Add New Feeding</h2>
-            </div>
+    <div data-bind=" with: item">
+
+        <div class="card-header">
+            <h2 class="m-b-20">
+                <span data-bind="if: $parent.isCreatingNew() ">Add New </span>
+                <span data-bind="if: $parent.isEditing() ">Update </span>
+                Feeding
+            </h2>
+        </div>
 
 
-            <div class="card-body card-padding">
-                <div class="row">
-                    <div class="col-sm-4 m-b-20">
-                        <p class="c-black f-500 m-b-20">Start Time</p>
-                        <div class="form-group fg-line">
-                            <input type='text' class="form-control" data-bind="datetimepicker: startTime" data-toggle="dropdown" placeholder="Start Time">
-                        </div>
+        <div class="card-body card-padding">
+            <div class="row">
+                <div class="col-sm-4 m-b-20">
+                    <p class="c-black f-500 m-b-20">Start Time</p>
+                    <div class="form-group fg-line">
+                        <input type='text' class="form-control" data-bind="datetimepicker: startTime" data-toggle="dropdown" placeholder="Start Time">
                     </div>
-                    <div class="col-sm-4 m-b-20">
-                        <p class="c-black f-500 m-b-20">End Time</p>
-                        <div class="form-group fg-line">
-                            <input type='text' class="form-control" data-bind="datetimepicker: endTime" data-toggle="dropdown" placeholder="End Time">
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4 m-b-20">
-                        <p class="c-black f-500 m-b-20">Delivery Type</p>
-
-                        <div>
-                            <select class="form-control" data-bind="options: $parent.deliveryTypes, optionsText: 'name', optionsValue: 'value', value: deliveryType "></select>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 m-b-20">
-                        <p class="c-black f-500 m-b-20">Amount (ml)</p>
-
-                        <div class="col-sm-3 form-group fg-line">
-                            <input id="amount" class="form-control" data-bind="value: amount" />
-                            <span data-bind="text: $parent.amountOunces() + ' oz'"></span>
-                        </div>
-                        <div class="col-sm-3">
-                            <input type="text" class="slider form-control" data-bind="sliderValue: {value: amount, min:0, max: 400, step: 1}" />
-                        </div>
-
-                    </div>
-
-
-                    <div class="col-sm-2 m-b-20 checkbox m-b-15">
-                        <label>
-                            <input type="checkbox" data-bind="checked: spitUp">
-                            <i class=" input-helper"></i>
-                            Was this feeding spit up by the baby?
-                        </label>
-                    </div>
-
-                    <div class="col-sm-4 m-b-20">
-                        <p class="c-black f-500 m-b-20">Notes</p>
-                        <div class="form-group">
-                            <div class="fg-line">
-                                <textarea class="form-control" data-bind='value: notes' rows="5" placeholder="Enter notes about the feeding here...."></textarea>
-                            </div>
-                        </div>
+                </div>
+                <div class="col-sm-4 m-b-20">
+                    <p class="c-black f-500 m-b-20">End Time</p>
+                    <div class="form-group fg-line">
+                        <input type='text' class="form-control" data-bind="datetimepicker: endTime" data-toggle="dropdown" placeholder="End Time">
                     </div>
                 </div>
 
+                <div class="col-sm-4 m-b-20">
+                    <p class="c-black f-500 m-b-20">Delivery Type</p>
 
-                <button class="btn bgm-green btn-icon" data-bind="click: $parent.create, enable: $parent.canSave"><i class="md md-check"></i></button>
-                <button class="btn bgm-red btn-icon" data-bind="click: $parent.cancel"><i class="md md-close"></i></button>
-            </div>
-        </div>
-    </div>
-
-    <div data-bind="if: isEditing">
-        <div data-bind=" with: item">
-            <div class="card-header">
-                <h2 class="m-b-20">Update New Feeding</h2>
-            </div>
-            <div>
-                <label for="feedingId" data-bind="visible: false">Id</label>
-                <label id="feedingId" data-bind="text: id, visible: false"></label>
-            </div>
-            <div class="card-body card-padding">
-                <div class="row">
                     <div>
-                        <label for="feedingId" data-bind="visible: false">Id</label>
-                        <label id="feedingId" data-bind="text: id, visible: false"></label>
-                    </div>
-                    <div class="col-sm-4 m-b-20">
-                        <p class="c-black f-500 m-b-20">Start Time</p>
-                        <div class="form-group fg-line">
-                            <input type='text' class="form-control" data-bind="datetimepicker: startTime" data-toggle="dropdown" placeholder="Start Time">
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4 m-b-20">
-                        <p class="c-black f-500 m-b-20">End Time</p>
-                        <div class="form-group fg-line">
-                            <input type='text' class="form-control" data-bind="datetimepicker: endTime" data-toggle="dropdown" placeholder="End Time">
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4 m-b-20">
-                        <p class="c-black f-500 m-b-20">Delivery Type</p>
-
-                        <div>
-                            <select class="form-control" data-bind="options: $parent.deliveryTypes, optionsText: 'name', optionsValue: 'value', value: deliveryType "></select>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 m-b-20">
-                        <p class="c-black f-500 m-b-20">Amount (ml)</p>
-
-                        <div class="col-sm-3 form-group fg-line">
-                            <input id="amount" class="form-control" data-bind="value: amount" />
-                            <span data-bind="text: $parent.amountOunces() + ' oz'"></span>
-                        </div>
-                        <div class="col-sm-3">
-                            <input type="text" class="slider form-control" data-bind="sliderValue: {value: amount, min:0, max: 400, step: 1}" />
-                        </div>
-
-                    </div>
-
-
-                    <div class="col-sm-2 m-b-20 checkbox m-b-15">
-                        <label>
-                            <input type="checkbox" data-bind="checked: spitUp">
-                            <i class=" input-helper"></i>
-                            Was this feeding spit up by the baby?
-                        </label>
-                    </div>
-
-                    <div class="col-sm-4 m-b-20">
-                        <p class="c-black f-500 m-b-20">Notes</p>
-                        <div class="form-group">
-                            <div class="fg-line">
-                                <textarea class="form-control" data-bind='value: notes' rows="5" placeholder="Enter notes about the feeding here...."></textarea>
-                            </div>
-                        </div>
+                        <select class="form-control" data-bind="options: $parent.deliveryTypes, optionsText: 'name', optionsValue: 'value', value: deliveryType "></select>
                     </div>
                 </div>
 
+                <div class="col-sm-6 m-b-20">
+                    <p class="c-black f-500 m-b-20">Amount (ml)</p>
 
-                <button class="btn bgm-green btn-icon" data-bind="click: $parent.update, enable: $parent.canSave"><i class="md md-check"></i></button>
+                    <div class="col-sm-3 form-group fg-line">
+                        <input id="amount" class="form-control" data-bind="value: amount" />
+                        <span data-bind="text: $parent.amountOunces() + ' oz'"></span>
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="text" class="slider form-control" data-bind="sliderValue: {value: amount, min:0, max: 400, step: 1}" />
+                    </div>
+
+                </div>
+
+
+                <div class="col-sm-2 m-b-20 checkbox m-b-15">
+                    <label>
+                        <input type="checkbox" data-bind="checked: spitUp">
+                        <i class=" input-helper"></i>
+                        Was this feeding spit up by the baby?
+                    </label>
+                </div>
+
+                <div class="col-sm-4 m-b-20">
+                    <p class="c-black f-500 m-b-20">Notes</p>
+                    <div class="form-group">
+                        <div class="fg-line">
+                            <textarea class="form-control" data-bind='value: notes' rows="5" placeholder="Enter notes about the feeding here...."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div data-bind="if: $parent.isEditing()">
+                <button class="btn bgm-green btn-icon pull-right" data-bind="click: $parent.update, enable: $parent.canSave"><i class="md md-check"></i></button>
+                <button class="btn bgm-red btn-icon" data-bind="click: $parent.cancel"><i class="md md-close"></i></button>
+            </div>
+
+            <div data-bind="if: $parent.isCreatingNew()">
+                <button class="btn bgm-green btn-icon pull-right" data-bind="click: $parent.create, enable: $parent.canSave"><i class="md md-check"></i></button>
                 <button class="btn bgm-red btn-icon" data-bind="click: $parent.cancel"><i class="md md-close"></i></button>
             </div>
         </div>
     </div>
+
 </div>
 
 
