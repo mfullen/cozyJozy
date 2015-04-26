@@ -30,7 +30,6 @@
 
     self.create = function () {
         self.item().childId(app.selectedChild().child().id());
-        console.log('item', self.item());
         $.ajax({
             url: baseUrl,
             cache: 'false',

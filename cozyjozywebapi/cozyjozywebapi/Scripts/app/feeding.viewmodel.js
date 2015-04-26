@@ -19,6 +19,19 @@
         return null;
     };
 
+    self.deliveryTypeClassTheme = function (dt) {
+        var css = "c-white bgm-indigo";
+        switch (dt) {
+            case 0:
+                css = "c-white bgm-teal";
+                break;
+            case 1:
+                css = "c-white bgm-purple";
+                break;
+        }
+        return css;
+    }
+
     //The selected date we are looking at for feedings
     self.sDate = ko.observable();
 
@@ -33,7 +46,7 @@
         return s;
     }, self);
 
-    self.mlToOz = function(ml) {
+    self.mlToOz = function (ml) {
         return +(Math.round((ml * 0.033814) + "e+2") + "e-2");
     }
 
@@ -72,6 +85,10 @@
     }
 
     self.sDate.subscribe(function (newValue) {
+        self.sDateChanged(newValue);
+    });
+
+    self.sDateChanged = function (newValue) {
         self.items.removeAll();
         self.toggleDateButtons();
         self.fetchItems({
@@ -79,6 +96,10 @@
             startDate: self.sDate(),
             endDate: self.sDate()
         }, self.toggleDateButtons, self.toggleDateButtons);
+    }
+
+    app.selectedChild.subscribe(function (newValue) {
+        self.sDateChanged(self.sDate());
     });
 
     var dateFormater = 'MM/DD/YYYY';

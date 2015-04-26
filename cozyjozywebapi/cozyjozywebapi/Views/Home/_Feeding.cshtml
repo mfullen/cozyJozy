@@ -113,7 +113,7 @@
                         </li>
 
                         <li>
-                            <i class=" md md-event c-white">  </i>
+                            <i class="md md-event c-white">  </i>
                             <input type="datetime" class="c-white" style="border: 0; margin-left: 10px;border-color: white;" data-bind="datetimepicker: sDate, dateTimePickerOptions: { format: 'MM/DD/YYYY'}, style: { backgroundColor: app.themeBackgroundColorClassName }">
                         </li>
 
@@ -142,7 +142,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="lv-title">
+                                <div class="lv-title" style="font-weight: bold">
                                     <span data-bind="text: $parent.formattedDateTime(startTime(), 'time')"></span> - <span data-bind="text: $parent.formattedDateTime(endTime(), 'time')"></span>
                                 </div>
 
@@ -154,13 +154,13 @@
 
                                 <ul class="lv-attrs">
 
-                                    <li data-bind="visible:$parent.amountText($data)">
+                                    <li data-bind="visible:$parent.amountText($data)" class="bgm-green c-white">
                                         <span data-bind="text: $parent.amountText($data)"></span>
                                     </li>
 
-                                    <li data-bind="text: $parent.getDeliveryType(deliveryType())"></li>
+                                    <li data-bind="text: $parent.getDeliveryType(deliveryType()), css:  $parent.deliveryTypeClassTheme(deliveryType())"></li>
 
-                                    <li data-bind="visible: spitUp">
+                                    <li data-bind="visible: spitUp" class="bgm-red c-white">
                                         <span data-bind="text: 'Spitup'"></span>
                                     </li>
 
@@ -176,7 +176,10 @@
                     <div class="lv-title">
                         <span style="font-size: 16px">No feedings for this date.</span>
                     </div>
-
+                    <div id='loadingDiv'>
+                        Please wait...
+                        <img src="~/Content/images/ajax-loader.gif" alt="loading" />
+                    </div>
                 </div>
             </div>
         </div>
