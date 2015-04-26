@@ -32,8 +32,7 @@
         return css;
     }
 
-    //The selected date we are looking at for feedings
-    self.sDate = ko.observable();
+
 
     self.canSave = function () {
 
@@ -76,61 +75,12 @@
         return ed.diff(sd, 'minutes');
     }
 
-    self.previousDateButtonEnabled = ko.observable(true);
-    self.nextDateButtonEnabled = ko.observable(true);
-
-    self.toggleDateButtons = function () {
-        self.previousDateButtonEnabled(!self.previousDateButtonEnabled());
-        self.nextDateButtonEnabled(!self.nextDateButtonEnabled());
-    }
-
-    self.sDate.subscribe(function (newValue) {
-        self.sDateChanged(newValue);
-    });
-
-    self.sDateChanged = function (newValue) {
-        self.items.removeAll();
-        self.toggleDateButtons();
-        self.fetchItems({
-            childId: app.selectedChild().child().id(),
-            startDate: self.sDate(),
-            endDate: self.sDate()
-        }, self.toggleDateButtons, self.toggleDateButtons);
-    }
-
-    app.selectedChild.subscribe(function (newValue) {
-        self.sDateChanged(self.sDate());
-    });
-
-    var dateFormater = 'MM/DD/YYYY';
-    var dateTimeFormater = 'hh:mm a z';
-
-    self.formattedDateTime = function (d, t) {
-        if (t === 'time') {
-            return moment(d).format(dateTimeFormater);
-        } else {
-            return moment(d).format(dateFormater);
-        }
-    }
-
     self.amountText = function (s) {
         if (!s.amount()) {
             return null;
         }
         return self.mlToOz(s.amount()) + ' oz (' + s.amount() + ' ml)';
     }
-
-    self.previousDate = function () {
-        var m = moment(self.sDate());
-        self.sDate(m.subtract('days', 1).format(dateFormater));
-    }
-
-    self.nextDate = function () {
-        var m = moment(self.sDate());
-        self.sDate(m.add('days', 1).format(dateFormater));
-    }
-
-    self.sDate(moment().format(dateFormater));
 }
 
 app.addViewModel({
