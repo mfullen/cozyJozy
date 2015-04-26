@@ -95,6 +95,14 @@
         return blueTheme;
     }, self);
 
+    self.childDisplayName = function (f) {
+        if (!f) {
+            return '';
+        }
+        return f.child().firstName() + ' ' + f.child().middleName() + ' ' + f.child().lastName();
+    }
+
+
     // UI state
     self.errors = ko.observableArray();
     self.user = ko.observable(null);

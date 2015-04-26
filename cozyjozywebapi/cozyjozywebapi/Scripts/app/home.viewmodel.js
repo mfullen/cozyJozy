@@ -3,9 +3,26 @@
 
     self.stats = ko.observable();
 
+    self.appendTimeStringIfExists = function (org, duration, timeframe) {
+        if (duration.get(timeframe) > 0) {
+            org = org + duration.get(timeframe) + ' ' + timeframe + ' ';
+        }
+        return org;
+    }
+
     self.timeSinceBirth = ko.computed(function () {
         if (self.stats()) {
-            return moment(self.stats().dateOfBirth()).fromNow();
+            var dob = moment(self.stats().dateOfBirth());
+            var duration = moment.duration(moment().diff(dob));
+
+            var durationString = '';
+            var timeframe = ['years', 'months', 'days', 'hours', 'minutes'];
+
+            for (var i = 0; i < timeframe.length; i++) {
+                durationString = self.appendTimeStringIfExists(durationString, duration, timeframe[i]);
+            }
+
+            return durationString;
         }
         return null;
     }, self);
@@ -17,12 +34,24 @@
             var nowDob = moment();
             nowDob.month(dob.month());
             nowDob.day(dob.day());
+            nowDob.hour(dob.hour());
+            nowDob.minutes(dob.minutes());
 
             var hasPast = moment().isAfter(nowDob);
             if (hasPast) {
                 nowDob.year(nowDob.year() + 1);
             }
-            return moment(nowDob).from();
+            var duration = moment.duration(nowDob.diff(moment()));
+
+
+            var durationString = '';
+            var timeframe = ['years', 'months', 'days', 'hours', 'minutes'];
+
+            for (var i = 0; i < timeframe.length; i++) {
+                durationString = self.appendTimeStringIfExists(durationString, duration, timeframe[i]);
+            }
+
+            return durationString;
         }
         return null;
     }, self);
