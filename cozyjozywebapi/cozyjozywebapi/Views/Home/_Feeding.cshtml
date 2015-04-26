@@ -18,13 +18,13 @@
                 <div class="col-sm-4 m-b-20">
                     <p class="c-black f-500 m-b-20">Start Time</p>
                     <div class="form-group fg-line">
-                        <input type='text' class="form-control" data-bind="datetimepicker: startTime" data-toggle="dropdown" placeholder="Start Time">
+                        <input type='datetime' class="form-control" data-bind="datetimepicker: startTime" data-toggle="dropdown" placeholder="Start Time">
                     </div>
                 </div>
                 <div class="col-sm-4 m-b-20">
                     <p class="c-black f-500 m-b-20">End Time</p>
                     <div class="form-group fg-line">
-                        <input type='text' class="form-control" data-bind="datetimepicker: endTime" data-toggle="dropdown" placeholder="End Time">
+                        <input type='datetime' class="form-control" data-bind="datetimepicker: endTime" data-toggle="dropdown" placeholder="End Time">
                     </div>
                 </div>
 
@@ -91,7 +91,7 @@
     <div class="col-md-12 col-sm-6">
         <div class="card">
             <div class="listview lv-bordered lv-lg">
-                <div class="lv-header-alt bgm-pink">
+                <div class="lv-header-alt" data-bind="style: { backgroundColor: app.themeBackgroundColorClassName }">
                     <h2 class="lvh-label c-white" data-bind="text: moment(sDate()).format('dddd, MMM Do YYYY')"></h2>
 
                     <ul class="lv-actions actions">
@@ -114,7 +114,7 @@
 
                         <li>
                             <i class=" md md-event c-white">  </i>
-                            <input class="bgm-pink c-white" style="border: 0; margin-left: 10px;border-color: white;" data-bind="datetimepicker: sDate, dateTimePickerOptions: { format: 'MM/DD/YYYY'}">
+                            <input type="datetime" class="c-white" style="border: 0; margin-left: 10px;border-color: white;" data-bind="datetimepicker: sDate, dateTimePickerOptions: { format: 'MM/DD/YYYY'}, style: { backgroundColor: app.themeBackgroundColorClassName }">
                         </li>
 
                     </ul>
@@ -130,7 +130,7 @@
                             <div class="media-body">
                                 <div class="lv-actions actions dropdown">
                                     <a href="" data-toggle="dropdown" aria-expanded="true">
-                                        <i class="md md-more-vert c-pink"></i>
+                                        <i class="md md-more-vert" data-bind="style: { color: app.themeBackgroundColorClassName }"></i>
                                     </a>
 
                                     <ul class="dropdown-menu dropdown-menu-right">

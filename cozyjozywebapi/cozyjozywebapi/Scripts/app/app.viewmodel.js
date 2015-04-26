@@ -81,6 +81,20 @@
         self.availableTitles(t);
     }
 
+    self.themeBackgroundColorClassName = ko.computed(function () {
+        var blueTheme = '#4285F4'; //blue theme
+        var pinkTheme =  "#e91e63"; //pink;
+        if (self.selectedChild()) {
+            var sc = self.selectedChild();
+            if (sc.child().male()) {
+                return blueTheme;
+            } else {
+                return pinkTheme;
+            }
+        }
+        return blueTheme;
+    }, self);
+
     // UI state
     self.errors = ko.observableArray();
     self.user = ko.observable(null);

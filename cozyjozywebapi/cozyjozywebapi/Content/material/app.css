@@ -11095,6 +11095,9 @@ a.waves-effect .waves-ripple {
 .bgm-pink {
   background-color: #e91e63 !important;
 }
+.bgm-materialbg {
+    background-color: #4285F4 !important;
+}
 .c-pink {
   color: #e91e63 !important;
 }
@@ -11347,7 +11350,7 @@ body #content {
   }
 }
 #header {
-  background: #4285F4;
+  /*background: #4285F4;*/
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
   height: 65px;
   position: fixed;
