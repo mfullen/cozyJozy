@@ -85,118 +85,99 @@
 
 <div class="block-header">
     <h1>Feedings</h1>
-
-    <div class="row">
-        <div class="col-sm-2" data-bind="visible: canAdd">
-            <button class="btn btn-icon command-edit" data-bind="click: openNew"><span class="md md-note-add"></span></button>
-        </div>
-
-        @*<div class="col-sm-8">*@
-        <div class="col-sm-4">
-            <button type="button" class="btn bgm-white btn-icon" data-bind="enable: previousDateButtonEnabled, click: previousDate"><span class="md md-arrow-back c-black"></span></button>
-        </div>
-
-        <div class="col-sm-2">
-            <span><i class="md md-event"></i></span>
-            <div class="form-group">
-                <div class="fg-line">
-                    <input type='text' class="form-control bgm-edecec" data-bind="datetimepicker: sDate, dateTimePickerOptions: { format: 'MM/DD/YYYY'}" data-toggle="dropdown" placeholder="Click here...">
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-1">
-
-            <button class="btn bgm-white btn-icon" data-bind="enable: nextDateButtonEnabled, click: nextDate"><i class="md md-arrow-forward c-black"></i></button>
-        </div>
-
-
-        @*</div>*@
-
-    </div>
-
 </div>
 
-<div class="card" data-bind="if: sortedFeedingsByDate().length == 0">
-    <div class="card-header">
-        <h2>
-            <span>
-                No feedings for this date.
-            </span>
-
-            <a class="pull-right" data-bind="visible: canAdd, click: openNew, text: 'Add a new feeding'">
-            </a>
-        </h2>
-
-    </div>
-</div>
-
-<div class="row">
+<div>
     <div class="col-md-12 col-sm-6">
-        <div id="best-selling" class="dash-widget-item">
-            <div class="dash-widget-header">
-                <div class="dash-widget-title">Feedings</div>
-                <img src="~/Content/material/images/widgets/alpha.jpg" alt="">
-                <div class="main-item">
-                    <small>TODO PUT TOOL BAR HERE</small>
-                    <h2>IMAGE WILL BE REPLACED WITH A NEW IMAGE OR COLOR</h2>
+        <div class="card">
+            <div class="listview lv-bordered lv-lg">
+                <div class="lv-header-alt bgm-pink">
+                    <h2 class="lvh-label c-white" data-bind="text: moment(sDate()).format('dddd, MMM Do YYYY')"></h2>
+
+                    <ul class="lv-actions actions">
+                        <li data-bind="visible: canAdd">
+                            <a href="#" data-bind="click: openNew">
+                                <i class="md md-add c-white"></i>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" data-toggle="tooltip" title="Previous Day" data-bind="enable: previousDateButtonEnabled, click: previousDate">
+                                <i class="md md-arrow-back c-white"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-bind="enable: nextDateButtonEnabled, click: nextDate">
+                                <i class="md md-arrow-forward c-white"></i>
+                            </a>
+                        </li>
+
+                        <li>
+                            <i class=" md md-event c-white">  </i>
+                            <input class="bgm-pink c-white" style="border: 0; margin-left: 10px;border-color: white;" data-bind="datetimepicker: sDate, dateTimePickerOptions: { format: 'MM/DD/YYYY'}">
+                        </li>
+
+                    </ul>
                 </div>
-            </div>
+                <div class="lv-body" data-bind="if: sortedFeedingsByDate().length > 0 ">
+                    <!-- ko foreach: sortedFeedingsByDate -->
+                    <div class="lv-item">
+                        <div class="media">
+                            <div class="pull-left">
+                                @*<img class="lv-img-sm" src="~/Content/material/images/widgets/mate7.jpg" alt="">*@
+                                <i class="md md-restaurant-menu" style="font-size:30px;"></i>
+                            </div>
+                            <div class="media-body">
+                                <div class="lv-actions actions dropdown">
+                                    <a href="" data-toggle="dropdown" aria-expanded="true">
+                                        <i class="md md-more-vert c-pink"></i>
+                                    </a>
 
-            <div class="listview p-t-5">
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li>
+                                            <a href="" data-bind="visible: $parent.canEdit, click: $parent.edit">Edit</a>
+                                        </li>
+                                        <li>
+                                            <a href="" data-bind="visible: $parent.canDelete, click: $parent.deleteItem">Delete</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="lv-title">
+                                    <span data-bind="text: $parent.formattedDateTime(startTime(), 'time')"></span> - <span data-bind="text: $parent.formattedDateTime(endTime(), 'time')"></span>
+                                </div>
 
-                <!-- ko foreach: sortedFeedingsByDate -->
-                <div class="lv-item">
-                    <div class="media">
-                        <div class="pull-left">
-                            @*<img class="lv-img-sm" src="~/Content/material/images/widgets/mate7.jpg" alt="">*@
-                            <i class="md md-restaurant-menu" style="font-size:30px;"></i>
-                        </div>
-                        <div class="media-body">
-                            <div class="lv-actions actions dropdown">
-                                <a href="" data-toggle="dropdown" aria-expanded="true">
-                                    <i class="md md-more-vert c-pink"></i>
-                                </a>
+                                <small class="lv-small" data-bind="text: $parent.getTimeDiff($data) + ' minutes'"></small>
 
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li>
-                                        <a href="" data-bind="visible: $parent.canEdit, click: $parent.edit">Edit</a>
+                                <span data-bind="visible: notes">
+                                    <span style="word-wrap: break-word" data-bind="text: notes"></span>
+                                </span>
+
+                                <ul class="lv-attrs">
+
+                                    <li data-bind="visible:$parent.amountText($data)">
+                                        <span data-bind="text: $parent.amountText($data)"></span>
                                     </li>
-                                    <li>
-                                        <a href="" data-bind="visible: $parent.canDelete, click: $parent.deleteItem">Delete</a>
+
+                                    <li data-bind="text: $parent.getDeliveryType(deliveryType())"></li>
+
+                                    <li data-bind="visible: spitUp">
+                                        <span data-bind="text: 'Spitup'"></span>
                                     </li>
+
                                 </ul>
                             </div>
-                            <div class="lv-title">
-                                <span data-bind="text: $parent.formattedDateTime(startTime(), 'time')"></span> - <span data-bind="text: $parent.formattedDateTime(endTime(), 'time')"></span>
-                            </div>
-
-                            <small class="lv-small" data-bind="text: $parent.getTimeDiff($data) + ' minutes'"></small>
-
-                            <span data-bind="visible: notes">
-                                <span style="word-wrap: break-word" data-bind="text: notes"></span>
-                            </span>
-
-                            <ul class="lv-attrs">
-
-                                <li data-bind="visible:$parent.amountText($data)">
-                                    <span data-bind="text: $parent.amountText($data)"></span>
-                                </li>
-
-                                <li data-bind="text: $parent.getDeliveryType(deliveryType())"></li>
-
-                                <li data-bind="visible: spitUp">
-                                    <span data-bind="text: 'Spitup'"></span>
-                                </li>
-                               
-                            </ul>
                         </div>
                     </div>
+
+                    <!-- /ko -->
                 </div>
-                <hr />
+                <div class="lv-body" data-bind="visible: sortedFeedingsByDate().length == 0">
+                    <a class="pull-right" data-bind="visible: canAdd, click: openNew, text: 'Add a new feeding'"></a>
+                    <div class="lv-title">
+                        <span style="font-size: 16px">No feedings for this date.</span>
+                    </div>
 
-                <!-- /ko -->
-
+                </div>
             </div>
         </div>
     </div>
