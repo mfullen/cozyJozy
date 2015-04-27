@@ -1,108 +1,163 @@
 ﻿<!-- ko with: diapermgt -->
 
-<div data-bind="visible: canAdd">
-    <button class="btn btn-default glyphicon glyphicon-plus" data-bind="click: openNew"></button>
-</div>
-
-<div data-bind="if: isCreatingNew">
+<div class="card" data-bind="if: isCreatingNew() || isEditing()">
     <div data-bind=" with: item">
-        <h2>Add New Diaper Changing</h2>
 
-        <div class="container">
+        <div class="card-header">
+            <h2 class="m-b-20">
+                <span data-bind="if: $parent.isCreatingNew() ">Add New </span>
+                <span data-bind="if: $parent.isEditing() ">Update </span>
+                Diaper Changes
+            </h2>
+        </div>
+
+
+        <div class="card-body card-padding">
             <div class="row">
-                <div class='col-sm-3'>
+                <div class="col-sm-4 m-b-20">
+                    <p class="c-black f-500 m-b-20">Date</p>
+                    <div class="form-group fg-line">
+                        <input type='datetime' class="form-control" data-bind="datetimepicker: occurredOn" data-toggle="dropdown" placeholder="Date">
+                    </div>
+                </div>
+                
+                <div class="col-sm-2 m-b-20 checkbox m-b-15">
+                    <label>
+                        <input type="checkbox" data-bind="checked: urine">
+                        <i class=" input-helper"></i>
+                        Pee?
+                    </label>
+                </div>
+                
+                <div class="col-sm-2 m-b-20 checkbox m-b-15">
+                    <label>
+                        <input type="checkbox" data-bind="checked: stool">
+                        <i class=" input-helper"></i>
+                        Poop?
+                    </label>
+                </div>
+             
+                <div class="col-sm-4 m-b-20">
+                    <p class="c-black f-500 m-b-20">Notes</p>
                     <div class="form-group">
-                        <label for="date">Date Time of Occurrence</label>
-                        <div id="date" class='input-group date datetimepicker'>
-                            <input type='text' class="form-control" data-bind="datetimepicker: occurredOn" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
+                        <div class="fg-line">
+                            <textarea class="form-control" data-bind='value: notes' rows="5" placeholder="Enter notes here..."></textarea>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div>
-            <label for="urine">Contained Urine?</label>
-            <input id="urine" data-bind="checked: urine" type="checkbox" title="Pee" />
-        </div>
-        <div>
-            <label for="stool">Contained Stool?</label>
-            <input id="stool" data-bind="checked: stool" type="checkbox" title="Poop" />
-        </div>
+            <div data-bind="if: $parent.isEditing()">
+                <button class="btn bgm-green btn-icon pull-right" data-bind="click: $parent.update, enable: $parent.canSave"><i class="md md-check"></i></button>
+                <button class="btn bgm-red btn-icon" data-bind="click: $parent.cancel"><i class="md md-close"></i></button>
+            </div>
 
-        <textarea data-bind='value: notes' rows='5' cols='60'> </textarea>
-
-        <button class="btn btn-default" data-bind="click: $parent.create, enable: $parent.canSave">Save</button>
-        <button class="btn btn-default" data-bind="click: $parent.cancel">Cancel</button>
-    </div>
-</div>
-
-<div data-bind="if: isEditing">
-    <div data-bind=" with: item">
-        <h2>Update Diaper Change</h2>
-        <div>
-            <label for="dcId" data-bind="visible: false">Id</label>
-            <label id="dcId" data-bind="text: id, visible: false"></label>
-        </div>
-
-
-        <div class="container">
-            <div class="row">
-                <div class='col-sm-3'>
-                    <div class="form-group">
-                        <label for="date">Date Time of Occurrence</label>
-                        <div id="date" class='input-group date datetimepicker'>
-                            <input type='text' class="form-control" data-bind="datetimepicker: occurredOn" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
+            <div data-bind="if: $parent.isCreatingNew()">
+                <button class="btn bgm-green btn-icon pull-right" data-bind="click: $parent.create, enable: $parent.canSave"><i class="md md-check"></i></button>
+                <button class="btn bgm-red btn-icon" data-bind="click: $parent.cancel"><i class="md md-close"></i></button>
             </div>
         </div>
-
-        <div>
-            <label for="urine">Contained Urine?</label>
-            <input id="urine" data-bind="checked: urine" type="checkbox" title="Pee" />
-        </div>
-        <div>
-            <label for="stool">Contained Stool?</label>
-            <input id="stool" data-bind="checked: stool" type="checkbox" title="Poop" />
-        </div>
-
-        <textarea data-bind='value: notes' rows='5' cols='60'> </textarea>
-
-
-        <button class="btn btn-default" data-bind="click: $parent.update">Save</button>
-        <button class="btn btn-default" data-bind="click: $parent.cancel">Cancel</button>
     </div>
+
 </div>
-<div>
+
+
+<div class="block-header">
     <h1>Diaper Changes</h1>
+</div>
 
-    <!-- ko foreach: sortedByDate -->
-    <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading">
 
-                <span class="panel-title" data-bind="text: moment(occurredOn()).format('hh:mm a MM/DD/YYYY')"></span>
 
-                <div class="pull-right">
-                    <button class="btn btn-default glyphicon glyphicon-pencil" data-bind="visible: $parent.canEdit, click: $parent.edit"></button>
-                    <button class="btn btn-default glyphicon glyphicon-remove" data-bind="visible: $parent.canDelete, click: $parent.deleteItem"></button>
+<div>
+    <div class="col-md-8 col-sm-6">
+        <div class="card">
+            <div class="listview lv-bordered lv-lg">
+                <div class="lv-header-alt" data-bind="style: { backgroundColor: app.themeBackgroundColorClassName }">
+                    <h2 class="lvh-label c-white" data-bind="text: moment(sDate()).format('dddd, MMM Do YYYY')"></h2>
+
+                    <ul class="lv-actions actions">
+                        <li data-bind="visible: canAdd">
+                            <a href="#" data-bind="click: openNew">
+                                <i class="md md-add c-white" style="font-size: 30px"></i>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" data-toggle="tooltip" title="Previous Day" data-bind="enable: previousDateButtonEnabled, click: previousDate">
+                                <i class="md md-arrow-back c-white" style="font-size: 30px"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-bind="enable: nextDateButtonEnabled, click: nextDate">
+                                <i class="md md-arrow-forward c-white" style="font-size: 30px"></i>
+                            </a>
+                        </li>
+
+                        <li>
+                            @*<i class="md md-event c-white">  </i>*@
+                            <input type="datetime" class="c-white" style="border: 0; margin-left: 10px;border-color: white;" data-bind="datetimepicker: sDate, dateTimePickerOptions: { format: 'MM/DD/YYYY'}, style: { backgroundColor: app.themeBackgroundColorClassName }">
+                        </li>
+
+                    </ul>
                 </div>
-            </div>
-            <div class="panel-body">
-                <p data-bind="visible:urine, text: 'Pee'"></p>
-                <p data-bind="visible:stool, text: 'Poop'"></p>
-                <p data-bind="visible:notes, text: notes"></p>
+                <div class="lv-body" data-bind="if: sortedByDate().length > 0 ">
+                    <!-- ko foreach: sortedByDate -->
+                    <div class="lv-item">
+                        <div class="media">
+                            <div class="pull-left">
+                                @*<img class="lv-img-sm" src="~/Content/material/images/widgets/mate7.jpg" alt="">*@
+                                <i class="md md-shopping-basket" style="font-size:30px;"></i>
+                            </div>
+                            <div class="media-body">
+                                <div class="lv-actions actions dropdown">
+                                    <a href="" data-toggle="dropdown" aria-expanded="true">
+                                        <i class="md md-more-vert" data-bind="style: { color: app.themeBackgroundColorClassName }"></i>
+                                    </a>
+
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li>
+                                            <a href="" data-bind="visible: $parent.canEdit, click: $parent.edit">Edit</a>
+                                        </li>
+                                        <li>
+                                            <a href="" data-bind="visible: $parent.canDelete, click: $parent.deleteItem">Delete</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="lv-title" style="font-weight: bold">
+                                    <span data-bind="text: $parent.formattedDateTime(occurredOn(), 'time')"></span>
+                                </div>
+
+                                <span data-bind="visible: notes">
+                                    <span style="word-wrap: break-word" data-bind="text: notes"></span>
+                                </span>
+
+                                <ul class="lv-attrs">
+                                    <li data-bind="visible: urine" class="bgm-amber c-white">
+                                        <span data-bind="text: 'Pee'"></span>
+                                    </li>
+
+                                    <li data-bind="visible: stool" class="bgm-brown c-white">
+                                        <span data-bind="text: 'Poop'"></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- /ko -->
+                </div>
+                <div class="lv-body" data-bind="visible: sortedByDate().length == 0">
+                    <a class="pull-right" data-bind="visible: canAdd, click: openNew, text: 'Add a new Diaper'"></a>
+                    <div class="lv-title">
+                        <span style="font-size: 16px">No Diaper Changes for this date.</span>
+                    </div>
+                    <div id='loadingDiv'>
+                        Please wait...
+                        <img src="~/Content/images/ajax-loader.gif" alt="loading" />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <!-- /ko -->
 </div>
 <!-- /ko -->
