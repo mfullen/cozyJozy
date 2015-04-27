@@ -1,146 +1,159 @@
 ﻿<!-- ko with: measurementMgt -->
-
-<div data-bind="visible: canAdd">
-    <button class="btn btn-default glyphicon glyphicon-plus" data-bind="click: openNew"></button>
-</div>
-
-
-<div data-bind="if: isCreatingNew">
+<div class="card" data-bind="if: isCreatingNew() || isEditing()">
     <div data-bind=" with: item">
-        <h2>Add New Measurement</h2>
 
-        <div class="container">
+        <div class="card-header">
+            <h2 class="m-b-20">
+                <span data-bind="if: $parent.isCreatingNew() ">Add New </span>
+                <span data-bind="if: $parent.isEditing() ">Update </span>
+                Measurements
+            </h2>
+        </div>
+
+
+        <div class="card-body card-padding">
             <div class="row">
-                <div class='col-sm-3'>
-                    <div class="form-group">
-                        <label for="date">Measurement Date</label>
-                        <div id="date" class='input-group date datetimepicker'>
-                            <input type='text' class="form-control" data-bind="datetimepicker: dateRecorded" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
+                <div class="col-sm-4 m-b-20">
+                    <p class="c-black f-500 m-b-20">Date</p>
+                    <div class="form-group fg-line">
+                        <input type='datetime' class="form-control" data-bind="datetimepicker: dateRecorded, dateTimePickerOptions: { format: 'MM/DD/YYYY'}" data-toggle="dropdown" placeholder="Date">
                     </div>
                 </div>
-            </div>
-        </div>
 
 
-        <div>
-            <label for="height">Height (in)</label>
-            <input id="height" data-bind="value: height" />
-            <span data-bind="text: height() + ' in'"></span>
-            <input type="text" class="slider form-control" data-bind="sliderValue: {value: height, min:0, max: 400, step: 1}" />
-        </div>
-        
 
-        <div>
-            <label for="weight">Weight (lb)</label>
-            <input id="weight" data-bind="value: weight" />
-            <span data-bind="text: weight() + ' in'"></span>
-            <input type="text" class="slider form-control" data-bind="sliderValue: {value: weight, min:0, max: 400, step: 1}" />
-        </div>
-        
-        
-        <div>
-            <label for="headCircumference">Head Circumference (cm)</label>
-            <input id="headCircumference" data-bind="value: headCircumference" />
-            <span data-bind="text: headCircumference() + ' cm'"></span>
-            <input type="text" class="slider form-control" data-bind="sliderValue: {value: headCircumference, min:0, max: 400, step: 1}" />
-        </div>
+                <div class="col-sm-6 m-b-20">
+                    <p class="c-black f-500 m-b-20">Height</p>
 
-        <button class="btn btn-default" data-bind="click: $parent.create, enable: $parent.canSave">Save</button>
-        <button class="btn btn-default" data-bind="click: $parent.cancel">Cancel</button>
-    </div>
-</div>
-
-<div data-bind="if: isEditing">
-    <div data-bind=" with: item">
-        <h2>Update Feeding</h2>
-        <div>
-            <label for="measurementId" data-bind="visible: false">Id</label>
-            <label id="measurementId" data-bind="text: id, visible: false"></label>
-        </div>
-
-        <div class="container">
-            <div class="row">
-                <div class='col-sm-3'>
-                    <div class="form-group">
-                        <label for="date">Measurement Date</label>
-                        <div id="date" class='input-group date datetimepicker'>
-                            <input type='text' class="form-control" data-bind="datetimepicker: dateRecorded" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
+                    <div class="col-sm-3 form-group fg-line">
+                        <input class="form-control" data-bind="value: height" />
+                        <span data-bind="text: height"></span>
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="text" class="slider form-control" data-bind="sliderValue: {value: height, min:0, max: 400, step: 1}" />
                     </div>
                 </div>
+                
+                <div class="col-sm-6 m-b-20">
+                    <p class="c-black f-500 m-b-20">Weight</p>
+
+                    <div class="col-sm-3 form-group fg-line">
+                        <input class="form-control" data-bind="value: weight" />
+                        <span data-bind="text: weight"></span>
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="text" class="slider form-control" data-bind="sliderValue: {value: weight, min:0, max: 400, step: 1}" />
+                    </div>
+                </div>
+                
+                <div class="col-sm-6 m-b-20">
+                    <p class="c-black f-500 m-b-20">Head Circumference</p>
+
+                    <div class="col-sm-3 form-group fg-line">
+                        <input class="form-control" data-bind="value: headCircumference" />
+                        <span data-bind="text: headCircumference"></span>
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="text" class="slider form-control" data-bind="sliderValue: {value: headCircumference, min:0, max: 400, step: 1}" />
+                    </div>
+                </div>
+
+            </div>
+
+            <div data-bind="if: $parent.isEditing()">
+                <button class="btn bgm-green btn-icon pull-right" data-bind="click: $parent.update, enable: $parent.canSave"><i class="md md-check"></i></button>
+                <button class="btn bgm-red btn-icon" data-bind="click: $parent.cancel"><i class="md md-close"></i></button>
+            </div>
+
+            <div data-bind="if: $parent.isCreatingNew()">
+                <button class="btn bgm-green btn-icon pull-right" data-bind="click: $parent.create, enable: $parent.canSave"><i class="md md-check"></i></button>
+                <button class="btn bgm-red btn-icon" data-bind="click: $parent.cancel"><i class="md md-close"></i></button>
             </div>
         </div>
-
-
-        <div>
-            <label for="height">Height (in)</label>
-            <input id="height" data-bind="value: height" />
-            <span data-bind="text: height() + ' in'"></span>
-            <input type="text" class="slider form-control" data-bind="sliderValue: {value: height, min:0, max: 400, step: 1}" />
-        </div>
-
-
-        <div>
-            <label for="weight">Weight (lb)</label>
-            <input id="weight" data-bind="value: weight" />
-            <span data-bind="text: weight() + ' in'"></span>
-            <input type="text" class="slider form-control" data-bind="sliderValue: {value: weight, min:0, max: 400, step: 1}" />
-        </div>
-
-
-        <div>
-            <label for="headCircumference">Head Circumference (cm)</label>
-            <input id="headCircumference" data-bind="value: headCircumference" />
-            <span data-bind="text: headCircumference() + ' cm'"></span>
-            <input type="text" class="slider form-control" data-bind="sliderValue: {value: headCircumference, min:0, max: 400, step: 1}" />
-        </div>
-
-
-
-        <button class="btn btn-default" data-bind="click: $parent.update, enable: $parent.canSave">Save</button>
-        <button class="btn btn-default" data-bind="click: $parent.cancel">Cancel</button>
     </div>
+
 </div>
-<div>
+
+
+<div class="block-header">
     <h1>Measurements</h1>
+</div>
 
-    <!-- ko foreach: sortedByDate -->
-    <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading">
 
-                <span class="panel-title" data-bind="text: moment(dateRecorded()).format('hh:mm a MM/DD/YYYY')"></span>
 
-                <div class="pull-right">
-                    <button class="btn btn-default glyphicon glyphicon-pencil" data-bind="visible: $parent.canEdit, click: $parent.edit"></button>
-                    <button class="btn btn-default glyphicon glyphicon-remove" data-bind="visible: $parent.canDelete, click: $parent.deleteItem"></button>
+<div>
+    <div class="col-md-8 col-sm-6">
+        <div class="card">
+            <div class="listview lv-bordered lv-lg">
+                <div class="lv-header-alt" data-bind="style: { backgroundColor: app.themeBackgroundColorClassName }">
+                    <h2 class="lvh-label c-white" data-bind="text: ''"></h2>
+
+                    <ul class="lv-actions actions">
+                        <li data-bind="visible: canAdd">
+                            <a href="#" data-bind="click: openNew">
+                                <i class="md md-add c-white" style="font-size: 30px"></i>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-            </div>
-            <div class="panel-body">
-                <div data-bind="if: height">
-                    <h2>Height</h2>
-                    <span data-bind="text: height"></span>
+                <div class="lv-body" data-bind="if: sortedByDate().length > 0 ">
+                    <!-- ko foreach: sortedByDate -->
+                    <div class="lv-item">
+                        <div class="media">
+                            <div class="pull-left">
+                                @*<img class="lv-img-sm" src="~/Content/material/images/widgets/mate7.jpg" alt="">*@
+                                <i class="md md-track-changes" style="font-size:30px;"></i>
+                            </div>
+                            <div class="media-body">
+                                <div class="lv-actions actions dropdown">
+                                    <a href="" data-toggle="dropdown" aria-expanded="true">
+                                        <i class="md md-more-vert" data-bind="style: { color: app.themeBackgroundColorClassName }"></i>
+                                    </a>
+
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li>
+                                            <a href="" data-bind="visible: $parent.canEdit, click: $parent.edit">Edit</a>
+                                        </li>
+                                        <li>
+                                            <a href="" data-bind="visible: $parent.canDelete, click: $parent.deleteItem">Delete</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="lv-title" style="font-weight: bold">
+                                    <span data-bind="text: $parent.formattedDateTime(dateRecorded())"></span>
+                                </div>
+
+                                <ul class="lv-attrs">
+                                    <li data-bind="visible: height" class="bgm-amber c-white">
+                                        <span data-bind="text: 'Height: ' + height()"></span>
+                                    </li>
+
+                                    <li data-bind="visible: weight" class="bgm-green c-white">
+                                        <span data-bind="text: 'Weight: ' + weight()"></span>
+                                    </li>
+                                    <li data-bind="visible: headCircumference" class="bgm-blue c-white">
+                                        <span data-bind="text: 'Head Circumference: ' + headCircumference()"></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- /ko -->
                 </div>
-                
-                <div data-bind="if: weight">
-                    <h2>Weight</h2>
-                    <span data-bind="text: weight"></span>
-                </div>
-                
-                <div data-bind="if: headCircumference">
-                    <h2>HeadCircumference</h2>
-                    <span data-bind="text: headCircumference"></span>
+                <div class="lv-body" data-bind="visible: sortedByDate().length == 0">
+                    <a class="pull-right" data-bind="visible: canAdd, click: openNew, text: 'Add a new Measurement'"></a>
+                    <div class="lv-title">
+                        <span style="font-size: 16px">No Measurements found.</span>
+                    </div>
+                    <div id='loadingDiv'>
+                        Please wait...
+                        <img src="~/Content/images/ajax-loader.gif" alt="loading" />
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- /ko -->
 </div>
+
 <!-- /ko -->
