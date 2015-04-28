@@ -81,18 +81,19 @@
         self.availableTitles(t);
     }
 
+    self.blueTheme = '#4285F4'; //blue theme
+    self.pinkTheme =  "#e91e63"; //pink;
+
     self.themeBackgroundColorClassName = ko.computed(function () {
-        var blueTheme = '#4285F4'; //blue theme
-        var pinkTheme =  "#e91e63"; //pink;
         if (self.selectedChild()) {
             var sc = self.selectedChild();
             if (sc.child().male()) {
-                return blueTheme;
+                return self.blueTheme;
             } else {
-                return pinkTheme;
+                return self.pinkTheme;
             }
         }
-        return blueTheme;
+        return self.blueTheme;
     }, self);
 
     self.childDisplayName = function (f) {

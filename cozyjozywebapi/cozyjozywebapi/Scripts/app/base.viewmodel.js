@@ -64,12 +64,12 @@
 
     self.previousDate = function () {
         var m = moment(self.sDate());
-        self.sDate(m.subtract('days', 1).format(self.dateFormater));
+        self.sDate(m.subtract(1, 'days').format(self.dateFormater));
     }
 
     self.nextDate = function () {
         var m = moment(self.sDate());
-        self.sDate(m.add('days', 1).format(self.dateFormater));
+        self.sDate(m.add(1, 'days').format(self.dateFormater));
     }
 
     self.openNew = function () {

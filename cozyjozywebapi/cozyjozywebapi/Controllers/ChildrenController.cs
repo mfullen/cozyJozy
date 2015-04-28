@@ -86,7 +86,11 @@ namespace cozyjozywebapi.Controllers
             try
             {
                 await _unitOfWork.CommitAsync();
-                return await GetChild(child.Id);
+                return  Ok(new ChildResponse()
+                {
+                    Child = child,
+                    ReadOnly = FilteredChildren().Where(c=> c.Id == child.Id).Select(s=> s.ReadOnly).FirstOrDefault()
+                });
             }
             catch (DbUpdateConcurrencyException)
             {

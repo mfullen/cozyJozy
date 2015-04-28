@@ -29,7 +29,6 @@
 
     self.timeTillBirthday = ko.computed(function () {
         if (self.stats()) {
-            //todo need to fix
             var dob = moment(self.stats().dateOfBirth());
             var nowDob = moment();
             nowDob.month(dob.month());

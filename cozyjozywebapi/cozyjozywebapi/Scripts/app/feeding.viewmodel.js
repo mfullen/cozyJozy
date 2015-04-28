@@ -92,7 +92,7 @@ app.addViewModel({
             return new FEED({
                 id: 0,
                 startTime: moment().format(dateFormater),
-                endTime: moment().add('minutes', 15).format(dateFormater),
+                endTime: moment().add(15, 'minutes').format(dateFormater),
                 dateReported: '',
                 spitUp: '',
                 deliveryType: 2,
