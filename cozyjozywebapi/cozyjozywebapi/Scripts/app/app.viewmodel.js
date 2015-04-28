@@ -151,16 +151,17 @@
             dataModel.setAccessToken(accessToken, persistent);
         }
 
-        dataModel.fetchChildren();
-        self.user(new UserInfoViewModel(self, userName, dataModel));
+        dataModel.fetchChildren(function() {
+            self.user(new UserInfoViewModel(self, userName, dataModel));
 
-        dataModel.fetchTitles(function (d) { return self.availableTitles(d); });
+            dataModel.fetchTitles(function (d) { return self.availableTitles(d); });
 
-        if (dataModel.children().length === 0) {
-            self.navigateToChildManagement();
-        } else {
-            self.navigateToHome();
-        }
+            if (dataModel.children().length === 0) {
+                self.navigateToChildManagement();
+            } else {
+                self.navigateToHome();
+            }
+        });
     };
 
     self.navigateToLoggedOff = function () {

@@ -93,32 +93,39 @@
         return self.children();
     }
 
-    self.fetchChildren = function() {
-        //$.ajax({
-        //    url: 'api/children',
-        //    cache: false,
-        //    headers: self.getSecurityHeaders(),
-        //    contentType: 'json',
-        //    success: function (data) {
-        //        self.setChildren(data);
-        //    }
-        //});
-
-        var childrenData = JSON.parse($.ajax({
+    self.fetchChildren = function(sFunc) {
+        $.ajax({
             url: 'api/children',
             cache: false,
             headers: self.getSecurityHeaders(),
             contentType: 'json',
-            async: false
-        }).responseText);
+            success: function (data) {
+                var cTemp = [];
+                for (var i = 0; i < data.length; i++) {
+                    cTemp.push(new ChildPermission(data[i]));
+                }
 
-        var cTemp = [];
+                self.setChildren(cTemp);
+
+                sFunc();
+            }
+        });
+
+        //var childrenData = JSON.parse($.ajax({
+        //    url: 'api/children',
+        //    cache: false,
+        //    headers: self.getSecurityHeaders(),
+        //    contentType: 'json',
+        //    async: false
+        //}).responseText);
+
+        //var cTemp = [];
        
-        for (var i = 0; i < childrenData.length; i++) {
-            cTemp.push(new ChildPermission(childrenData[i]));
-        }
+        //for (var i = 0; i < childrenData.length; i++) {
+        //    cTemp.push(new ChildPermission(childrenData[i]));
+        //}
 
-        self.setChildren(cTemp);
+        //self.setChildren(cTemp);
 
     }
 
