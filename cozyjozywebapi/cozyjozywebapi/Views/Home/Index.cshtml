@@ -37,7 +37,7 @@
                 <a href="" data-bind="click: navigateToHome">CozyJozy</a>
             </li>
             <li><span class="c-white" data-bind="text: app.childDisplayName(selectedChild())"></span></li>
-          
+
             <li class="pull-right">
                 <ul class="top-menu">
                     <li id="toggle-width">
@@ -321,17 +321,17 @@
                     </div>
 
                     <div class="select" style="width:95%">
-                       
+
                         <select class="form-control" data-bind="options: availableChildren, optionsText: function(item) { return app.childDisplayName(item);}, value: selectedChild"></select>
-                     </div>
+                    </div>
 
                     <ul class="main-menu" data-bind="if: loggedIn">
-                        <li class="active"><a href="#" data-bind="click: navigateToHome"><i class="md md-home"></i> Home</a></li>
+                        <li class="active"><a href="#" data-bind="visible: selectedChild(), click: navigateToHome"><i class="md md-home"></i> Home</a></li>
                         <li><a href="#" data-bind="click: navigateToChildManagement"><i class="md md-face-unlock"></i>Child Management</a></li>
-                        <li><a href="#" data-bind="visible: !selectedChild().readOnly, click: navigateToChildPermissionViewModel"><i class="md md-assignment"></i>Permissions</a></li>
-                        <li><a href="#" data-bind="click: navigateToFeeding"><i class="md md-restaurant-menu"></i>Feeding</a></li>
-                        <li><a href="#" data-bind="click: navigateToDiaper"><i class="md md-shopping-basket"></i>Diaper</a></li>
-                        <li><a href="#" data-bind="click: navigateToMeasurements"><i class="md md-track-changes"></i>Measurements</a></li>
+                        <li><a href="#" data-bind="visible: selectedChild() && !selectedChild().readOnly, click: navigateToChildPermissionViewModel"><i class="md md-assignment"></i>Permissions</a></li>
+                        <li><a href="#" data-bind="visible: selectedChild(), click: navigateToFeeding"><i class="md md-restaurant-menu"></i>Feeding</a></li>
+                        <li><a href="#" data-bind="visible: selectedChild(), click: navigateToDiaper"><i class="md md-shopping-basket"></i>Diaper</a></li>
+                        <li><a href="#" data-bind="visible: selectedChild(), click: navigateToMeasurements"><i class="md md-track-changes"></i>Measurements</a></li>
                         <li>@Html.ActionLink("API", "Index", "Help", new { area = "HelpPage" }, null)</li>
                     </ul>
                 </div>
