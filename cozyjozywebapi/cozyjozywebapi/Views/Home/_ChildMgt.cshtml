@@ -147,7 +147,13 @@
                 <div class="lv-body" data-bind="visible: sortedByDate().length == 0">
                     <a class="pull-right" data-bind="visible: canAdd, click: openNew, text: 'Add a new Child'"></a>
                     <div class="lv-title">
-                        <span style="font-size: 16px">No Children found.</span>
+                        <span style="font-size: 16px">No Children found. Adding a child will enable the following features</span>
+                        <ul>
+                            <li>Statistics (Charts and Graphs)</li>
+                            <li>Feeding Tracker</li>
+                            <li>Diaper Tracker</li>
+                            <li>Measurement Tracker</li>
+                        </ul>
                     </div>
                     <div id='loadingDiv'>
                         Please wait...
