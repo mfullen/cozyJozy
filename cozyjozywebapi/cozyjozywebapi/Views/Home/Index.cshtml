@@ -286,7 +286,7 @@
     </header>
 
     <section id="main">
-        <aside id="sidebar" data-bind="if: loggedIn()">
+        <aside id="sidebar" data-bind="visible: loggedIn()">
             <div class="sidebar-inner">
                 <div class="si-inner">
                     <div class="profile-menu">
@@ -338,7 +338,7 @@
             </div>
         </aside>
 
-        <aside id="chat">
+        <aside id="chat" data-bind="visible:false">
             <ul class="tab-nav tn-justified" role="tablist">
                 <li role="presentation" class="active"><a href="#friends" aria-controls="friends" role="tab" data-toggle="tab">Friends</a></li>
                 <li role="presentation"><a href="#online" aria-controls="online" role="tab" data-toggle="tab">Online Now</a></li>
