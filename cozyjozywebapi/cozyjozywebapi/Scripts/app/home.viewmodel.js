@@ -30,19 +30,21 @@
     self.timeTillBirthday = ko.computed(function () {
         if (self.stats()) {
             var dob = moment(self.stats().dateOfBirth());
-            var nowDob = moment();
-            nowDob.month(dob.month());
-            nowDob.day(dob.day());
-            nowDob.hour(dob.hour());
-            nowDob.minutes(dob.minutes());
+            var d = moment.duration(moment().diff(dob));
+            var durationYears = d.get('years');
+            var nextBirthday = moment(self.stats().dateOfBirth());
+            nextBirthday.add(durationYears, 'years');
+            var nbHasPassed = nextBirthday.isBefore(moment());
 
-            var hasPast = moment().isAfter(nowDob);
-            if (hasPast) {
-                nowDob.year(nowDob.year() + 1);
+            if (nbHasPassed) {
+                nextBirthday.add(1, 'years');
             }
-            var duration = moment.duration(nowDob.diff(moment()));
-
-
+           
+            var duration = moment.duration(nextBirthday.diff(moment()));
+            console.log('Next Birthday', nextBirthday);
+            console.log('Now', moment());
+            console.log('duration', duration);
+ 
             var durationString = '';
             var timeframe = ['years', 'months', 'days', 'hours', 'minutes'];
 
