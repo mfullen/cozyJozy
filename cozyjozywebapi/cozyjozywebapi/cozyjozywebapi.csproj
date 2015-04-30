@@ -434,7 +434,6 @@
     <Content Include="Content\material\images\profile-pics\7.jpg" />
     <Content Include="Content\material\images\profile-pics\8.jpg" />
     <Content Include="Content\material\images\profile-pics\9.jpg" />
-    <Content Include="Content\material\images\profile-pics\profile-pic.jpg" />
     <Content Include="Content\material\images\select%402x.png" />
     <Content Include="Content\material\images\select.png" />
     <Content Include="Content\material\images\social\behance-128.png" />
@@ -462,11 +461,6 @@
     <Content Include="Content\material\images\social\yahoo-128.png" />
     <Content Include="Content\material\images\social\youtube-128.png" />
     <Content Include="Content\material\images\thumbs-up.png" />
-    <Content Include="Content\material\images\widgets\535.jpg" />
-    <Content Include="Content\material\images\widgets\alpha-2.jpg" />
-    <Content Include="Content\material\images\widgets\alpha.jpg" />
-    <Content Include="Content\material\images\widgets\mate7.jpg" />
-    <Content Include="Content\material\images\widgets\note4.jpg" />
     <Content Include="Content\material\images\widgets\preview.jpg" />
     <Content Include="Content\material\sweet-alert.css" />
     <Content Include="Content\material\sweet-alert.min.css" />
