@@ -32,8 +32,24 @@ namespace cozyjozywebapi.Controllers
         }
 
         // GET: api/DiaperChanges
-        public IHttpActionResult Get(int pagesize = 25, int page = 0, int childId = 0)
+        public IHttpActionResult Get(int childId, int pagesize = 25, int page = 0,
+            DateTime? startDate = null,
+            DateTime? endDate = null)
         {
+            if (childId <= 0)
+            {
+                return BadRequest("ChildId is not valid.");
+            }
+
+            if (startDate == null)
+            {
+                startDate = DateTime.Today;
+            }
+
+            if (endDate == null)
+            {
+                endDate = DateTime.Today;
+            }
             var authorthizedChildren = HttpContext.Current.Items[Authorthizedchildren] as List<int>;
 
             if (pagesize > MaxPageSize)
@@ -41,12 +57,13 @@ namespace cozyjozywebapi.Controllers
                 pagesize = MaxPageSize;
             }
 
-            var data = _unitOfWork.DiaperChangesRepository.All().OrderByDescending(v => v.OccurredOn).Where(x => authorthizedChildren.Contains(x.ChildId));
-
-            if (childId > 0)
-            {
-                data = data.Where(c => c.ChildId == childId);
-            }
+            var data = _unitOfWork.DiaperChangesRepository.All()
+               .OrderByDescending(v => v.OccurredOn)
+               .Where(x => authorthizedChildren.Contains(x.ChildId))
+               .Where(c => c.ChildId == childId)
+               .Where(d => DbFunctions.TruncateTime(d.OccurredOn) >= startDate)
+               .Where(d => DbFunctions.TruncateTime(d.OccurredOn) <= endDate);
+          
             return Ok(data.Skip(page * pagesize).Take(pagesize).ToList());
         }
 

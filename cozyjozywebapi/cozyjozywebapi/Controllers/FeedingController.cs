@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -31,8 +32,26 @@ namespace cozyjozywebapi.Controllers
             _feedingRepository = uow.FeedingRepository;
         }
 
-        public IHttpActionResult Get(int pagesize = 25, int page = 0, int childId = 0)
+        public IHttpActionResult Get(int childId,
+            int pagesize = 25, int page = 0,
+            DateTime? startDate = null,
+            DateTime? endDate = null)
         {
+            if (childId <= 0)
+            {
+                return BadRequest("ChildId is not valid.");
+            }
+
+            if (startDate == null)
+            {
+                startDate = DateTime.Today;
+            }
+
+            if (endDate == null)
+            {
+                endDate = DateTime.Today;
+            }
+
             var authorthizedChildren = HttpContext.Current.Items[Authorthizedchildren] as List<int>;
 
             if (pagesize > MaxPageSize)
@@ -41,12 +60,13 @@ namespace cozyjozywebapi.Controllers
             }
 
 
-            var data = _feedingRepository.All().OrderByDescending(v => v.EndTime).Where(x => authorthizedChildren.Contains(x.ChildId));
+            var data = _feedingRepository.All()
+                .OrderByDescending(v => v.EndTime)
+                .Where(x => authorthizedChildren.Contains(x.ChildId))
+                .Where(c => c.ChildId == childId)
+                .Where(d => DbFunctions.TruncateTime(d.StartTime) >= startDate)
+                .Where(d => DbFunctions.TruncateTime(d.EndTime) <= endDate);
 
-            if (childId > 0)
-            {
-                data = data.Where(c => c.ChildId == childId);
-            }
             var results = data.Skip(page * pagesize).Take(pagesize).ToList();
             return Ok(results);
         }
@@ -132,7 +152,7 @@ namespace cozyjozywebapi.Controllers
             if (existingFeed == null || !authorthizedChildren.Contains(existingFeed.ChildId))
                 return NotFound();
 
-          
+
             if (!HasWritePermission(existingFeed.ChildId))
             {
                 return BadRequest();

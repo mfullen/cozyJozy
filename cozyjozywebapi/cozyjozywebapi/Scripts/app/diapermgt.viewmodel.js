@@ -12,8 +12,6 @@
         });
         return s;
     }, self);
-
-    self.fetchItems();
 }
 
 app.addViewModel({

@@ -1,117 +1,167 @@
 ﻿<!-- ko with: childmgt -->
+<div class="card" data-bind="if: isCreatingNew() || isEditing()">
+    <div data-bind=" with: item">
+
+        <div class="card-header">
+            <h2 class="m-b-20">
+                <span data-bind="if: $parent.isCreatingNew() ">Add New </span>
+                <span data-bind="if: $parent.isEditing() ">Update </span>
+                Child
+            </h2>
+        </div>
+
+
+        <div class="card-body card-padding">
+            <div class="row">
+
+                <div class="col-sm-4 m-b-20">
+                    <p class="c-black f-500 m-b-20">Date Of Birth</p>
+                    <div class="form-group fg-line">
+                        <input type='datetime' class="form-control" data-bind="datetimepicker: dateOfBirth" data-toggle="dropdown" placeholder="Date Of Birth">
+                    </div>
+                </div>
+
+                <div class="col-sm-2 m-b-20">
+                    <label class="radio radio-inline m-r-20">
+                        <input type="radio" name="inlineRadioOptions" data-bind="checked: male, checkedValue: true">
+                        <i class="input-helper"></i>
+                        Boy
+                    </label>
+
+                    <label class="radio radio-inline m-r-20">
+                        <input type="radio" name="inlineRadioOptions"  data-bind="checked: male, checkedValue: false">
+                        <i class="input-helper"></i>
+                        Girl
+                    </label>
+                </div>
+
+                <div class="col-sm-6 m-b-20">
+                    <p class="c-black f-500 m-b-20">First Name</p>
+
+                    <div class="col-sm-3 form-group fg-line">
+                        <input class="form-control" data-bind="value: firstName" />
+                    </div>
+
+                </div>
+                
+                <div class="col-sm-6 m-b-20">
+                    <p class="c-black f-500 m-b-20">Middle Name</p>
+
+                    <div class="col-sm-3 form-group fg-line">
+                        <input class="form-control" data-bind="value: middleName" />
+                    </div>
+
+                </div>
+                
+                <div class="col-sm-6 m-b-20">
+                    <p class="c-black f-500 m-b-20">Last Name</p>
+
+                    <div class="col-sm-3 form-group fg-line">
+                        <input class="form-control" data-bind="value: lastName" />
+                    </div>
+
+                </div>
+            </div>
+
+            <div data-bind="if: $parent.isEditing()">
+                <button class="btn bgm-green btn-icon pull-right" data-bind="click: $parent.update, enable: $parent.canSave"><i class="md md-check"></i></button>
+                <button class="btn bgm-red btn-icon" data-bind="click: $parent.cancel"><i class="md md-close"></i></button>
+            </div>
+
+            <div data-bind="if: $parent.isCreatingNew()">
+                <button class="btn bgm-green btn-icon pull-right" data-bind="click: $parent.create, enable: $parent.canSave"><i class="md md-check"></i></button>
+                <button class="btn bgm-red btn-icon" data-bind="click: $parent.cancel"><i class="md md-close"></i></button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="block-header">
+    <h1>Child Management</h1>
+</div>
 
 <div>
-    <button class="btn btn-default glyphicon glyphicon-plus" data-bind="click: openNew"></button>
-</div>
+    <div class="col-md-8 col-sm-6">
+        <div class="card">
+            <div class="listview lv-bordered lv-lg">
+                <div class="lv-header-alt" data-bind="style: { backgroundColor: app.themeBackgroundColorClassName }">
+                    <h2 class="lvh-label c-white" data-bind="text: 'My Children'"></h2>
 
-<div data-bind="if: isCreatingNew">
-    <div data-bind=" with: item">
-        <h2>Add New Child</h2>
-        <div>
-            <label for="gender">Gender (Male)</label>
-            <input id="gender" data-bind="checked: male" type="checkbox" title="Gender (Male)" />
-        </div>
-        <div>
-            <label for="firstName">First Name</label>
-            <input id="firstName" data-bind="value: firstName" type="text" title="First Name" />
-        </div>
-        <div>
-            <label for="middleName">Middle Name</label>
-            <input id="middleName" data-bind="value: middleName" type="text" title="Middle Name" />
-        </div>
-        <div>
-            <label for="lastName">Last Name</label>
-            <input id="lastName" data-bind="value: lastName" type="text" title="Last Name" />
-        </div>
-        
-        
-        <div class="container">
-            <div class="row">
-                <div class='col-sm-3'>
-                    <div class="form-group">
-                        <label for="date">Date of Birth</label>
-                        <div id="date" class='input-group date datetimepicker'>
-                            <input type='text' class="form-control" data-bind="datetimepicker: dateOfBirth" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
+                    <ul class="lv-actions actions">
+                        <li data-bind="visible: canAdd">
+                            <a href="#" data-bind="click: openNew">
+                                <i class="md md-add c-white" style="font-size: 30px"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="lv-body" data-bind="if: sortedByDate().length > 0 ">
+                    <!-- ko foreach: sortedByDate -->
+                    <div class="lv-item">
+                        <div class="media">
+                            <div class="pull-left" data-bind="with: child">
+                                @*<img class="lv-img-sm" src="~/Content/material/images/widgets/mate7.jpg" alt="">*@
+                                <i class="md md-face-unlock" data-bind="style: { color: male() ?  app.blueTheme : app.pinkTheme, fontSize: '30px' }"></i>
+                            </div>
+                            <div class="media-body">
+                                <div class="lv-actions actions dropdown">
+                                    <a href="" data-toggle="dropdown" aria-expanded="true">
+                                        <i class="md md-more-vert" data-bind="style: { color: app.themeBackgroundColorClassName }"></i>
+                                    </a>
+
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li>
+                                            <a href="" data-bind="visible: $parent.canEdit, click: $parent.edit">Edit</a>
+                                        </li>
+                                        <li>
+                                            <a href="" data-bind="visible: $parent.canDelete, click: $parent.deleteItem">Delete</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- ko with: child -->
+                                <div class="lv-title" style="font-weight: bold">
+                                    <span data-bind="visible: firstName, text: firstName"></span> <span data-bind="visible:middleName, text: middleName"> </span>
+                                    <span data-bind="visible:lastName, text: lastName"> </span>
+                                </div>
+                                <small class="lv-small" data-bind="text: moment(dateOfBirth()).format('dddd, MMM Do YYYY hh:mm a')"></small>
+                                <!-- /ko -->
+
+                                <span >
+                                    <span style="word-wrap: break-word" data-bind="text: ''"></span>
+                                </span>
+
+                                <ul class="lv-attrs">
+                                    <li data-bind="visible: !readOnly" class="bgm-blue c-white">
+                                        <span data-bind="text: 'Admin'"></span>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
+                    </div>
+
+                    <!-- /ko -->
+                </div>
+                <div class="lv-body" data-bind="visible: sortedByDate().length == 0">
+                    <a class="pull-right" data-bind="visible: canAdd, click: openNew, text: 'Add a new Child'"></a>
+                    <div class="lv-title">
+                        <span style="font-size: 16px">No Children found. Adding a child will enable the following features</span>
+                        <ul>
+                            <li>Statistics (Charts and Graphs)</li>
+                            <li>Feeding Tracker</li>
+                            <li>Diaper Tracker</li>
+                            <li>Measurement Tracker</li>
+                        </ul>
+                    </div>
+                    <div id='loadingDiv'>
+                        Please wait...
+                        <img src="~/Content/images/ajax-loader.gif" alt="loading" />
                     </div>
                 </div>
             </div>
         </div>
-
-       
-        <button class="btn btn-default" data-bind="click: $parent.create, enable: $parent.canSave">Save</button>
-        <button class="btn btn-default" data-bind="click: $parent.cancel">Cancel</button>
     </div>
-</div>
-
-<div data-bind="if: isEditing">
-    <div data-bind=" with: item">
-        <h2>Update Child</h2>
-        <div>
-            <label for="childId" data-bind="visible: false">Id</label>
-            <label id="childId" data-bind="text: id, visible: false"></label>
-        </div>
-        <div>
-            <label for="gender">Gender (Male)</label>
-            <input id="gender" data-bind="checked: male" type="checkbox" title="Gender (Male)" />
-        </div>
-        <div>
-            <label for="firstName">First Name</label>
-            <input id="firstName" data-bind="value: firstName" type="text" title="First Name" />
-        </div>
-        <div>
-            <label for="middleName">Middle Name</label>
-            <input id="middleName" data-bind="value: middleName" type="text" title="Middle Name" />
-        </div>
-        <div>
-            <label for="lastName">Last Name</label>
-            <input id="lastName" data-bind="value: lastName" type="text" title="Last Name" />
-        </div>
-        
-
-        <div class="container">
-            <div class="row">
-                <div class='col-sm-3'>
-                    <div class="form-group">
-                        <label for="date">Date of Birth</label>
-                        <div id="date" class='input-group date datetimepicker'>
-                            <input type='text' class="form-control" data-bind="datetimepicker: dateOfBirth" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-
-        <button class="btn btn-default" data-bind="click: $parent.update">Save</button>
-        <button class="btn btn-default" data-bind="click: $parent.cancel">Cancel</button>
-    </div>
-</div>
-
-<div class="row">
-    <h1>Children</h1>
-    <table>
-        <tbody data-bind="foreach: items">
-
-            <tr>
-                <td data-bind="text: child().id"></td>
-                <td data-bind="text: child().firstName"></td>
-                <td data-bind="text: child().middleName"></td>
-                <td data-bind="text: child().lastName"></td>
-                <td data-bind="text: child().dateOfBirth"></td>
-                <td>
-                    <button class="btn btn-default" data-bind="visible: !readOnly, click: $parent.edit">Edit</button>
-                    <button class="btn btn-default" data-bind="visible: !readOnly, click: $parent.deleteItem">Delete</button>
-                </td>
-            </tr>
-
-        </tbody>
-    </table>
 </div>
 <!-- /ko -->

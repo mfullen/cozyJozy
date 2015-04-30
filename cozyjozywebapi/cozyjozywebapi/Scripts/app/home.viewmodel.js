@@ -3,26 +3,53 @@
 
     self.stats = ko.observable();
 
+    self.appendTimeStringIfExists = function (org, duration, timeframe) {
+        if (duration.get(timeframe) > 0) {
+            org = org + duration.get(timeframe) + ' ' + timeframe + ' ';
+        }
+        return org;
+    }
+
     self.timeSinceBirth = ko.computed(function () {
         if (self.stats()) {
-            return moment(self.stats().dateOfBirth()).fromNow();
+            var dob = moment(self.stats().dateOfBirth());
+            var duration = moment.duration(moment().diff(dob));
+
+            var durationString = '';
+            var timeframe = ['years', 'months', 'days', 'hours', 'minutes'];
+
+            for (var i = 0; i < timeframe.length; i++) {
+                durationString = self.appendTimeStringIfExists(durationString, duration, timeframe[i]);
+            }
+
+            return durationString;
         }
         return null;
     }, self);
 
     self.timeTillBirthday = ko.computed(function () {
         if (self.stats()) {
-            //todo need to fix
             var dob = moment(self.stats().dateOfBirth());
-            var nowDob = moment();
-            nowDob.month(dob.month());
-            nowDob.day(dob.day());
+            var d = moment.duration(moment().diff(dob));
+            var durationYears = d.get('years');
+            var nextBirthday = moment(self.stats().dateOfBirth());
+            nextBirthday.add(durationYears, 'years');
+            var nbHasPassed = nextBirthday.isBefore(moment());
 
-            var hasPast = moment().isAfter(nowDob);
-            if (hasPast) {
-                nowDob.year(nowDob.year() + 1);
+            if (nbHasPassed) {
+                nextBirthday.add(1, 'years');
             }
-            return moment(nowDob).from();
+           
+            var duration = moment.duration(nextBirthday.diff(moment()));
+
+            var durationString = '';
+            var timeframe = ['years', 'months', 'days', 'hours', 'minutes'];
+
+            for (var i = 0; i < timeframe.length; i++) {
+                durationString = self.appendTimeStringIfExists(durationString, duration, timeframe[i]);
+            }
+
+            return durationString;
         }
         return null;
     }, self);

@@ -22,6 +22,56 @@
     self.isEditing = ko.observable(false);
     self.isCreatingNew = ko.observable(false);
 
+    //The selected date we are looking at for feedings
+    self.sDate = ko.observable();
+
+    self.dateFormater = 'MM/DD/YYYY';
+    self.dateTimeFormater = 'hh:mm a z';
+
+    self.previousDateButtonEnabled = ko.observable(true);
+    self.nextDateButtonEnabled = ko.observable(true);
+
+    self.toggleDateButtons = function () {
+        self.previousDateButtonEnabled(!self.previousDateButtonEnabled());
+        self.nextDateButtonEnabled(!self.nextDateButtonEnabled());
+    }
+
+    self.sDate.subscribe(function (newValue) {
+        self.sDateChanged(newValue);
+    });
+
+    self.sDateChanged = function (newValue) {
+        self.items.removeAll();
+        self.toggleDateButtons();
+        self.fetchItems({
+            childId: app.selectedChild().child().id(),
+            startDate: self.sDate(),
+            endDate: self.sDate()
+        }, self.toggleDateButtons, self.toggleDateButtons);
+    }
+
+    app.selectedChild.subscribe(function (newValue) {
+        self.sDateChanged(self.sDate());
+    });
+
+    self.formattedDateTime = function (d, t) {
+        if (t === 'time') {
+            return moment(d).format(self.dateTimeFormater);
+        } else {
+            return moment(d).format(self.dateFormater);
+        }
+    }
+
+    self.previousDate = function () {
+        var m = moment(self.sDate());
+        self.sDate(m.subtract(1, 'days').format(self.dateFormater));
+    }
+
+    self.nextDate = function () {
+        var m = moment(self.sDate());
+        self.sDate(m.add(1, 'days').format(self.dateFormater));
+    }
+
     self.openNew = function () {
         self.isEditing(false);
         self.item(newItemFunction());
@@ -30,7 +80,6 @@
 
     self.create = function () {
         self.item().childId(app.selectedChild().child().id());
-
         $.ajax({
             url: baseUrl,
             cache: 'false',
@@ -91,7 +140,7 @@
     }
 
     self.deleteItem = function (f) {
-        if (confirm('Are you sure you want to Delete this ' + itemName +'?')) {
+        if (confirm('Are you sure you want to Delete this ' + itemName + '?')) {
             $.ajax({
                 url: baseUrl + '/' + f.id(),
                 cache: 'false',
@@ -109,26 +158,34 @@
         }
     }
 
-    self.fetchItems = function() {
+    self.fetchItems = function (p, sfunc, ffunc) {
+        var pp = p || { childId: app.selectedChild().child().id() };
         $.ajax({
             url: baseUrl,
             cache: false,
             headers: dataModel.getSecurityHeaders(),
-            data: { childId: app.selectedChild().child().id() },
+            data: pp,
             contentType: 'json',
             success: function (data) {
                 for (var i = 0; i < data.length; i++) {
                     self.items.push(new modelFunction(data[i]));
                 }
+
+                if (sfunc != null) {
+                    sfunc();
+                }
             },
             error: function (xhr, textStatus, err) {
                 addError("Failed to retrieve " + itemName + "s. Please try again!");
                 console.log("Error", xhr, textStatus, err);
+                if (ffunc != null) {
+                    ffunc();
+                }
             }
         });
     }
 
-    self.canAdd = ko.computed(function() {
+    self.canAdd = ko.computed(function () {
         return !app.selectedChild().readOnly;
     }, self);
 
@@ -139,8 +196,10 @@
     self.canDelete = ko.computed(function () {
         return !app.selectedChild().readOnly;
     }, self);
-   
-    self.testMe = function() {
+
+    self.testMe = function () {
         console.log("TEST ME WORKS AS BASE CLASS");
     }
+
+    self.sDate(moment().format(self.dateFormater));
 }

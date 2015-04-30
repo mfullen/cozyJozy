@@ -19,6 +19,18 @@
         return null;
     };
 
+    self.deliveryTypeClassTheme = function (dt) {
+        var css = "c-white bgm-indigo";
+        switch (dt) {
+            case 0:
+                css = "c-white bgm-teal";
+                break;
+            case 1:
+                css = "c-white bgm-purple";
+                break;
+        }
+        return css;
+    }
 
 
 
@@ -33,7 +45,9 @@
         return s;
     }, self);
 
-
+    self.mlToOz = function (ml) {
+        return +(Math.round((ml * 0.033814) + "e+2") + "e-2");
+    }
 
     self.amountOunces = ko.computed(function () {
         if (!self.item() || !self.item().amount() || self.item().amount() < 0)
@@ -61,42 +75,24 @@
         return ed.diff(sd, 'minutes');
     }
 
-    self.fetchItems();
+    self.amountText = function (s) {
+        if (!s.amount()) {
+            return null;
+        }
+        return self.mlToOz(s.amount()) + ' oz (' + s.amount() + ' ml)';
+    }
 }
-
-//ko.bindingHandlers.numeric = {
-//    init: function (element, valueAccessor) {
-//        $(element).on("keydown", function (event) {
-//            // Allow: backspace, delete, tab, escape, and enter
-//            if (event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 ||
-//                // Allow: Ctrl+A
-//                (event.keyCode == 65 && event.ctrlKey === true) ||
-//                // Allow: . ,
-//                (event.keyCode == 188 || event.keyCode == 190 || event.keyCode == 110) ||
-//                // Allow: home, end, left, right
-//                (event.keyCode >= 35 && event.keyCode <= 39)) {
-//                // let it happen, don't do anything
-//                return;
-//            }
-//            else {
-//                // Ensure that it is a number and stop the keypress
-//                if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105)) {
-//                    event.preventDefault();
-//                }
-//            }
-//        });
-//    }
-//};
 
 app.addViewModel({
     name: "Feeding",
     bindingMemberName: "feedingMgt",
     factory: function (app, dataModel) {
+        var dateFormater = 'MM/DD/YYYY hh:mm a';
         var newFeed = function () {
             return new FEED({
                 id: 0,
-                startTime: '',
-                endTime: '',
+                startTime: moment().format(dateFormater),
+                endTime: moment().add(15, 'minutes').format(dateFormater),
                 dateReported: '',
                 spitUp: '',
                 deliveryType: 2,

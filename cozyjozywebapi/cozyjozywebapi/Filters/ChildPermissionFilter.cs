@@ -17,8 +17,7 @@ namespace cozyjozywebapi.Filters
     public class ChildPermissionFilter : ActionFilterAttribute
     {
         private  IUnitOfWork _unitOfWork;
-        private readonly CozyJozyContext context = new CozyJozyContext();
-
+ 
         [Inject]
         public void SetUow(IUnitOfWork uow)
         {
@@ -30,11 +29,13 @@ namespace cozyjozywebapi.Filters
             // pre-processing
             //Debug.WriteLine("ACTION 1 DEBUG pre-processing logging");
             var userId = HttpContext.Current.User.Identity.GetUserId();
-            var validChildIds = context.ChildPermissions.Where(w => w.IdentityUserId == userId).Select(x => x.ChildId).ToList();
-          
-            //var validChildIds = _unitOfWork.ChildPermissionsRepository.All().Where(w => w.IdentityUserId == userId).Select(x => x.ChildId).ToList();
+            List<int> validChildIds = null;
+            using (var context = new CozyJozyContext())
+            {
+                validChildIds = context.ChildPermissions.Where(w => w.IdentityUserId == userId).Select(x => x.ChildId).ToList();
+            }
 
-            if (!validChildIds.Any())
+            if (validChildIds != null && !validChildIds.Any())
             {
                 throw new HttpException(403, "Forbidden");
             }

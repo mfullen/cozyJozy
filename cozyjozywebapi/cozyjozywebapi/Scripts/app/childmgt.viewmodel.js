@@ -26,6 +26,14 @@ function ChildManagement(app, dataModel) {
     self.isEditing = ko.observable(false);
     self.isCreatingNew = ko.observable(false);
 
+
+    self.sortedByDate = ko.computed(function () {
+        var s = self.items.slice(0).sort(function (l, r) {
+            return moment(r.child().dateOfBirth()).isBefore(moment(l.child().dateOfBirth())) ? -1 : 1;
+        });
+        return s;
+    }, self);
+
     self.reset = function () {
         self.item(newChild());
         self.isEditing(false);
@@ -118,6 +126,18 @@ function ChildManagement(app, dataModel) {
     self.canSave = function () {
         
     }
+
+    self.canAdd = ko.computed(function () {
+        return true;
+    }, self);
+
+    self.canEdit = ko.computed(function () {
+        return true;
+    }, self);
+
+    self.canDelete = ko.computed(function () {
+        return true;
+    }, self);
 
 }
 

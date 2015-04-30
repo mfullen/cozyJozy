@@ -81,6 +81,29 @@
         self.availableTitles(t);
     }
 
+    self.blueTheme = '#4285F4'; //blue theme
+    self.pinkTheme =  "#e91e63"; //pink;
+
+    self.themeBackgroundColorClassName = ko.computed(function () {
+        if (self.selectedChild()) {
+            var sc = self.selectedChild();
+            if (sc.child().male()) {
+                return self.blueTheme;
+            } else {
+                return self.pinkTheme;
+            }
+        }
+        return self.blueTheme;
+    }, self);
+
+    self.childDisplayName = function (f) {
+        if (!f) {
+            return '';
+        }
+        return f.child().firstName() + ' ' + f.child().middleName() + ' ' + f.child().lastName();
+    }
+
+
     // UI state
     self.errors = ko.observableArray();
     self.user = ko.observable(null);
@@ -128,16 +151,17 @@
             dataModel.setAccessToken(accessToken, persistent);
         }
 
-        dataModel.fetchChildren();
-        self.user(new UserInfoViewModel(self, userName, dataModel));
+        dataModel.fetchChildren(function() {
+            self.user(new UserInfoViewModel(self, userName, dataModel));
 
-        dataModel.fetchTitles(function (d) { return self.availableTitles(d); });
+            dataModel.fetchTitles(function (d) { return self.availableTitles(d); });
 
-        if (dataModel.children().length === 0) {
-            self.navigateToChildManagement();
-        } else {
-            self.navigateToHome();
-        }
+            if (dataModel.children().length === 0) {
+                self.navigateToChildManagement();
+            } else {
+                self.navigateToHome();
+            }
+        });
     };
 
     self.navigateToLoggedOff = function () {

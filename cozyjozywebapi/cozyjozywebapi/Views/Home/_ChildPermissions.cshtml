@@ -1,81 +1,137 @@
 ﻿<!-- ko with: cpvm -->
-<div>
-    <button class="btn btn-default glyphicon glyphicon-plus" data-bind="click: openNew"></button>
-</div>
 
 
-<div data-bind="if: isCreatingNew">
+<div class="card" data-bind="if: isCreatingNew() || isEditing()">
     <div data-bind=" with: item">
-        <h2>Add New Child Permission</h2>
 
-        <div>
-            <label for="urine">Read Only?</label>
-            <input id="urine" data-bind="checked: readOnly" type="checkbox" title="ReadOnly" />
-        </div>
-        <div data-bind="with: user">
-            <label for="stool">UserId</label>
-            <input class="typeahead" id="stool" data-bind="value: id" type="text" title="userId" />
-        </div>
-        
-        <select class="form-control" data-bind="options: $parent.availableTitles, value: title"></select>
-
-
-        <button class="btn btn-default" data-bind="click: $parent.create, enable: $parent.canSave">Save</button>
-        <button class="btn btn-default" data-bind="click: $parent.cancel">Cancel</button>
-    </div>
-</div>
-
-<div data-bind="if: isEditing">
-    <div data-bind=" with: item">
-        <h2>Update Child Permission</h2>
-        <div>
-            <label for="dcId" data-bind="visible: false">Id</label>
-            <label id="dcId" data-bind="text: id, visible: false"></label>
+        <div class="card-header">
+            <h2 class="m-b-20">
+                <span data-bind="if: $parent.isCreatingNew() ">Add New </span>
+                <span data-bind="if: $parent.isEditing() ">Update </span>
+                Permissions
+            </h2>
         </div>
 
 
-        <div>
-            <label for="urine">Read Only?</label>
-            <input id="urine" data-bind="checked: readOnly" type="checkbox" title="ReadOnly" />
-        </div>
-        <div data-bind="with: user" class="ui-widget">
-            <label for="stool">UserId</label>
-            <input class="typeahead" data-bind="value: id" type="text" title="userId" />
-        </div>
-        
-        <select class="form-control" data-bind="options: $parent.availableTitles, value: title"></select>
+        <div class="card-body card-padding">
+            <div class="row">
 
-        <button class="btn btn-default" data-bind="click: $parent.update">Save</button>
-        <button class="btn btn-default" data-bind="click: $parent.cancel">Cancel</button>
-    </div>
-</div>
-<div>
-    <h1>Permissions</h1>
+                <div class="col-sm-2 m-b-20 checkbox m-b-15">
+                    <label>
+                        <input type="checkbox" data-bind="checked: readOnly">
+                        <i class=" input-helper"></i>
+                        Give Readonly access
+                    </label>
+                </div>
 
-    <!-- ko foreach: sortedByDate -->
-    <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading">
 
-                <span class="panel-title" data-bind="text: 'hi'"></span>
 
-                <div class="pull-right">
-                    <button class="btn btn-default glyphicon glyphicon-pencil" data-bind="click: $parent.edit"></button>
-                    <button class="btn btn-default glyphicon glyphicon-remove" data-bind="click: $parent.deleteItem"></button>
+                <div class="col-sm-4 m-b-20">
+                    <p class="c-black f-500 m-b-20">UserId</p>
+                    <div class="form-group">
+                        <div class="fg-line" data-bind="with: user">
+                            <textarea class="form-control" data-bind='value: id' rows="1" placeholder="Enter UserId here..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4 m-b-20">
+                    <select class="form-control" data-bind="options: $parent.availableTitles, value: title"></select>
                 </div>
             </div>
-            <div class="panel-body">
-                
-                <!-- ko with: user -->
-                <p data-bind="text: userName"></p>
-                <p data-bind="text: id"></p>
-                <!-- /ko -->
-                <p data-bind="text: readOnly"></p>
-                <p data-bind="text: title"></p>
 
+            <div data-bind="if: $parent.isEditing()">
+                <button class="btn bgm-green btn-icon pull-right" data-bind="click: $parent.update, enable: $parent.canSave"><i class="md md-check"></i></button>
+                <button class="btn bgm-red btn-icon" data-bind="click: $parent.cancel"><i class="md md-close"></i></button>
+            </div>
+
+            <div data-bind="if: $parent.isCreatingNew()">
+                <button class="btn bgm-green btn-icon pull-right" data-bind="click: $parent.create, enable: $parent.canSave"><i class="md md-check"></i></button>
+                <button class="btn bgm-red btn-icon" data-bind="click: $parent.cancel"><i class="md md-close"></i></button>
             </div>
         </div>
     </div>
-    <!-- /ko -->
+
+</div>
+
+
+<div class="block-header">
+    <h1>Permissions</h1>
+</div>
+
+<div>
+    <div class="col-md-8 col-sm-6">
+        <div class="card">
+            <div class="listview lv-bordered lv-lg">
+                <div class="lv-header-alt" data-bind="style: { backgroundColor: app.themeBackgroundColorClassName }">
+                    <h2 class="lvh-label c-white" data-bind="text: ''"></h2>
+
+                    <ul class="lv-actions actions">
+                        <li data-bind="visible: canAdd">
+                            <a href="#" data-bind="click: openNew">
+                                <i class="md md-add c-white" style="font-size: 30px"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="lv-body" data-bind="if: sortedByDate().length > 0 ">
+                    <!-- ko foreach: sortedByDate -->
+                    <div class="lv-item">
+                        <div class="media">
+                            <div class="pull-left">
+                                @*<img class="lv-img-sm" src="~/Content/material/images/widgets/mate7.jpg" alt="">*@
+                                <i class="md md-assignment" style="font-size:30px;"></i>
+                            </div>
+                            <div class="media-body">
+                                <div class="lv-actions actions dropdown">
+                                    <a href="" data-toggle="dropdown" aria-expanded="true">
+                                        <i class="md md-more-vert" data-bind="style: { color: app.themeBackgroundColorClassName }"></i>
+                                    </a>
+
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li>
+                                            <a href="" data-bind="visible: $parent.canEdit, click: $parent.edit">Edit</a>
+                                        </li>
+                                        <li>
+                                            <a href="" data-bind="visible: $parent.canDelete, click: $parent.deleteItem">Delete</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                                <!-- ko with: user -->
+                                <div class="lv-title" style="font-weight: bold">
+                                    <span data-bind="text: userName"></span>
+                                </div>
+                                <small class="lv-small" data-bind="text: id"></small>
+                                <!-- /ko -->
+
+                                <span data-bind="visible: title">
+                                    <span style="word-wrap: break-word" data-bind="text: title"></span>
+                                </span>
+
+                                <ul class="lv-attrs">
+                                    <li data-bind="visible: !readOnly()" class="bgm-blue c-white">
+                                        <span data-bind="text: 'Admin'"></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- /ko -->
+                </div>
+                <div class="lv-body" data-bind="visible: sortedByDate().length == 0">
+                    <a class="pull-right" data-bind="visible: canAdd, click: openNew, text: 'Add a new Permission'"></a>
+                    <div class="lv-title">
+                        <span style="font-size: 16px">No Permission found for this child.</span>
+                    </div>
+                    <div id='loadingDiv'>
+                        Please wait...
+                        <img src="~/Content/images/ajax-loader.gif" alt="loading" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- /ko -->

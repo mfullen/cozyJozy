@@ -9,6 +9,7 @@ using System.Web.Http.Description;
 using cozyjozywebapi.Infrastructure.Core;
 using cozyjozywebapi.Models;
 using Microsoft.AspNet.Identity;
+using MoreLinq;
 
 namespace cozyjozywebapi.Controllers
 {
@@ -31,7 +32,7 @@ namespace cozyjozywebapi.Controllers
         protected IQueryable<ChildPermissions> FilteredChildren()
         {
             var userId = HttpContext.Current.User.Identity.GetUserId();
-            return _unitOfWork.ChildPermissionsRepository.All().Where(c => c.IdentityUserId == userId);
+            return _unitOfWork.ChildPermissionsRepository.All().Where(c => c.IdentityUserId == userId).DistinctBy(p => new { p.IdentityUserId, p.ChildId }).AsQueryable();
         }
 
         // GET: api/Children
@@ -85,7 +86,11 @@ namespace cozyjozywebapi.Controllers
             try
             {
                 await _unitOfWork.CommitAsync();
-                return await GetChild(child.Id);
+                return  Ok(new ChildResponse()
+                {
+                    Child = child,
+                    ReadOnly = FilteredChildren().Where(c=> c.Id == child.Id).Select(s=> s.ReadOnly).FirstOrDefault()
+                });
             }
             catch (DbUpdateConcurrencyException)
             {
