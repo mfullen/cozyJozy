@@ -41,10 +41,7 @@
             }
            
             var duration = moment.duration(nextBirthday.diff(moment()));
-            console.log('Next Birthday', nextBirthday);
-            console.log('Now', moment());
-            console.log('duration', duration);
- 
+
             var durationString = '';
             var timeframe = ['years', 'months', 'days', 'hours', 'minutes'];
 
