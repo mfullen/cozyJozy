@@ -52,7 +52,7 @@ namespace cozyjozywebapi.Controllers
                 endDate = DateTime.Today;
             }
 
-            var includeEndDate = startDate != endDate;
+            var isDateRange = startDate != endDate;
 
             var authorthizedChildren = HttpContext.Current.Items[Authorthizedchildren] as List<int>;
 
@@ -68,8 +68,17 @@ namespace cozyjozywebapi.Controllers
                 .Where(c => c.ChildId == childId)
                 .Where(d => DbFunctions.TruncateTime(d.StartTime) >= startDate);
 
-            if (includeEndDate)
+            if (isDateRange)
+            {
                 data = data.Where(d => DbFunctions.TruncateTime(d.EndTime) <= endDate);
+            }
+
+            else
+            {
+                //only looking at 1 day worth of data
+                endDate = endDate.Value.AddDays(1);
+                data = data.Where(d => DbFunctions.TruncateTime(d.StartTime) < endDate);
+            }
 
             var results = data.Skip(page * pagesize).Take(pagesize).ToList();
             return Ok(results);
