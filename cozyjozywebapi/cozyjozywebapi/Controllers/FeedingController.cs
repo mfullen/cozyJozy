@@ -52,6 +52,8 @@ namespace cozyjozywebapi.Controllers
                 endDate = DateTime.Today;
             }
 
+            var includeEndDate = startDate != endDate;
+
             var authorthizedChildren = HttpContext.Current.Items[Authorthizedchildren] as List<int>;
 
             if (pagesize > MaxPageSize)
@@ -64,8 +66,10 @@ namespace cozyjozywebapi.Controllers
                 .OrderByDescending(v => v.EndTime)
                 .Where(x => authorthizedChildren.Contains(x.ChildId))
                 .Where(c => c.ChildId == childId)
-                .Where(d => DbFunctions.TruncateTime(d.StartTime) >= startDate)
-                .Where(d => DbFunctions.TruncateTime(d.EndTime) <= endDate);
+                .Where(d => DbFunctions.TruncateTime(d.StartTime) >= startDate);
+
+            if (includeEndDate)
+                data = data.Where(d => DbFunctions.TruncateTime(d.EndTime) <= endDate);
 
             var results = data.Skip(page * pagesize).Take(pagesize).ToList();
             return Ok(results);
