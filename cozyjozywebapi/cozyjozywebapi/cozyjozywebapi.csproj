@@ -284,6 +284,10 @@
     <Compile Include="Migrations\201504160054056_TitleAssociation.Designer.cs">
       <DependentUpon>201504160054056_TitleAssociation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505050311173_CommentedOutModelBuilder.cs" />
+    <Compile Include="Migrations\201505050311173_CommentedOutModelBuilder.Designer.cs">
+      <DependentUpon>201505050311173_CommentedOutModelBuilder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -636,6 +640,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504160054056_TitleAssociation.resx">
       <DependentUpon>201504160054056_TitleAssociation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505050311173_CommentedOutModelBuilder.resx">
+      <DependentUpon>201505050311173_CommentedOutModelBuilder.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
