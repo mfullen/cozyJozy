@@ -335,9 +335,12 @@ namespace cozyjozywebapi.Controllers
                 return BadRequest(ModelState);
             }
 
-            IdentityUser user = new IdentityUser
+            var user = new User
             {
-                UserName = model.UserName
+                UserName = model.UserName,
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName
             };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);

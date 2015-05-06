@@ -5,11 +5,20 @@
     self.userName = ko.observable("").extend({ required: true });
     self.password = ko.observable("").extend({ required: true });
     self.confirmPassword = ko.observable("").extend({ required: true, equal: self.password });
+    self.firstName = ko.observable("").extend({ required: false });
+    self.lastName = ko.observable("").extend({ required: false });
+    self.email = ko.observable("").extend({ required: true, email: true });
+    self.acceptAgreement = ko.observable(false).extend({
+        equal: {
+            message: "You MUST",
+            params: true
+        }
+    });
 
     // Other UI state
     self.registering = ko.observable(false);
     self.errors = ko.observableArray();
-    self.validationErrors = ko.validation.group([self.userName, self.password, self.confirmPassword]);
+    self.validationErrors = ko.validation.group([self.userName, self.password, self.confirmPassword, self.email, self.acceptAgreement]);
 
     // Operations
     self.register = function () {
@@ -23,8 +32,11 @@
         dataModel.register({
             userName: self.userName(),
             password: self.password(),
-            confirmPassword: self.confirmPassword()
-        }).done(function (data) {
+            confirmPassword: self.confirmPassword(),
+            email: self.email(),
+            firstName: self.firstName(),
+            lastName: self.lastName()
+    }).done(function (data) {
             dataModel.login({
                 grant_type: "password",
                 username: self.userName(),
