@@ -13,6 +13,27 @@
                     <input type="text" class="form-control" placeholder="Username" data-bind="value: userName, hasFocus: true">
                 </div>
             </div>
+            
+            <div class="col-md-12 col-sm-4 input-group m-b-20">
+                <span class="input-group-addon"><i class="md md-email"></i></span>
+                <div class="fg-line">
+                    <input type="text" class="form-control" placeholder="Email" data-bind="value: email">
+                </div>
+            </div>
+            
+            <div class="col-md-12 col-sm-4 input-group m-b-20">
+                <span class="input-group-addon"><i class="md md-person"></i></span>
+                <div class="fg-line">
+                    <input type="text" class="form-control" placeholder="First Name" data-bind="value: firstName">
+                </div>
+            </div>
+            
+            <div class="col-md-12 col-sm-4 input-group m-b-20">
+                <span class="input-group-addon"><i class="md md-person"></i></span>
+                <div class="fg-line">
+                    <input type="text" class="form-control" placeholder="Last Name" data-bind="value: lastName">
+                </div>
+            </div>
 
             <div class="col-md-12 col-sm-4 input-group m-b-20">
                 <span class="input-group-addon"><i class="md md-accessibility"></i></span>
@@ -30,14 +51,14 @@
 
             <div class="clearfix"></div>
 
-            <div class="col-sm-4 checkbox">
+            <div class="col-sm-4">
                 <label>
-                    <input type="checkbox" value="">
+                    <input type="checkbox" data-bind="checked: acceptAgreement">
                     <i class="input-helper"></i>
                     Accept the license agreement
                 </label>
             </div>
-            
+           
             <div>
                 <button class="btn btn-login btn-danger btn-float pull-right" data-bind="click: register, disable: registering, style: { position: 'relative'}"><i class="md md-arrow-forward"></i></button>
             </div>
