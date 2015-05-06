@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
+using System.Web.UI.WebControls;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
@@ -171,8 +173,18 @@ namespace cozyjozywebapi.Controllers
                 return BadRequest("The external login is already associated with an account.");
             }
 
-            IdentityResult result = await UserManager.AddLoginAsync(User.Identity.GetUserId(),
-                new UserLoginInfo(externalData.LoginProvider, externalData.ProviderKey));
+            IdentityResult result;
+            try
+            {
+                result = await UserManager.AddLoginAsync(User.Identity.GetUserId(),
+               new UserLoginInfo(externalData.LoginProvider, externalData.ProviderKey));
+
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
 
             IHttpActionResult errorResult = GetErrorResult(result);
 
@@ -269,6 +281,8 @@ namespace cozyjozywebapi.Controllers
 
             return Ok();
         }
+
+
 
         // GET api/Account/ExternalLogins?returnUrl=%2F&generateState=true
         [AllowAnonymous]
@@ -426,15 +440,55 @@ namespace cozyjozywebapi.Controllers
             public string LoginProvider { get; set; }
             public string ProviderKey { get; set; }
             public string UserName { get; set; }
+            public String Email { get; set; }
+            public bool? Gender { get; set; }
+            public DateTime? Birthday { get; set; }
+            public String FirstName { get; set; }
+            public String LastName { get; set; }
+            public String Address { get; set; }
+            public String Link { get; set; }
 
             public IList<Claim> GetClaims()
             {
+                string claimBase = "urn:" + LoginProvider + ":";
                 IList<Claim> claims = new List<Claim>();
                 claims.Add(new Claim(ClaimTypes.NameIdentifier, ProviderKey, null, LoginProvider));
 
                 if (UserName != null)
                 {
                     claims.Add(new Claim(ClaimTypes.Name, UserName, null, LoginProvider));
+                }
+
+                if (Email != null)
+                {
+                    claims.Add(new Claim(ClaimTypes.Email, Email, null, LoginProvider));
+                }
+
+
+                if (Address != null)
+                {
+                    claims.Add(new Claim(claimBase + "address", Address, null, LoginProvider));
+                }
+
+                if (Gender != null)
+                {
+                    claims.Add(new Claim(claimBase + "gender", Gender.Value ? "male" : "female", null, LoginProvider));
+                }
+
+
+                if (FirstName != null)
+                {
+                    claims.Add(new Claim(claimBase + "first_name", FirstName, null, LoginProvider));
+                }
+
+                if (LastName != null)
+                {
+                    claims.Add(new Claim(claimBase + "last_name", FirstName, null, LoginProvider));
+                }
+
+                if (Link != null)
+                {
+                    claims.Add(new Claim(claimBase + "link", Link, null, LoginProvider));
                 }
 
                 return claims;
@@ -459,12 +513,37 @@ namespace cozyjozywebapi.Controllers
                 {
                     return null;
                 }
+                string claimBase = "urn:" + providerKeyClaim.Issuer + ":";
+                string email = identity.FindFirstValue(ClaimTypes.Email);
+                var gender = identity.FindFirstValue(claimBase + "gender");
+                var dob = identity.FindFirstValue(claimBase + "birthday");
+                var firstName = identity.FindFirstValue(claimBase + "first_name");
+                var lastName = identity.FindFirstValue(claimBase + "last_name");
+                var name = identity.FindFirstValue(claimBase + "name");
+                var streetAddress = identity.FindFirstValue(claimBase + "address");
+                var link = identity.FindFirstValue(claimBase + "link");
+
+                var userName = identity.FindFirstValue(ClaimTypes.Name);
+
+                if (userName.IsNullOrWhiteSpace() && !email.IsNullOrWhiteSpace())
+                {
+                    userName = email;
+                }
+
+
 
                 return new ExternalLoginData
                 {
                     LoginProvider = providerKeyClaim.Issuer,
                     ProviderKey = providerKeyClaim.Value,
-                    UserName = identity.FindFirstValue(ClaimTypes.Name)
+                    UserName = userName,
+                    Email = email,
+                    Gender = gender.ToLower().Equals("male"),
+                    // Birthday = dob != null ? DateTime.Parse(dob) : null,
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Address = streetAddress,
+                    Link = link
                 };
             }
         }
