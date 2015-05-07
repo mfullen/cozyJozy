@@ -32,14 +32,14 @@ namespace cozyjozywebapi.Controllers
         {
         }
 
-        public AccountController(UserManager<IdentityUser> userManager,
+        public AccountController(UserManager<User> userManager,
             ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
         }
 
-        public UserManager<IdentityUser> UserManager { get; private set; }
+        public UserManager<User> UserManager { get; private set; }
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
         // GET api/Account/UserInfo
@@ -257,7 +257,7 @@ namespace cozyjozywebapi.Controllers
                 return new ChallengeResult(provider, this);
             }
 
-            IdentityUser user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider,
+            User user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider,
                 externalLogin.ProviderKey));
 
             bool hasRegistered = user != null;
@@ -372,7 +372,7 @@ namespace cozyjozywebapi.Controllers
                 return InternalServerError();
             }
 
-            IdentityUser user = new IdentityUser
+            User user = new User
             {
                 UserName = model.UserName
             };

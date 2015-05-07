@@ -53,6 +53,7 @@ namespace cozyjozywebapi
             bundles.Add(new ScriptBundle("~/bundles/materialThemeJs").Include(
                 "~/Scripts/bootstrap.js",
                 "~/Scripts/moment.js",
+                "~/Scripts/handlebars-v3.0.3.js",
                 "~/Scripts/fullcalendar.js",
                 "~/Scripts/jquery.simpleWeather.js",
                 "~/Scripts/jquery.nicescroll.js",
@@ -63,6 +64,7 @@ namespace cozyjozywebapi
                 "~/Scripts/curvedLines.js",
                 "~/Scripts/jquery.easypiechart.js",
                 "~/Scripts/jquery.sparkline.js",
+                "~/Scripts/typeahead.bundle.js",
                 "~/Scripts/bootstrap-datetimepicker.js",
                 "~/Scripts/bootstrap-slider.js",
                 "~/Scripts/charts.js",
@@ -73,6 +75,7 @@ namespace cozyjozywebapi
                "~/Content/material/animate.css",
                "~/Content/material/sweet-alert.css",
                "~/Content/bootstrap-slider/bootstrap-slider.css",
+               "~/Content/typeaheadjs.css",
                "~/Content/material/app.css"
                ));
 

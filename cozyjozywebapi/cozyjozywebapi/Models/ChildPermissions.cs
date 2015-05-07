@@ -27,7 +27,7 @@ namespace cozyjozywebapi.Models
         /// <summary>
         /// Virtual Object to allow navigation of the IdentityUser 
         /// </summary>
-        public virtual IdentityUser IdentityUser { get; set; }
+        public virtual User IdentityUser { get; set; }
         /// <summary>
         /// This user can only read the associated childs records. False value allows created / edit / delete.
         /// </summary>

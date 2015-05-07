@@ -8,13 +8,68 @@
 
     }
 
-   
+
     self.sortedByDate = ko.computed(function () {
         var s = self.items.slice(0).sort(function (l, r) {
             return r.user().userName() > l.user().userName() ? -1 : 1;
         });
         return s;
     }, self);
+
+    self.onUpdated = function ($e, datum) {
+        self.item().user(new User(datum));
+    };
+
+    self.baOptions = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('userName'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        //  prefetch: '../data/films/post_1960.json',
+        remote: {
+            url: "api/search?username=%QUERY",
+            wildcard: '%QUERY',
+            filter: function (data) {
+                return data;
+            }
+        }
+    });
+
+
+    self.applyTypeAhead = function () {
+        $(".typeahead")
+        .typeahead({
+            hint: false,
+            minLength: 3,
+            highlight: true
+        }, {
+            displayKey: 'userName',
+            source: self.baOptions.ttAdapter(), // states,
+            templates: {
+                empty: [
+                        '<div class="empty-message">',
+                          'No matching User found',
+                        '</div>'
+                ].join('\n'),
+                suggestion: Handlebars.compile('<div>{{userName}}</div>')
+            }
+        })
+        .on('typeahead:autocompleted', self.onUpdated)
+        .on('typeahead:selected', self.onUpdated); // for knockoutJS
+
+        $("span.twitter-typeahead").attr('style', 'display: inline');
+    }
+
+
+
+
+    self.isCreatingNew.subscribe(function (newvalue) {
+        self.applyTypeAhead();
+    });
+
+    self.isEditing.subscribe(function (newvalue) {
+        self.applyTypeAhead();
+    });
+
+
 }
 
 app.addViewModel({
@@ -27,7 +82,7 @@ app.addViewModel({
                 child: ko.toJS(app.selectedChild().child()),
                 readOnly: true,
                 user: { id: 0 }
-        });
+            });
         };
         var options = {
             modelFunc: Permission,

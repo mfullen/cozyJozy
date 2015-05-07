@@ -228,6 +228,7 @@
     <Compile Include="Controllers\FeedingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MeasurementController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\TitleController.cs" />
     <Compile Include="Entity\CozyJozyContext.cs" />
     <Compile Include="Entity\Repositories\ChildPermissionsRepository.cs" />
@@ -473,6 +474,7 @@
     <Content Include="Content\material\sweet-alert.css" />
     <Content Include="Content\material\sweet-alert.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\typeaheadjs.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -548,6 +550,7 @@
     <Content Include="Scripts\fullcalendar.min.js" />
     <Content Include="Scripts\functions.js" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
+    <Content Include="Scripts\handlebars-v3.0.3.js" />
     <Content Include="Scripts\jquery-2.1.3.js" />
     <Content Include="Scripts\jquery-2.1.3.min.js" />
     <Content Include="Scripts\jquery.easypiechart.js" />
@@ -576,6 +579,7 @@
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\typeahead.bundle.js" />
     <Content Include="Scripts\waves.js" />
     <Content Include="Scripts\waves.min.js" />
     <Content Include="Scripts\_references.js" />
