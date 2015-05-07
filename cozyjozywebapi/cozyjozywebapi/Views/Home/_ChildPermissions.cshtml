@@ -1,7 +1,7 @@
 ﻿<!-- ko with: cpvm -->
 
 
-<div class="card" data-bind="if: isCreatingNew() || isEditing()">
+<div class="card" data-bind="visible: isCreatingNew() || isEditing()">
     <div data-bind=" with: item">
 
         <div class="card-header">
@@ -16,27 +16,41 @@
         <div class="card-body card-padding">
             <div class="row">
 
-                <div class="col-sm-2 m-b-20 checkbox m-b-15">
-                    <label>
-                        <input type="checkbox" data-bind="checked: readOnly">
-                        <i class=" input-helper"></i>
-                        Give Readonly access
-                    </label>
+                <div class="col-sm-2 m-b-20">
+                    <p class="c-black f-500 m-b-20">Access</p>
+                    <div>
+                        <label class="radio radio-inline m-r-20 m-b-20">
+                            <input type="radio" name="inlineRadioOptions" data-bind="checked: readOnly, checkedValue: true">
+                            <i class="input-helper"></i>
+                            Read Only
+                        </label>
+                    </div>
+                    <div>
+                        <label class="radio radio-inline m-r-20 m-b-20">
+                            <input type="radio" name="inlineRadioOptions" data-bind="checked: readOnly, checkedValue: false">
+                            <i class="input-helper"></i>
+                            Admin
+                        </label>
+                    </div>
                 </div>
 
 
 
                 <div class="col-sm-4 m-b-20">
-                    <p class="c-black f-500 m-b-20">UserId</p>
-                    <div class="form-group">
+                    <p class="c-black f-500 m-b-20">User Name</p>
+                    <div class="form-group" id="scrollable-dropdown-menu">
                         <div class="fg-line" data-bind="with: user">
-                            <textarea class="form-control" data-bind='value: id' rows="1" placeholder="Enter UserId here..."></textarea>
+                            <input class="typeahead form-control" type="text" placeholder="User Name" data-bind='value: userName'>
                         </div>
                     </div>
                 </div>
 
+
                 <div class="col-sm-4 m-b-20">
-                    <select class="form-control" data-bind="options: $parent.availableTitles, value: title"></select>
+                    <p class="c-black f-500 m-b-20">Title</p>
+                    <div class="form-group">
+                        <select class="form-control" data-bind="options: $parent.availableTitles, value: title"></select>
+                    </div>
                 </div>
             </div>
 
@@ -97,7 +111,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                
+
                                 <!-- ko with: user -->
                                 <div class="lv-title" style="font-weight: bold">
                                     <span data-bind="text: userName"></span>
@@ -111,7 +125,10 @@
 
                                 <ul class="lv-attrs">
                                     <li data-bind="visible: !readOnly()" class="bgm-blue c-white">
-                                        <span data-bind="text: 'Admin'"></span>
+                                        <span data-bind="text: 'Admin (Can Add/Edit/Delete)'"></span>
+                                    </li>
+                                    <li data-bind="visible: readOnly()" class="bgm-deeppurple c-white">
+                                        <span data-bind="text: 'Read Only (No Editing)'"></span>
                                     </li>
                                 </ul>
                             </div>

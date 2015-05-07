@@ -534,6 +534,7 @@
 
             $('[data-toggle="tooltip"]').tooltip();
 
+  
             ko.bindingHandlers.datetimepicker = {
                 init: function (element, valueAccessor, allBindings) {
                     var options = {
@@ -611,7 +612,6 @@
                     $(element).slider('setValue', parseFloat(valueObservable()));
                 }
             };
-
         });
     </script>
     <script>

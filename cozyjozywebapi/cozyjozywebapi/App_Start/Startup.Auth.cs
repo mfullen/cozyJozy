@@ -23,7 +23,7 @@ namespace cozyjozywebapi
         {
             PublicClientId = "self";
 
-            UserManagerFactory = () => new UserManager<IdentityUser>(new UserStore<IdentityUser>(new CozyJozyContext()));
+            UserManagerFactory = () => new UserManager<User>(new UserStore<User>(new CozyJozyContext()));
 
 
             OAuthOptions = new OAuthAuthorizationServerOptions
@@ -38,7 +38,7 @@ namespace cozyjozywebapi
 
         public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
 
-        public static Func<UserManager<IdentityUser>> UserManagerFactory { get; set; }
+        public static Func<UserManager<User>> UserManagerFactory { get; set; }
 
         public static string PublicClientId { get; private set; }
 
