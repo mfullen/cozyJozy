@@ -502,6 +502,11 @@
 
         <section id="content">
             <div class="container">
+                <div class="alert alert-danger" data-bind="visible: errors().length > 0">
+                    <ul data-bind="foreach: errors">
+                        <li data-bind="text: $data"></li>
+                    </ul>
+                </div>
                 @Html.Partial("_Home")
                 @Html.Partial("_ChildMgt")
                 @Html.Partial("_ChildPermissions")

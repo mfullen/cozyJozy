@@ -2,9 +2,26 @@
     BaseVm.apply(this, arguments);
     var self = this;
 
-    self.canSave = function () {
+    self.canSave = ko.computed(function () {
+        self.clearErrors();
 
-    }
+        if(!(self.isEditing() || self.isCreatingNew())) {
+            return false;
+        }
+
+        //Must have an Occurred on Date
+        if (!self.item().occurredOn()) {
+            self.addError('Date of Occurrence is required.');
+            return false;
+        }
+        //Must have either Poop or Pee
+        if (!(self.item().urine() || self.item().stool())) {
+            self.addError('Pee and/or Poop is required.');
+            return false;
+        }
+
+        return true;
+    }, self);
 
     self.sortedByDate = ko.computed(function () {
         var s = self.items.slice(0).sort(function (l, r) {

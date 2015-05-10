@@ -8,7 +8,8 @@ function ChildManagement(app, dataModel) {
             id: 0,
             male: false,
             lastName: '',
-            middleName: ''
+            middleName: '',
+            dateOfBirth: ''
         });
     };
 
@@ -123,9 +124,41 @@ function ChildManagement(app, dataModel) {
         self.reset();
     }
 
-    self.canSave = function () {
-        
+
+    self.clearErrors = function () {
+        app.errors.removeAll();
     }
+
+    self.addError = function (error) {
+        app.errors.push(error);
+    }
+
+
+    self.canSave = ko.computed(function () {
+
+        self.clearErrors();
+
+        if (!(self.isEditing() || self.isCreatingNew())) {
+            return false;
+        }
+
+
+        //must have DOB
+        if (!self.item().dateOfBirth()) {
+            self.addError('Date of Birth is required.');
+            return false;
+        }
+
+        //must have First name
+        if (!self.item().firstName()) {
+            self.addError('First Name is required.');
+            return false;
+        }
+
+
+        return true;
+
+    }, self);
 
     self.canAdd = ko.computed(function () {
         return true;

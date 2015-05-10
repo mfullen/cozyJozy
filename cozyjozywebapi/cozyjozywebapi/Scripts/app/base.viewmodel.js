@@ -7,11 +7,11 @@
     var baseUrl = options.url;
     var itemName = options.itemName;
 
-    var clearErrors = function () {
+    self.clearErrors = function () {
         app.errors.removeAll();
     }
 
-    var addError = function (error) {
+    self.addError = function (error) {
         app.errors.push(error);
     }
 
@@ -92,7 +92,7 @@
                 self.reset();
             },
             error: function (xhr, textStatus, err) {
-                addError("Failed to create " + itemName + ". Please try again!");
+                self.addError("Failed to create " + itemName + ". Please try again!");
                 console.log("Error", xhr, textStatus, err);
             }
         });
@@ -106,7 +106,7 @@
         self.item(newItemFunction());
         self.isEditing(false);
         self.isCreatingNew(false);
-        clearErrors();
+        self.clearErrors();
     }
 
     self.edit = function (f) {
@@ -133,7 +133,7 @@
                 self.reset();
             },
             error: function (xhr, textStatus, err) {
-                addError("Failed to update " + itemName + ". Please try again!");
+                self.addError("Failed to update " + itemName + ". Please try again!");
                 console.log("Error", xhr, textStatus, err);
             }
         });
@@ -151,7 +151,7 @@
                     self.items.remove(f);
                 },
                 error: function (xhr, textStatus, err) {
-                    addError("Failed to delete the record.");
+                    self.addError("Failed to delete the record.");
                     console.log("Error", xhr, textStatus, err);
                 }
             });
@@ -176,7 +176,7 @@
                 }
             },
             error: function (xhr, textStatus, err) {
-                addError("Failed to retrieve " + itemName + "s. Please try again!");
+                self.addError("Failed to retrieve " + itemName + "s. Please try again!");
                 console.log("Error", xhr, textStatus, err);
                 if (ffunc != null) {
                     ffunc();
