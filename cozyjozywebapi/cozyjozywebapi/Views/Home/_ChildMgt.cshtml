@@ -21,42 +21,48 @@
                     </div>
                 </div>
 
-                <div class="col-sm-2 m-b-20">
-                    <label class="radio radio-inline m-r-20">
-                        <input type="radio" name="inlineRadioOptions" data-bind="checked: male, checkedValue: true">
-                        <i class="input-helper"></i>
-                        Boy
-                    </label>
-
-                    <label class="radio radio-inline m-r-20">
-                        <input type="radio" name="inlineRadioOptions"  data-bind="checked: male, checkedValue: false">
-                        <i class="input-helper"></i>
-                        Girl
-                    </label>
+                <div>
+                    <p class="c-black f-500 m-b-20">Gender</p>
+                    <div class="col-sm-2 m-b-20">
+                        <label class="radio radio-inline m-r-20">
+                            <input type="radio" name="inlineRadioOptions" data-bind="checked: male, checkedValue: true">
+                            <i class="input-helper"></i>
+                            Boy
+                        </label>
+                    </div>
+                    <div class="col-sm-2 m-b-20">
+                        <label class="radio radio-inline m-r-20">
+                            <input type="radio" name="inlineRadioOptions" data-bind="checked: male, checkedValue: false">
+                            <i class="input-helper"></i>
+                            Girl
+                        </label>
+                    </div>
                 </div>
 
-                <div class="col-sm-6 m-b-20">
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6 m-b-20">
                     <p class="c-black f-500 m-b-20">First Name</p>
 
-                    <div class="col-sm-3 form-group fg-line">
+                    <div class="col-md-6 col-sm-3 form-group fg-line">
                         <input class="form-control" data-bind="value: firstName" />
                     </div>
 
                 </div>
-                
-                <div class="col-sm-6 m-b-20">
+
+                <div class="col-md-6 col-sm-6 m-b-20">
                     <p class="c-black f-500 m-b-20">Middle Name</p>
 
-                    <div class="col-sm-3 form-group fg-line">
+                    <div class="col-md-6 col-sm-3 form-group fg-line">
                         <input class="form-control" data-bind="value: middleName" />
                     </div>
 
                 </div>
-                
-                <div class="col-sm-6 m-b-20">
+
+                <div class="col-md-6 col-sm-6 m-b-20">
                     <p class="c-black f-500 m-b-20">Last Name</p>
 
-                    <div class="col-sm-3 form-group fg-line">
+                    <div class="col-md-6 col-sm-3 form-group fg-line">
                         <input class="form-control" data-bind="value: lastName" />
                     </div>
 
@@ -129,7 +135,7 @@
                                 <small class="lv-small" data-bind="text: moment(dateOfBirth()).format('dddd, MMM Do YYYY hh:mm a')"></small>
                                 <!-- /ko -->
 
-                                <span >
+                                <span>
                                     <span style="word-wrap: break-word" data-bind="text: ''"></span>
                                 </span>
 
