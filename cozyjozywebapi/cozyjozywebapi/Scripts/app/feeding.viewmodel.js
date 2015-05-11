@@ -33,10 +33,40 @@
     }
 
 
+    self.canSave = ko.computed(function() {
+        self.clearErrors();
 
-    self.canSave = function () {
+        if (!(self.isEditing() || self.isCreatingNew())) {
+            return false;
+        }
 
-    }
+        //Must have Start Date
+        if (!self.item().startTime()) {
+            self.addError('Start date/time is required.');
+            return false;
+        }
+
+        //Must have End Date
+        if (!self.item().endTime()) {
+            self.addError('Ending date/time is required.');
+            return false;
+        }
+
+        //Must have delivery Type
+        if (!self.item().deliveryType()) {
+            self.addError('Delivery Type is required.');
+            return false;
+        }
+
+        //Start Date must be before End Date
+        var startBeforeEnd = moment(self.item().startTime()).isBefore(moment(self.item().endTime()));
+        if (!startBeforeEnd) {
+            self.addError('Start date/time must come before the End date/time.');
+            return false;
+        }
+        return true;
+
+    }, self);
 
     self.sortedFeedingsByDate = ko.computed(function () {
         var s = self.items().slice(0).sort(function (l, r) {

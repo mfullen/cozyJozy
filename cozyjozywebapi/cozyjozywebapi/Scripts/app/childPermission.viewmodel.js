@@ -4,9 +4,32 @@
 
     self.availableTitles = app.availableTitles();
 
-    self.canSave = function () {
 
-    }
+    self.canSave = ko.computed(function () {
+        self.clearErrors();
+
+        if (!(self.isEditing() || self.isCreatingNew())) {
+            return false;
+        }
+
+        if (!self.item().user()) {
+            self.addError('Must have a user selected.');
+            return false;
+        }
+
+        if (!self.item().user().userName()) {
+            self.addError('Must have a user selected.');
+            return false;
+        }
+
+        if (self.item().user().userName() === '') {
+            self.addError('Must have a user selected.');
+            return false;
+        }
+
+        return true;
+
+    }, self);
 
 
     self.sortedByDate = ko.computed(function () {

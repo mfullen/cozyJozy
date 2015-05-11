@@ -5,7 +5,7 @@ function FEED(data) {
     this.id = ko.observable(data.id);
     this.startTime = ko.observable(data.startTime).extend({ required: true });
     this.endTime = ko.observable(data.endTime).extend({ required: true });
-    this.deliveryType = ko.observable(data.deliveryType);
+    this.deliveryType = ko.observable(data.deliveryType).extend({ required: true });
     this.amount = ko.observable(data.amount).extend({ numeric: 2 });
     this.dateReported = ko.observable(data.dateReported);
     this.childId = ko.observable(data.childId);
@@ -50,11 +50,11 @@ Permission class represents the actual data contained in granting a user permiss
 */
 function Permission(data) {
     this.id = ko.observable(data.id);
-    this.user = ko.observable(new User(data.user));
+    this.user = ko.observable(new User(data.user)).extend({ required: true });
     this.child = ko.observable(new ChildClass(data.child));
     this.readOnly = ko.observable(data.readOnly);
     this.childId = ko.observable(data.childId);
-    this.title = ko.observable(data.title);
+    this.title = ko.observable(data.title).extend({ required: true });
 }
 
 /**
