@@ -104,6 +104,22 @@
     }
 
 
+    self.activeMenuClass = function(bit) {
+        return ko.computed({
+            read: function() {
+                if (bit === self.view().name) {
+                    return "active";
+                }
+                return "";
+            },
+            write: function(cname) {
+
+                return "";
+            }
+        }, self);
+    };
+
+
     // UI state
     self.errors = ko.observableArray();
     self.user = ko.observable(null);
@@ -179,6 +195,7 @@
 
         // Add view to AppViewModel.Views enum (for example, app.Views.Home).
         self.Views[options.name] = viewItem;
+        viewItem.name = options.name;
 
         // Add binding member to AppViewModel (for example, app.home);
         self[options.bindingMemberName] = ko.computed(function () {
