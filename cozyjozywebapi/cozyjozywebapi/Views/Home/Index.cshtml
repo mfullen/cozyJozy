@@ -326,6 +326,7 @@
                     </div>
 
                     <ul class="main-menu" data-bind="if: loggedIn">
+                        @*<li class="active"><a href="#" data-bind="click: navigateToDeveloper"><i class="md md-home"></i> Development</a></li>*@
                         <li class="active"><a href="#" data-bind="visible: selectedChild(), click: navigateToHome"><i class="md md-home"></i> Home</a></li>
                         <li><a href="#" data-bind="click: navigateToChildManagement"><i class="md md-face-unlock"></i>Child Management</a></li>
                         <li><a href="#" data-bind="visible: selectedChild() && !selectedChild().readOnly, click: navigateToChildPermissionViewModel"><i class="md md-assignment"></i>Permissions</a></li>
@@ -338,166 +339,166 @@
             </div>
         </aside>
 
-        <aside id="chat" data-bind="visible:false">
-            <ul class="tab-nav tn-justified" role="tablist">
-                <li role="presentation" class="active"><a href="#friends" aria-controls="friends" role="tab" data-toggle="tab">Friends</a></li>
-                <li role="presentation"><a href="#online" aria-controls="online" role="tab" data-toggle="tab">Online Now</a></li>
-            </ul>
+        @*<aside id="chat" data-bind="visible:false">
+                <ul class="tab-nav tn-justified" role="tablist">
+                    <li role="presentation" class="active"><a href="#friends" aria-controls="friends" role="tab" data-toggle="tab">Friends</a></li>
+                    <li role="presentation"><a href="#online" aria-controls="online" role="tab" data-toggle="tab">Online Now</a></li>
+                </ul>
 
-            <div class="chat-search">
-                <div class="fg-line">
-                    <input type="text" class="form-control" placeholder="Search People">
-                </div>
-            </div>
-
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade in active" id="friends">
-                    <div class="listview">
-                        <a class="lv-item" href="">
-                            <div class="media">
-                                <div class="pull-left p-relative">
-                                    <img class="lv-img-sm" src="~/Content/material/images/profile-pics/2.jpg" alt="">
-                                    <i class="chat-status-busy"></i>
-                                </div>
-                                <div class="media-body">
-                                    <div class="lv-title">Jonathan Morris</div>
-                                    <small class="lv-small">Available</small>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a class="lv-item" href="">
-                            <div class="media">
-                                <div class="pull-left">
-                                    <img class="lv-img-sm" src="~/Content/material/images/profile-pics/1.jpg" alt="">
-                                </div>
-                                <div class="media-body">
-                                    <div class="lv-title">David Belle</div>
-                                    <small class="lv-small">Last seen 3 hours ago</small>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a class="lv-item" href="">
-                            <div class="media">
-                                <div class="pull-left p-relative">
-                                    <img class="lv-img-sm" src="~/Content/material/images/profile-pics/3.jpg" alt="">
-                                    <i class="chat-status-online"></i>
-                                </div>
-                                <div class="media-body">
-                                    <div class="lv-title">Fredric Mitchell Jr.</div>
-                                    <small class="lv-small">Availble</small>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a class="lv-item" href="">
-                            <div class="media">
-                                <div class="pull-left p-relative">
-                                    <img class="lv-img-sm" src="~/Content/material/images/profile-pics/4.jpg" alt="">
-                                    <i class="chat-status-online"></i>
-                                </div>
-                                <div class="media-body">
-                                    <div class="lv-title">Glenn Jecobs</div>
-                                    <small class="lv-small">Availble</small>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a class="lv-item" href="">
-                            <div class="media">
-                                <div class="pull-left">
-                                    <img class="lv-img-sm" src="~/Content/material/images/profile-pics/5.jpg" alt="">
-                                </div>
-                                <div class="media-body">
-                                    <div class="lv-title">Bill Phillips</div>
-                                    <small class="lv-small">Last seen 3 days ago</small>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a class="lv-item" href="">
-                            <div class="media">
-                                <div class="pull-left">
-                                    <img class="lv-img-sm" src="~/Content/material/images/profile-pics/6.jpg" alt="">
-                                </div>
-                                <div class="media-body">
-                                    <div class="lv-title">Wendy Mitchell</div>
-                                    <small class="lv-small">Last seen 2 minutes ago</small>
-                                </div>
-                            </div>
-                        </a>
-                        <a class="lv-item" href="">
-                            <div class="media">
-                                <div class="pull-left p-relative">
-                                    <img class="lv-img-sm" src="~/Content/material/images/profile-pics/7.jpg" alt="">
-                                    <i class="chat-status-busy"></i>
-                                </div>
-                                <div class="media-body">
-                                    <div class="lv-title">Teena Bell Ann</div>
-                                    <small class="lv-small">Busy</small>
-                                </div>
-                            </div>
-                        </a>
+                <div class="chat-search">
+                    <div class="fg-line">
+                        <input type="text" class="form-control" placeholder="Search People">
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane fade" id="online">
-                    <div class="listview">
-                        <a class="lv-item" href="">
-                            <div class="media">
-                                <div class="pull-left p-relative">
-                                    <img class="lv-img-sm" src="~/Content/material/images/profile-pics/2.jpg" alt="">
-                                    <i class="chat-status-busy"></i>
-                                </div>
-                                <div class="media-body">
-                                    <div class="lv-title">Jonathan Morris</div>
-                                    <small class="lv-small">Available</small>
-                                </div>
-                            </div>
-                        </a>
 
-                        <a class="lv-item" href="">
-                            <div class="media">
-                                <div class="pull-left p-relative">
-                                    <img class="lv-img-sm" src="~/Content/material/images/profile-pics/3.jpg" alt="">
-                                    <i class="chat-status-online"></i>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="friends">
+                        <div class="listview">
+                            <a class="lv-item" href="">
+                                <div class="media">
+                                    <div class="pull-left p-relative">
+                                        <img class="lv-img-sm" src="~/Content/material/images/profile-pics/2.jpg" alt="">
+                                        <i class="chat-status-busy"></i>
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="lv-title">Jonathan Morris</div>
+                                        <small class="lv-small">Available</small>
+                                    </div>
                                 </div>
-                                <div class="media-body">
-                                    <div class="lv-title">Fredric Mitchell Jr.</div>
-                                    <small class="lv-small">Availble</small>
-                                </div>
-                            </div>
-                        </a>
+                            </a>
 
-                        <a class="lv-item" href="">
-                            <div class="media">
-                                <div class="pull-left p-relative">
-                                    <img class="lv-img-sm" src="~/Content/material/images/profile-pics/4.jpg" alt="">
-                                    <i class="chat-status-online"></i>
+                            <a class="lv-item" href="">
+                                <div class="media">
+                                    <div class="pull-left">
+                                        <img class="lv-img-sm" src="~/Content/material/images/profile-pics/1.jpg" alt="">
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="lv-title">David Belle</div>
+                                        <small class="lv-small">Last seen 3 hours ago</small>
+                                    </div>
                                 </div>
-                                <div class="media-body">
-                                    <div class="lv-title">Glenn Jecobs</div>
-                                    <small class="lv-small">Availble</small>
-                                </div>
-                            </div>
-                        </a>
+                            </a>
 
-                        <a class="lv-item" href="">
-                            <div class="media">
-                                <div class="pull-left p-relative">
-                                    <img class="lv-img-sm" src="~/Content/material/images/profile-pics/7.jpg" alt="">
-                                    <i class="chat-status-busy"></i>
+                            <a class="lv-item" href="">
+                                <div class="media">
+                                    <div class="pull-left p-relative">
+                                        <img class="lv-img-sm" src="~/Content/material/images/profile-pics/3.jpg" alt="">
+                                        <i class="chat-status-online"></i>
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="lv-title">Fredric Mitchell Jr.</div>
+                                        <small class="lv-small">Availble</small>
+                                    </div>
                                 </div>
-                                <div class="media-body">
-                                    <div class="lv-title">Teena Bell Ann</div>
-                                    <small class="lv-small">Busy</small>
+                            </a>
+
+                            <a class="lv-item" href="">
+                                <div class="media">
+                                    <div class="pull-left p-relative">
+                                        <img class="lv-img-sm" src="~/Content/material/images/profile-pics/4.jpg" alt="">
+                                        <i class="chat-status-online"></i>
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="lv-title">Glenn Jecobs</div>
+                                        <small class="lv-small">Availble</small>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
+
+                            <a class="lv-item" href="">
+                                <div class="media">
+                                    <div class="pull-left">
+                                        <img class="lv-img-sm" src="~/Content/material/images/profile-pics/5.jpg" alt="">
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="lv-title">Bill Phillips</div>
+                                        <small class="lv-small">Last seen 3 days ago</small>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <a class="lv-item" href="">
+                                <div class="media">
+                                    <div class="pull-left">
+                                        <img class="lv-img-sm" src="~/Content/material/images/profile-pics/6.jpg" alt="">
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="lv-title">Wendy Mitchell</div>
+                                        <small class="lv-small">Last seen 2 minutes ago</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <a class="lv-item" href="">
+                                <div class="media">
+                                    <div class="pull-left p-relative">
+                                        <img class="lv-img-sm" src="~/Content/material/images/profile-pics/7.jpg" alt="">
+                                        <i class="chat-status-busy"></i>
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="lv-title">Teena Bell Ann</div>
+                                        <small class="lv-small">Busy</small>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="online">
+                        <div class="listview">
+                            <a class="lv-item" href="">
+                                <div class="media">
+                                    <div class="pull-left p-relative">
+                                        <img class="lv-img-sm" src="~/Content/material/images/profile-pics/2.jpg" alt="">
+                                        <i class="chat-status-busy"></i>
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="lv-title">Jonathan Morris</div>
+                                        <small class="lv-small">Available</small>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <a class="lv-item" href="">
+                                <div class="media">
+                                    <div class="pull-left p-relative">
+                                        <img class="lv-img-sm" src="~/Content/material/images/profile-pics/3.jpg" alt="">
+                                        <i class="chat-status-online"></i>
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="lv-title">Fredric Mitchell Jr.</div>
+                                        <small class="lv-small">Availble</small>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <a class="lv-item" href="">
+                                <div class="media">
+                                    <div class="pull-left p-relative">
+                                        <img class="lv-img-sm" src="~/Content/material/images/profile-pics/4.jpg" alt="">
+                                        <i class="chat-status-online"></i>
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="lv-title">Glenn Jecobs</div>
+                                        <small class="lv-small">Availble</small>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <a class="lv-item" href="">
+                                <div class="media">
+                                    <div class="pull-left p-relative">
+                                        <img class="lv-img-sm" src="~/Content/material/images/profile-pics/7.jpg" alt="">
+                                        <i class="chat-status-busy"></i>
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="lv-title">Teena Bell Ann</div>
+                                        <small class="lv-small">Busy</small>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </aside>
+            </aside>*@
 
 
         <section id="content">
@@ -507,6 +508,7 @@
                         <li data-bind="text: $data"></li>
                     </ul>
                 </div>
+                @Html.Partial("Developer")
                 @Html.Partial("_Home")
                 @Html.Partial("_ChildMgt")
                 @Html.Partial("_ChildPermissions")
@@ -537,9 +539,22 @@
                 $('#loadingDiv').hide();
             });
 
-            $('[data-toggle="tooltip"]').tooltip();
 
-  
+            $(document).ajaxError(function (event, xhr, textStatus, err) {
+                switch (xhr.status) {
+                    case 401:
+                    case 403:
+                        app.user(null);
+                        app.navigateToLoggedOff();
+                        app.errors.push('Your request could not be authenicated. Please login again!');
+                        break;
+                    default:
+                        app.errors.push('Error: ' + xhr.status + ' ' + err);
+                        break;
+                }
+            });
+
+
             ko.bindingHandlers.datetimepicker = {
                 init: function (element, valueAccessor, allBindings) {
                     var options = {
