@@ -157,6 +157,7 @@ namespace cozyjozywebapi.Controllers
         }
 
         // DELETE api/<controller>/5
+        [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
             var authorthizedChildren = HttpContext.Current.Items[Authorthizedchildren] as List<int>;

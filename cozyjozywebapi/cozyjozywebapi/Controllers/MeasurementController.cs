@@ -59,8 +59,9 @@ namespace cozyjozywebapi.Controllers
 
         // PUT: api/Measurement/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutMeasurement(int id, Measurement measurement)
+        public async Task<IHttpActionResult> PutMeasurement(Measurement measurement)
         {
+            var id = measurement.Id;
             var authorthizedChildren = HttpContext.Current.Items[Authorthizedchildren] as List<int>;
 
             if (!ModelState.IsValid || !authorthizedChildren.Contains(measurement.ChildId))

@@ -84,8 +84,9 @@ namespace cozyjozywebapi.Controllers
 
         // PUT: api/DiaperChanges/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutDiaperChanges(int id, DiaperChanges diaperChanges)
+        public async Task<IHttpActionResult> PutDiaperChanges(DiaperChanges diaperChanges)
         {
+            var id = diaperChanges.Id;
             var authorthizedChildren = HttpContext.Current.Items[Authorthizedchildren] as List<int>;
 
             if (!ModelState.IsValid || !authorthizedChildren.Contains(diaperChanges.ChildId))

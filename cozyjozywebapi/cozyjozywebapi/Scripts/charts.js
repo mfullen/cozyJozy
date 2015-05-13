@@ -7,13 +7,13 @@ $(document).ready(function () {
     * SPARKLINE
     */
     function sparklineBar(id, values, height, barWidth, barColor, barSpacing) {
-        $('.'+id).sparkline(values, {
+        $('.' + id).sparkline(values, {
             type: 'bar',
             height: height,
             barWidth: barWidth,
             barColor: barColor,
             barSpacing: barSpacing
-        })
+        });
     }
     
     function sparklineLine(id, values, width, height, lineColor, fillColor, lineWidth, maxSpotColor, minSpotColor, spotColor, spotRadius, hSpotColor, hLineColor) {

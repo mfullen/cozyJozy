@@ -64,8 +64,10 @@ namespace cozyjozywebapi.Controllers
 
         // PUT: api/Children/5
         [ResponseType(typeof(ChildResponse))]
-        public async Task<IHttpActionResult> PutChild(int id, Child child)
+        public async Task<IHttpActionResult> PutChild(Child child)
         {
+            var id = child.Id;
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
