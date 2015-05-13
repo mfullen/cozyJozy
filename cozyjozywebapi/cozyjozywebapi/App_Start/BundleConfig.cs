@@ -13,6 +13,15 @@ namespace cozyjozywebapi
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                 "~/Scripts/jquery-{version}.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/jqueryPlugins").Include(
+               "~/Scripts/jquery.flot.js",
+               "~/Scripts/jquery.flot.resize.js",
+               "~/Scripts/jquery.easypiechart.js",
+               "~/Scripts/jquery.sparkline.js",
+               "~/Scripts/jquery.simpleWeather.js",
+               "~/Scripts/jquery.nicescroll.js"
+               ));
+
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
                 "~/Scripts/knockout-{version}.js",
                 "~/Scripts/knockout.validation.js",
@@ -21,8 +30,7 @@ namespace cozyjozywebapi
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
                 "~/Scripts/app/ajaxPrefilters.js",
                 "~/Scripts/app/app.models.js",
-                 "~/Scripts/app/base.viewmodel.js",
-                "~/Scripts/app/app.bindings.js",
+                "~/Scripts/app/base.viewmodel.js",
                 "~/Scripts/app/app.datamodel.js",
                 "~/Scripts/app/app.viewmodel.js",
                 "~/Scripts/app/developer.viewmodel.js",
@@ -39,25 +47,21 @@ namespace cozyjozywebapi
                 "~/Scripts/app/userInfo.viewmodel.js",
                 "~/Scripts/app/_run.js"));
 
-          
 
-            bundles.Add(new ScriptBundle("~/bundles/materialThemeJs").Include(
+
+            bundles.Add(new ScriptBundle("~/bundles/bootstrapApp").Include(
                 "~/Scripts/bootstrap.js",
                 "~/Scripts/moment.js",
                 "~/Scripts/handlebars-v3.0.3.js",
-                "~/Scripts/fullcalendar.js",
-                "~/Scripts/jquery.simpleWeather.js",
-                "~/Scripts/jquery.nicescroll.js",
                 "~/Scripts/bootstrap-growl.js",
-                "~/Scripts/waves.js",
-                "~/Scripts/jquery.flot.js",
-                "~/Scripts/jquery.flot.resize.js",
-                "~/Scripts/curvedLines.js",
-                "~/Scripts/jquery.easypiechart.js",
-                "~/Scripts/jquery.sparkline.js",
-                "~/Scripts/typeahead.bundle.js",
                 "~/Scripts/bootstrap-datetimepicker.js",
-                "~/Scripts/bootstrap-slider.js",
+                "~/Scripts/typeahead.bundle.js",
+                "~/Scripts/bootstrap-slider.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/materialThemeJs").Include(
+                "~/Scripts/fullcalendar.js",
+                "~/Scripts/waves.js",
+                "~/Scripts/curvedLines.js",
                 "~/Scripts/charts.js",
                 "~/Scripts/functions.js"));
 
@@ -78,7 +82,7 @@ namespace cozyjozywebapi
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                 "~/Scripts/modernizr-*"));
 
-          
+
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                 "~/Scripts/bootstrap.js",

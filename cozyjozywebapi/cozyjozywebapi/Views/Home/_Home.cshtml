@@ -2,95 +2,197 @@
 <div class="jumbotron">
     <h1>CozyJozy.net!</h1>
     <p class="lead">Welcome to CozyJozy, a place to document your child's growth.</p>
+    <p><a class="btn btn-primary btn-lg waves-effect waves-button" data-bind="click: app.navigateToFeeding">Log Feedings &raquo;</a></p>
+    <p><a class="btn btn-primary btn-lg waves-effect waves-button" data-bind="click: app.navigateToDiaper">Log Diaper Changes &raquo;</a></p>
     @*<p><a href="http://asp.net" class="btn btn-primary btn-large">Learn more &raquo;</a></p>*@
 </div>
 
-<div class="row" data-bind="with: stats">
-    <div class="col-md-4 card">
-        <div class="card-header">
-            <h1>Birth Stats</h1>
-        </div>
-        <div class="card-padding">
-            <div>
-                <label>Date of Birth</label>
-                <span data-bind="text: $parent.dob"></span>
-            </div>
-            <div>
-                <label>Time Since Birth</label>
-                <span data-bind="text: $parent.timeSinceBirth"></span>
-            </div>
-            <div>
-                <label>Time Till Birthday</label>
-                <span data-bind="text: $parent.timeTillBirthday"></span>
-            </div>
-
-        </div>
-
+<div data-bind="with: stats">
+    
+    <div class="block-header">
+        <h2>Birth Stats <small>Quick collection of statistics from your child's birth. For advanced statistics, please visit the Statistics page</small></h2>
     </div>
-    <div class="col-md-4 card">
-        <div class="card-header">
-            <h1>Feeding Stats</h1>
+
+    <div class="row">
+        
+        <div class="col-sm-3">
+            <div class="mini-charts-item bgm-bluegray">
+                <div class="clearfix">
+                    <div class="count">
+                        <label>Date of Birth</label>
+                        <h2 data-bind="text: $parent.dob"></h2>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="card-padding">
-            <div>
-                <label>Time Since Last feeding</label>
-                <span data-bind="text: $parent.timeSinceLastFeeding"></span>
-            </div>
-            <div>
-                <label>Number of Feedings in last 24 hours</label>
-                <span data-bind="text: numberOfRecentFeedings"></span>
-            </div>
-            <div>
-                <label>Total Feedings</label>
-                <span data-bind="text: totalFeedings"></span>
-            </div>
-            <div>
-                <label>Amount per Feed in last 24 hours</label>
-                <span data-bind="text: $parent.round2Decimals(recentAmountPerFeed()) + ' mL'"></span>
-                <span> or </span>
-                <span data-bind="text: $parent.convertToOz(recentAmountPerFeed()) + ' oz'"></span>
 
+        <div class="col-sm-3">
+            <div class="mini-charts-item bgm-bluegray">
+                <div class="clearfix">
+                 
+                    <div class="count">
+                        <label>Time Since Birth</label>
+                        <h2 data-bind="text: $parent.timeSinceBirth"></h2>
+                    </div>
+                </div>
             </div>
-            <div>
-                <label>Total Amount per Feed</label>
-                <span data-bind="text: $parent.round2Decimals(totalAmountPerFeed()) + ' mL'"></span>
-                <span> or </span>
-                <span data-bind="text: $parent.convertToOz(totalAmountPerFeed()) + ' oz'"></span>
-            </div>
-
-            <div>
-                <label>Total Amount in last 24 hours</label>
-                <span data-bind="text: $parent.round2Decimals(totalRecentAmount()) + ' mL'"></span>
-                <span> or </span>
-                <span data-bind="text: $parent.convertToOz(totalRecentAmount()) + ' oz'"></span>
-            </div>
-            <p><a class="btn btn-default" data-bind="click: app.navigateToFeeding">Log Feedings &raquo;</a></p>
         </div>
+
+        <div class="col-sm-3">
+
+            <div class="mini-charts-item bgm-bluegray">
+                <div class="clearfix">
+                   
+                    <div class="count">
+                        <label>Next Birthday</label>
+                        <h2 data-bind="text: $parent.timeTillBirthday"></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
 
+    <div class="block-header">
+        <h2>Feeding Stats <small>Quick collection of statistics for your child's feedings. For advanced statistics, please visit the Statistics page</small></h2>
+    </div>
 
-    <div class="col-md-4 card">
-        <div class="card-header">
-            <h1>Diaper Stats</h1>
+    <div class="row">
+
+        <div class="col-sm-3">
+            <div class="mini-charts-item bgm-cyan">
+                <div class="clearfix">
+                    @*<div class="chart stats-bar"></div>*@
+                    <div class="count">
+                        <label>Last Feeding</label>
+                        <h2 data-bind="text: $parent.timeSinceLastFeeding"></h2>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="card-padding">
-            <div>
-                <label>Time Since Last Diaper</label>
-                <span data-bind="text: $parent.timeSinceLastDiaperChange"></span>
+
+
+        <div class="col-sm-3">
+            <div class="mini-charts-item bgm-cyan">
+                <div class="clearfix">
+                    @*<div class="chart stats-bar"></div>*@
+                    <div class="count">
+                        <label>Number of Feedings Since Birth</label>
+                        <h2 data-bind="text: totalFeedings"></h2>
+                    </div>
+                </div>
             </div>
-            <div>
-                <label>Number of Diaper Changes in last 24 hours</label>
-                <span data-bind="text: numberOfRecentDiaperChanges"></span>
-            </div>
-            <div>
-                <label>Total Diaper Changes</label>
-                <span data-bind="text: totalDiaperChanges"></span>
-            </div>
-            <p><a class="btn btn-default" data-bind="click: app.navigateToDiaper">Log Diaper Changes &raquo;</a></p>
         </div>
+
+        <div class="col-sm-3">
+
+            <div class="mini-charts-item bgm-cyan">
+                <div class="clearfix">
+                    @*<div class="chart stats-bar"></div>*@
+                    <div class="count">
+                        <label>Number Feedings in last 24 hours</label>
+                        <h2 data-bind="text: numberOfRecentFeedings"></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="mini-charts-item bgm-cyan">
+                <div class="clearfix">
+                    @*<div class="chart stats-bar"></div>*@
+                    <div class="count">
+                        <label>Avg Amount per Feed Since Birth</label>
+                        <h2 data-bind="text: $parent.round2Decimals(totalAmountPerFeed()) + ' mL'"></h2>
+                        <h2> or </h2>
+                        <h2 data-bind="text: $parent.convertToOz(totalAmountPerFeed()) + ' oz'"></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="col-sm-3">
+            <div class="mini-charts-item bgm-cyan">
+                <div class="clearfix">
+                    @*<div class="chart stats-bar"></div>*@
+                    <div class="count">
+                        <label>Avg Amount per Feed in last 24 hours</label>
+                        <h2 data-bind="text: $parent.round2Decimals(recentAmountPerFeed()) + ' mL'"></h2>
+                        <h2> or </h2>
+                        <h2 data-bind="text: $parent.convertToOz(recentAmountPerFeed()) + ' oz'"></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="mini-charts-item bgm-cyan">
+                <div class="clearfix">
+                    @*<div class="chart stats-bar"></div>*@
+                    <div class="count">
+                        <label>Amount eaten in last 24 hours</label>
+                        <h2 data-bind="text: $parent.round2Decimals(totalRecentAmount()) + ' mL'"></h2>
+                        <h2> or </h2>
+                        <h2 data-bind="text: $parent.convertToOz(totalRecentAmount()) + ' oz'"></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <div class="block-header">
+        <h2>Diaper Stats <small>Quick collection of statistics for your child's Diaper Changes. For advanced statistics, please visit the Statistics page</small></h2>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-3">
+            <div class="mini-charts-item bgm-lightgreen">
+                <div class="clearfix">
+                    @*<div class="chart stats-bar"></div>*@
+                    <div class="count">
+                        <label>Last Diaper Change</label>
+                        <h2 data-bind="text: $parent.timeSinceLastDiaperChange"></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-3">
+            <div class="mini-charts-item bgm-lightgreen">
+                <div class="clearfix">
+                    @*<div class="chart stats-bar"></div>*@
+                    <div class="count">
+                        <label>Number of Diaper Changes Since Birth</label>
+                        <h2 data-bind="text: totalDiaperChanges"></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+
+            <div class="mini-charts-item bgm-lightgreen">
+                <div class="clearfix">
+                    @*<div class="chart stats-bar"></div>*@
+                    <div class="count">
+                        <label>Number Diaper Changes in last 24 hours</label>
+                        <h2 data-bind="text: numberOfRecentDiaperChanges"></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
     </div>
 </div>
-
 <!-- /ko -->

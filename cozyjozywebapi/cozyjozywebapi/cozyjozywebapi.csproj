@@ -626,6 +626,7 @@
     <Content Include="Scripts\knockout.validation.min.js.map" />
     <Content Include="Views\Home\Developer.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Shared\_Layout2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

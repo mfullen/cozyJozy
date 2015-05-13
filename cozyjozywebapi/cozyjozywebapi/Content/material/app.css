@@ -12626,9 +12626,10 @@ input:focus {
 }
 .mini-charts-item .count > h2,
 .mini-charts-item .count > small {
-  overflow: hidden;
+  /*overflow: hidden;*/
   text-overflow: ellipsis;
-  white-space: nowrap;
+  /*white-space: nowrap;*/
+  white-space: normal;
 }
 .mini-charts-item > .clearfix,
 .mini-charts-item > .dl-horizontal dd,

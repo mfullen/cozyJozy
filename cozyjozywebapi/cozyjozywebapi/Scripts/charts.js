@@ -1,4 +1,8 @@
 $(document).ready(function () {
+
+    $(document).ajaxSuccess(function (event, xhr, textStatus, err) {
+    
+   
     /*
     * SPARKLINE
     */
@@ -99,6 +103,7 @@ $(document).ready(function () {
     if ($('.sub-pie-2')[0]) {
         easyPieChart('sub-pie-2', '#eee', '#ccc', '#FFC107', 4, 'butt', 95);
     }
+    });
 });
 
 
