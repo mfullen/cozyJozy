@@ -125,8 +125,8 @@ namespace cozyjozywebapi.Controllers
                     throw e;
                 }
             }
-
-            return CreatedAtRoute("DefaultApi", new { id = measurement.Id }, measurement);
+            var myUri = Request.RequestUri + measurement.Id.ToString();
+            return Created(myUri, measurement);
         }
 
         // DELETE: api/Measurement/5

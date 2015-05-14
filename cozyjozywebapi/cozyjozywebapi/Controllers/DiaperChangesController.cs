@@ -153,8 +153,8 @@ namespace cozyjozywebapi.Controllers
                     throw e;
                 }
             }
-
-            return CreatedAtRoute("DefaultApi", new { id = diaperChanges.Id }, diaperChanges);
+            var myUri = Request.RequestUri + diaperChanges.Id.ToString();
+            return Created(myUri, diaperChanges);
         }
 
         // DELETE: api/DiaperChanges/5

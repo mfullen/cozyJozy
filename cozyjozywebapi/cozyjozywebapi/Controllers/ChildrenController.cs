@@ -88,10 +88,10 @@ namespace cozyjozywebapi.Controllers
             try
             {
                 await _unitOfWork.CommitAsync();
-                return  Ok(new ChildResponse()
+                return Ok(new ChildResponse()
                 {
                     Child = child,
-                    ReadOnly = FilteredChildren().Where(c=> c.Id == child.Id).Select(s=> s.ReadOnly).FirstOrDefault()
+                    ReadOnly = FilteredChildren().Where(c => c.Id == child.Id).Select(s => s.ReadOnly).FirstOrDefault()
                 });
             }
             catch (DbUpdateConcurrencyException)
@@ -128,7 +128,8 @@ namespace cozyjozywebapi.Controllers
                  IdentityUserId = userId
              });
             await _unitOfWork.CommitAsync();
-            return CreatedAtRoute("DefaultApi", new { id = cp.ChildId }, new ChildResponse
+            var myUri = Request.RequestUri + cp.ChildId.ToString();
+            return Created(myUri, new ChildResponse
             {
                 Child = cp.Child,
                 ReadOnly = cp.ReadOnly
