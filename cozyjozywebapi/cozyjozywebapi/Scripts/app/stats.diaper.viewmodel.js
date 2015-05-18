@@ -1,7 +1,6 @@
 ﻿function DiaperStats(app, dataModel, options) {
     var self = this;
 
-
     self.populateBarChart = function (url, selector, dateFormat, fillColor, converter, opts) {
         $.ajax({
             url: url,
@@ -51,18 +50,7 @@
                 // This will get the first returned node in the jQuery collection.
                 var myNewChart = new Chart(ctx);
 
-
-                var width = $('canvas').parent().width();
-                $('canvas').attr("width", width);
-
-                window.onresize = function (event) {
-                    var width = $('canvas').parent().width();
-                    $('canvas').attr("width", width);
-                    myNewChart.StackedBar(data2, opts);
-                };
-
                 myNewChart.StackedBar(data2, opts);
-                //legend(document.getElementById("legendDiv"), data2);
             },
             error: function (xhr, textStatus, err) {
                 app.errors.push("Failed to retrieve Feeding stats. Please try again!");
@@ -112,16 +100,6 @@
                 var ctx = $(selector).get(0).getContext("2d");
                 // This will get the first returned node in the jQuery collection.
                 var myNewChart = new Chart(ctx);
-
-
-                var width = $('canvas').parent().width();
-                $('canvas').attr("width", width);
-
-                window.onresize = function (event) {
-                    var width = $('canvas').parent().width();
-                    $('canvas').attr("width", width);
-                    var myPieChart = myNewChart.Pie(data2, opts);
-                };
 
                 var myPieChart = myNewChart.Pie(data2, opts);
                 var legend = myPieChart.generateLegend();
