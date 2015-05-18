@@ -14,8 +14,8 @@ namespace cozyjozywebapi
                 "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryPlugins").Include(
-               "~/Scripts/jquery.flot.js",
-               "~/Scripts/jquery.flot.resize.js",
+               //"~/Scripts/jquery.flot.js",
+               //"~/Scripts/jquery.flot.resize.js",
                "~/Scripts/jquery.easypiechart.js",
                "~/Scripts/jquery.sparkline.js",
                "~/Scripts/jquery.simpleWeather.js",
@@ -45,6 +45,7 @@ namespace cozyjozywebapi
                 "~/Scripts/app/registerExternal.viewmodel.js",
                 "~/Scripts/app/manage.viewmodel.js",
                 "~/Scripts/app/userInfo.viewmodel.js",
+                "~/Scripts/app/stats.feeding.viewmodel.js",
                 "~/Scripts/app/_run.js"));
 
 
@@ -61,7 +62,8 @@ namespace cozyjozywebapi
             bundles.Add(new ScriptBundle("~/bundles/materialThemeJs").Include(
                 "~/Scripts/fullcalendar.js",
                 "~/Scripts/waves.js",
-                "~/Scripts/curvedLines.js",
+                "~/Scripts/Chart.js",
+                //"~/Scripts/curvedLines.js",
                 "~/Scripts/charts.js",
                 "~/Scripts/functions.js"));
 

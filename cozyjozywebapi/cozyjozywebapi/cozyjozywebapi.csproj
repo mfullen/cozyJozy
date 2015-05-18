@@ -231,6 +231,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MeasurementController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\FeedingStatsController.cs" />
     <Compile Include="Controllers\TitleController.cs" />
     <Compile Include="Entity\CozyJozyContext.cs" />
     <Compile Include="Entity\Repositories\ChildPermissionsRepository.cs" />
@@ -488,6 +489,7 @@
     <Content Include="Scripts\app\diapermgt.viewmodel.js" />
     <Content Include="Scripts\app\feeding.viewmodel.js" />
     <Content Include="Scripts\app\measurements.viewmodel.js" />
+    <Content Include="Scripts\app\stats.feeding.viewmodel.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap-growl.js" />
@@ -547,6 +549,7 @@
     <None Include="Properties\PublishProfiles\cozyjozyazure.pubxml" />
     <None Include="Properties\PublishProfiles\cozyJozymikefullen.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\charts.js" />
     <Content Include="Scripts\curvedLines.js" />
     <Content Include="Scripts\fullcalendar.js" />
@@ -627,6 +630,7 @@
     <Content Include="Views\Home\Developer.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Shared\_Layout2.cshtml" />
+    <Content Include="Views\Home\_FeedingStats.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

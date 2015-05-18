@@ -7,6 +7,7 @@
 @section SPAViews {
     @Html.Partial("_Home")
     @Html.Partial("_Login")
+    @Html.Partial("_FeedingStats")
     @Html.Partial("Developer")
     @Html.Partial("_ChildMgt")
     @Html.Partial("_ChildPermissions")
@@ -34,7 +35,7 @@
         $(document).ajaxStop(function () {
             $('#loadingDiv').hide();
         });
-        
+
         $(document).ajaxError(function (event, xhr, textStatus, err) {
             switch (xhr.status) {
                 case 401:

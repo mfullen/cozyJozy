@@ -58,6 +58,14 @@
             return false;
         }
 
+        if (self.item().deliveryType() == 2) {
+
+            if (!self.item().amount() || self.item().amount() <= 0) {
+                self.addError('Amount must be greater than zero.');
+                return false;
+            }
+        }
+
         //Start Date must be before End Date
         var startBeforeEnd = moment(self.item().startTime()).isBefore(moment(self.item().endTime()));
         if (!startBeforeEnd) {
