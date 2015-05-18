@@ -46,6 +46,7 @@ namespace cozyjozywebapi
                 "~/Scripts/app/manage.viewmodel.js",
                 "~/Scripts/app/userInfo.viewmodel.js",
                 "~/Scripts/app/stats.feeding.viewmodel.js",
+                "~/Scripts/app/stats.diaper.viewmodel.js",
                 "~/Scripts/app/_run.js"));
 
 
@@ -63,6 +64,7 @@ namespace cozyjozywebapi
                 "~/Scripts/fullcalendar.js",
                 "~/Scripts/waves.js",
                 "~/Scripts/Chart.js",
+                "~/Scripts/Chart.StackedBar.js",
                 //"~/Scripts/curvedLines.js",
                 "~/Scripts/charts.js",
                 "~/Scripts/functions.js"));

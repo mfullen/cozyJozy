@@ -2,6 +2,15 @@
  * Load Main Bootstrap LESS files
  */
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+.pie-legend li span {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    margin-right: 5px;
+}
+.pie-legend {
+    list-style: none;    
+}
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;

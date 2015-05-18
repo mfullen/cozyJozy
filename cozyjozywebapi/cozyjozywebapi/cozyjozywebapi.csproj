@@ -226,6 +226,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DeveloperController.cs" />
     <Compile Include="Controllers\DiaperChangesController.cs" />
+    <Compile Include="Controllers\DiaperStatsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FeedingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -489,6 +490,7 @@
     <Content Include="Scripts\app\diapermgt.viewmodel.js" />
     <Content Include="Scripts\app\feeding.viewmodel.js" />
     <Content Include="Scripts\app\measurements.viewmodel.js" />
+    <Content Include="Scripts\app\stats.diaper.viewmodel.js" />
     <Content Include="Scripts\app\stats.feeding.viewmodel.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
@@ -550,6 +552,7 @@
     <None Include="Properties\PublishProfiles\cozyJozymikefullen.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.js" />
+    <Content Include="Scripts\Chart.StackedBar.js" />
     <Content Include="Scripts\charts.js" />
     <Content Include="Scripts\curvedLines.js" />
     <Content Include="Scripts\fullcalendar.js" />
@@ -631,6 +634,7 @@
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Shared\_Layout2.cshtml" />
     <Content Include="Views\Home\_FeedingStats.cshtml" />
+    <Content Include="Views\Home\_DiaperStats.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
