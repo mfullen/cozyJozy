@@ -23,16 +23,21 @@
                     return val.amount;
                 });
   
-                var svg = dimple.newSvg(selector, 800, 600);
-                var data2 = [
-                  { "Word": "Hello", "Awesomeness": 2000 },
-                  { "Word": "World", "Awesomeness": 3000 }
-                ];
-                var chart = new dimple.chart(svg, data2);
-                chart.addCategoryAxis("x", "Word");
-                chart.addMeasureAxis("y", "Awesomeness");
-                chart.addSeries(null, dimple.plot.bar);
-                chart.draw();
+                amounts.unshift('Amount oz');
+
+                var chart = c3.generate({
+                    bindto: selector,
+                    data: {
+                        columns: [amounts]
+                    },
+                    axis: {
+                        x: {
+                            type: 'category',
+                            categories: labels
+                        }
+                    }
+                });
+              
             },
             error: function (xhr, textStatus, err) {
                 app.errors.push("Failed to retrieve Feeding stats. Please try again!");
@@ -42,17 +47,11 @@
     }
 
 
-    self.populateLineChart('api/feedingstats/birth/feedovertime', '#sinceBirth', 'MMM YY', '#4CAF50', convertMlToOz, {
-        scaleLabel: '<%=value + " oz"%>'
-    });
+    self.populateLineChart('api/feedingstats/birth/feedovertime', '#sinceBirth', 'MMM YY', '#4CAF50', convertMlToOz);
 
-    self.populateLineChart('api/feedingstats/week/feedovertime', '#feedAmountLastWeek', 'M/DD', '#FF9800', convertMlToOz, {
-        scaleLabel: '<%=value + " oz"%>'
-    });
+    self.populateLineChart('api/feedingstats/week/feedovertime', '#feedAmountLastWeek', 'M/DD', '#FF9800', convertMlToOz);
 
-    self.populateLineChart('api/feedingstats/3month/feedovertime', '#lastThreeMonths', 'MMM YY', '#03A9F4', convertMlToOz, {
-        scaleLabel: '<%=value + " oz"%>'
-    });
+    self.populateLineChart('api/feedingstats/3month/feedovertime', '#lastThreeMonths', 'MMM YY', '#03A9F4', convertMlToOz);
 
 
     self.populateLineChart('api/feedingstats/week/feedcount', '#feedCountLastWeek', 'M/DD', '#607D8B');
