@@ -59,19 +59,9 @@
     }
 
     self.populatePieChart = function (url, selector) {
-        var colors = ['#F44336',
-        '#E91E63',
-        '#CDDC39',
-        '#009688',
+        var colors = ['#009688',
         '#9C27B0',
-        '#673AB7',
-        '#3F51B5',
-        '#2196F3',
-        '#4CAF50',
-        '#FFEB3B',
-        '#FFC107',
-        '#FF5722',
-        '#9E9E9E'];
+        '#FFC107'];
 
         $.ajax({
             url: url,
@@ -82,11 +72,6 @@
                 var data2 = [];
 
                 $.each(data, function (i, item) {
-                    var color = colors[Math.floor(Math.random() * colors.length)];
-                    var i = colors.indexOf(color);
-                    if (i != -1) {
-                        colors.splice(i, 1);
-                    }
                     data2.push([item.userName + ':' + item.title, item.amount]);
                 });
 
