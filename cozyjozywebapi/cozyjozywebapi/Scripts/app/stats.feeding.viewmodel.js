@@ -28,7 +28,9 @@
                 var chart = c3.generate({
                     bindto: selector,
                     data: {
-                        columns: [amounts]
+                        columns: [amounts],
+                        type: 'area-spline'
+                            // 'line', 'spline', 'step', 'area', 'area-step' are also available to stack
                     },
                     axis: {
                         x: {
