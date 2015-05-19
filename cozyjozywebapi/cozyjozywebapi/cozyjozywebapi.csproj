@@ -336,6 +336,7 @@
     <Content Include="Content\material\animate.css" />
     <Content Include="Content\material\animate.min.css" />
     <Content Include="Content\material\app.css" />
+    <Content Include="Content\material\c3.css" />
     <Content Include="Content\material\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\material\fonts\material-icons\Material-Design-Iconic-Font.svg" />
     <Content Include="Content\material\fonts\roboto\Roboto-Bold-webfont.svg" />
@@ -550,9 +551,13 @@
     <None Include="Properties\PublishProfiles\cozyjozy.pubxml" />
     <None Include="Properties\PublishProfiles\cozyjozyazure.pubxml" />
     <None Include="Properties\PublishProfiles\cozyJozymikefullen.pubxml" />
+    <Content Include="Scripts\c3.js" />
+    <Content Include="Scripts\d3-LICENSE" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\charts.js" />
     <Content Include="Scripts\curvedLines.js" />
+    <Content Include="Scripts\d3.js" />
+    <Content Include="Scripts\d3.min.js" />
     <Content Include="Scripts\fullcalendar.js" />
     <Content Include="Scripts\fullcalendar.min.js" />
     <Content Include="Scripts\functions.js" />

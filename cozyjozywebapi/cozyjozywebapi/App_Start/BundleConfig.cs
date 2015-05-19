@@ -63,9 +63,8 @@ namespace cozyjozywebapi
             bundles.Add(new ScriptBundle("~/bundles/materialThemeJs").Include(
                 "~/Scripts/fullcalendar.js",
                 "~/Scripts/waves.js",
-                "~/Scripts/Chart.js",
-                "~/Scripts/Chart.StackedBar.js",
-                //"~/Scripts/curvedLines.js",
+                "~/Scripts/d3.js",
+                "~/Scripts/c3.js",
                 "~/Scripts/charts.js",
                 "~/Scripts/functions.js"));
 
@@ -73,6 +72,7 @@ namespace cozyjozywebapi
                "~/Content/material/fullcalendar.css",
                "~/Content/material/animate.css",
                "~/Content/material/sweet-alert.css",
+               "~/Content/material/c3.css",
                "~/Content/bootstrap-slider/bootstrap-slider.css",
                "~/Content/typeaheadjs.css",
                "~/Content/material/app.css"

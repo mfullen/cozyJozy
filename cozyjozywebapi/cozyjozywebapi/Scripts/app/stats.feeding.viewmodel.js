@@ -23,39 +23,16 @@
                     return val.amount;
                 });
   
-                var data2 = {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: "My First dataset",
-                            fillColor: fillColor,//"rgba(220,220,220,0.2)",
-                            strokeColor: "rgba(220,220,220,1)",
-                            pointColor: "rgba(220,220,220,1)",
-                            pointStrokeColor: "#000",
-                            pointHighlightFill: "#000",
-                            pointHighlightStroke: "rgba(220,220,220,1)",
-                            data: amounts
-                        }
-                    ]
-                };
-
-
-                // Get context with jQuery - using jQuery's .get() method.
-                var ctx = $(selector).get(0).getContext("2d");
-                // This will get the first returned node in the jQuery collection.
-                var myNewChart = new Chart(ctx);
-
-
-                var width = $('canvas').parent().width();
-                $('canvas').attr("width", width);
-                myNewChart.Line(data2, opts);
-                window.onresize = function (event) {
-                    var width = $('canvas').parent().width();
-                    $('canvas').attr("width", width);
-                    myNewChart.Line(data2, opts);
-                };
-
-                myNewChart.Line(data2, opts);
+                var svg = dimple.newSvg(selector, 800, 600);
+                var data2 = [
+                  { "Word": "Hello", "Awesomeness": 2000 },
+                  { "Word": "World", "Awesomeness": 3000 }
+                ];
+                var chart = new dimple.chart(svg, data2);
+                chart.addCategoryAxis("x", "Word");
+                chart.addMeasureAxis("y", "Awesomeness");
+                chart.addSeries(null, dimple.plot.bar);
+                chart.draw();
             },
             error: function (xhr, textStatus, err) {
                 app.errors.push("Failed to retrieve Feeding stats. Please try again!");
@@ -73,7 +50,7 @@
         scaleLabel: '<%=value + " oz"%>'
     });
 
-    self.populateLineChart('api/feedingstats/3month/feedovertime', '#3Month', 'MMM YY', '#03A9F4', convertMlToOz, {
+    self.populateLineChart('api/feedingstats/3month/feedovertime', '#lastThreeMonths', 'MMM YY', '#03A9F4', convertMlToOz, {
         scaleLabel: '<%=value + " oz"%>'
     });
 

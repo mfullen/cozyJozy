@@ -22,35 +22,34 @@
                     return val.poop;
                 });
 
-                var data2 = {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: "Pee",
-                            fillColor: '#FFEB3B',
-                            strokeColor: "#000",
-                            highlightFill: '#FFEB3B',
-                            highlightStroke: "#000",
-                            data: peeAmounts
-                        },
-                        {
-                            label: "Poop",
-                            fillColor: '#795548',
-                            strokeColor: "#000",
-                            highlightFill: '#795548',
-                            highlightStroke: "#000",
-                            data: poopAmount
+             
+                $.each(data, function (i, item) {
+                   
+                });
+
+                peeAmounts.unshift('Pee');
+                poopAmount.unshift('Poop');
+
+                var chart = c3.generate({
+                    bindto: selector,
+                    data: {
+                        columns: [peeAmounts, poopAmount],
+                        type: 'bar',
+                        groups: [
+                            ['Poop', 'Pee']
+                        ]
+                    },
+                    color: {
+                        pattern: ['#FFEB3B', '#795548', '#ff7f0e', '#ffbb78', '#2ca02c', '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5', '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
+                    },
+                    axis: {
+                        x: {
+                            type: 'category',
+                            categories: labels
                         }
-                    ]
-                };
+                    }
+                });
 
-
-                // Get context with jQuery - using jQuery's .get() method.
-                var ctx = $(selector).get(0).getContext("2d");
-                // This will get the first returned node in the jQuery collection.
-                var myNewChart = new Chart(ctx);
-
-                myNewChart.StackedBar(data2, opts);
             },
             error: function (xhr, textStatus, err) {
                 app.errors.push("Failed to retrieve Feeding stats. Please try again!");
@@ -120,14 +119,14 @@
     self.populateBarChart('api/diaperstats/month/diaperovertime', '#diaperLastMonth', 'M/DD', '#CDDC39');
     self.populateBarChart('api/diaperstats/birth/diaperovertime', '#diaperSinceBirth', 'MMM YY', '#CDDC39');
 
-    self.populatePieChart('api/diaperstats/most/poops', '#mostLoggedPoop', 'MMM YY', '#CDDC39', null, {
-        legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
-    },
-    '#mostPooplegendDiv');
-    self.populatePieChart('api/diaperstats/most/pee', '#mostLoggedPee', 'MMM YY', '#CDDC39', null, {
-        legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
-    },
-    '#mostPeelegendDiv');
+    //self.populatePieChart('api/diaperstats/most/poops', '#mostLoggedPoop', 'MMM YY', '#CDDC39', null, {
+    //    legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+    //},
+    //'#mostPooplegendDiv');
+    //self.populatePieChart('api/diaperstats/most/pee', '#mostLoggedPee', 'MMM YY', '#CDDC39', null, {
+    //    legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+    //},
+    //'#mostPeelegendDiv');
 
 }
 
