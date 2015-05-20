@@ -325,6 +325,10 @@
                     <ul class="main-menu" data-bind="if: loggedIn">
                         @*<li class="active"><a href="#" data-bind="click: navigateToDeveloper"><i class="md md-home"></i> Development</a></li>*@
                         <li data-bind="css: activeMenuClass('Home')"><a href="#" data-bind="visible: selectedChild(), click: navigateToHome"><i class="md md-home"></i> Home</a></li>
+                        <li data-bind="css: activeMenuClass('Feeding')"><a href="#" data-bind="visible: selectedChild(), click: navigateToFeeding"><i class="md md-restaurant-menu"></i>Feeding</a></li>
+                        <li data-bind="css: activeMenuClass('Diaper')"><a href="#" data-bind="visible: selectedChild(), click: navigateToDiaper"><i class="md md-shopping-basket"></i>Diaper</a></li>
+                        <li data-bind="css: activeMenuClass('Measurements')"><a href="#" data-bind="visible: selectedChild(), click: navigateToMeasurements"><i class="md md-track-changes"></i>Measurements</a></li>
+
                         <li class="sub-menu toggled">
                             <a href=""><i class="md md-now-widgets"></i> Statistics</a>
 
@@ -335,10 +339,7 @@
                         </li>
                        <li data-bind="css: activeMenuClass('ChildManagement')"><a href="#" data-bind="click: navigateToChildManagement"><i class="md md-face-unlock"></i>Child Management</a></li>
                         <li data-bind="css: activeMenuClass('ChildPermissionViewModel')"><a href="#" data-bind="visible: selectedChild() && !selectedChild().readOnly, click: navigateToChildPermissionViewModel"><i class="md md-assignment"></i>Permissions</a></li>
-                        <li data-bind="css: activeMenuClass('Feeding')"><a href="#" data-bind="visible: selectedChild(), click: navigateToFeeding"><i class="md md-restaurant-menu"></i>Feeding</a></li>
-                        <li data-bind="css: activeMenuClass('Diaper')"><a href="#" data-bind="visible: selectedChild(), click: navigateToDiaper"><i class="md md-shopping-basket"></i>Diaper</a></li>
-                        <li data-bind="css: activeMenuClass('Measurements')"><a href="#" data-bind="visible: selectedChild(), click: navigateToMeasurements"><i class="md md-track-changes"></i>Measurements</a></li>
-                        <li>@Html.ActionLink("API", "Index", "Help", new { area = "HelpPage" }, null)</li>
+                        @*<li>@Html.ActionLink("API", "Index", "Help", new { area = "HelpPage" }, null)</li>*@
                     </ul>
                 </div>
             </div>
