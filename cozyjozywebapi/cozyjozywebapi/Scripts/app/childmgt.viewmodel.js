@@ -78,7 +78,7 @@ function ChildManagement(app, dataModel) {
     self.update = function () {
         var uChild = self.item();
         $.ajax({
-            url: 'api/children/' + uChild.id(),
+            url: 'api/children',
             cache: 'false',
             type: 'PUT',
             contentType: 'application/json',

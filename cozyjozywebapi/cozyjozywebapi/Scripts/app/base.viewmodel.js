@@ -118,7 +118,7 @@
     self.update = function () {
         var dc = self.item();
         $.ajax({
-            url: baseUrl + '/' + dc.id(),
+            url: baseUrl,
             cache: 'false',
             type: 'PUT',
             contentType: 'application/json',

@@ -1,15 +1,17 @@
 $(document).ready(function () {
+    $(document).ajaxSuccess(function (event, xhr, textStatus, err) {
+    
     /*
     * SPARKLINE
     */
     function sparklineBar(id, values, height, barWidth, barColor, barSpacing) {
-        $('.'+id).sparkline(values, {
+        $('.' + id).sparkline(values, {
             type: 'bar',
             height: height,
             barWidth: barWidth,
             barColor: barColor,
             barSpacing: barSpacing
-        })
+        });
     }
     
     function sparklineLine(id, values, width, height, lineColor, fillColor, lineWidth, maxSpotColor, minSpotColor, spotColor, spotRadius, hSpotColor, hLineColor) {
@@ -99,6 +101,7 @@ $(document).ready(function () {
     if ($('.sub-pie-2')[0]) {
         easyPieChart('sub-pie-2', '#eee', '#ccc', '#FFC107', 4, 'butt', 95);
     }
+    });
 });
 
 

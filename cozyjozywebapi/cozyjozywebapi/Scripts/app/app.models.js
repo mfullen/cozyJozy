@@ -94,3 +94,6 @@ function DashboardStats(data) {
     this.childId = ko.observable(data.childId);
 }
 
+function convertMlToOz(ml) {
+    return +(Math.round((ml * 0.033814) + "e+2") + "e-2");
+}

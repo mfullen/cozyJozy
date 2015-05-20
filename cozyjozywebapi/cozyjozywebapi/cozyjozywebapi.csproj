@@ -226,11 +226,13 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DeveloperController.cs" />
     <Compile Include="Controllers\DiaperChangesController.cs" />
+    <Compile Include="Controllers\DiaperStatsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FeedingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MeasurementController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\FeedingStatsController.cs" />
     <Compile Include="Controllers\TitleController.cs" />
     <Compile Include="Entity\CozyJozyContext.cs" />
     <Compile Include="Entity\Repositories\ChildPermissionsRepository.cs" />
@@ -334,6 +336,7 @@
     <Content Include="Content\material\animate.css" />
     <Content Include="Content\material\animate.min.css" />
     <Content Include="Content\material\app.css" />
+    <Content Include="Content\material\c3.css" />
     <Content Include="Content\material\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\material\fonts\material-icons\Material-Design-Iconic-Font.svg" />
     <Content Include="Content\material\fonts\roboto\Roboto-Bold-webfont.svg" />
@@ -488,6 +491,8 @@
     <Content Include="Scripts\app\diapermgt.viewmodel.js" />
     <Content Include="Scripts\app\feeding.viewmodel.js" />
     <Content Include="Scripts\app\measurements.viewmodel.js" />
+    <Content Include="Scripts\app\stats.diaper.viewmodel.js" />
+    <Content Include="Scripts\app\stats.feeding.viewmodel.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap-growl.js" />
@@ -546,9 +551,13 @@
     <None Include="Properties\PublishProfiles\cozyjozy.pubxml" />
     <None Include="Properties\PublishProfiles\cozyjozyazure.pubxml" />
     <None Include="Properties\PublishProfiles\cozyJozymikefullen.pubxml" />
+    <Content Include="Scripts\c3.js" />
+    <Content Include="Scripts\d3-LICENSE" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\charts.js" />
     <Content Include="Scripts\curvedLines.js" />
+    <Content Include="Scripts\d3.js" />
+    <Content Include="Scripts\d3.min.js" />
     <Content Include="Scripts\fullcalendar.js" />
     <Content Include="Scripts\fullcalendar.min.js" />
     <Content Include="Scripts\functions.js" />
@@ -626,6 +635,9 @@
     <Content Include="Scripts\knockout.validation.min.js.map" />
     <Content Include="Views\Home\Developer.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Shared\_Layout2.cshtml" />
+    <Content Include="Views\Home\_FeedingStats.cshtml" />
+    <Content Include="Views\Home\_DiaperStats.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

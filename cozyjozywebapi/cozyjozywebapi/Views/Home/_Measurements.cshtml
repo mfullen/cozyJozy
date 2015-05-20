@@ -19,46 +19,49 @@
                         <input type='datetime' class="form-control" data-bind="datetimepicker: dateRecorded, dateTimePickerOptions: { format: 'MM/DD/YYYY'}" data-toggle="dropdown" placeholder="Date">
                     </div>
                 </div>
+            </div>
 
+            <div class="">
+                <div class="m-b-20">
+                    <p class="c-black f-500 m-b-20">Height (inches)</p>
 
-
-                <div class="col-sm-6 m-b-20">
-                    <p class="c-black f-500 m-b-20">Height</p>
-
-                    <div class="col-sm-3 form-group fg-line">
-                        <input class="form-control" data-bind="value: height" />
-                        <span data-bind="text: height"></span>
-                    </div>
-                    <div class="col-sm-3">
-                        <input type="text" class="slider form-control" data-bind="sliderValue: {value: height, min:0, max: 400, step: 1}" />
+                    <div>
+                        <input type="text" class="slider form-control" data-bind="sliderValue: {value: height, min:5, max: 50, step: 0.5}" />
                     </div>
                 </div>
-                
-                <div class="col-sm-6 m-b-20">
-                    <p class="c-black f-500 m-b-20">Weight</p>
+                <div class="form-group fg-line">
+                    <input class="form-control" data-bind="value: height" />
+                    <span data-bind="text: height"></span>
+                </div>
+            </div>
+            <div class="">
+                <div class="m-b-20">
+                    <p class="c-black f-500 m-b-20">Weight (lbs)</p>
 
-                    <div class="col-sm-3 form-group fg-line">
-                        <input class="form-control" data-bind="value: weight" />
-                        <span data-bind="text: weight"></span>
-                    </div>
-                    <div class="col-sm-3">
-                        <input type="text" class="slider form-control" data-bind="sliderValue: {value: weight, min:0, max: 400, step: 1}" />
+                    <div>
+                        <input type="text" class="slider form-control" data-bind="sliderValue: {value: weight, min:1, max: 25, step: 0.1}" />
                     </div>
                 </div>
-                
-                <div class="col-sm-6 m-b-20">
-                    <p class="c-black f-500 m-b-20">Head Circumference</p>
+                <div class="form-group fg-line">
+                    <input class="form-control" data-bind="value: weight" />
+                    <span data-bind="text: $parent.lbsAndOzString(weight())"></span>
+                </div>
+            </div>
+            <div class="">
+                <div class="m-b-20">
+                    <p class="c-black f-500 m-b-20">Head Circumference (cm)</p>
 
-                    <div class="col-sm-3 form-group fg-line">
-                        <input class="form-control" data-bind="value: headCircumference" />
-                        <span data-bind="text: headCircumference"></span>
+                    <div>
+                        <input type="text" class="slider form-control" data-bind="sliderValue: {value: headCircumference, min:1, max: 60, step: 0.5}" />
                     </div>
-                    <div class="col-sm-3">
-                        <input type="text" class="slider form-control" data-bind="sliderValue: {value: headCircumference, min:0, max: 400, step: 1}" />
-                    </div>
+                </div>
+                <div class="form-group fg-line">
+                    <input class="form-control" data-bind="value: headCircumference" />
+                    <span data-bind="text: headCircumference"></span>
                 </div>
 
             </div>
+
 
             <div data-bind="if: $parent.isEditing()">
                 <button class="btn bgm-green btn-icon pull-right" data-bind="click: $parent.update, enable: $parent.canSave"><i class="md md-check"></i></button>
@@ -125,14 +128,14 @@
 
                                 <ul class="lv-attrs">
                                     <li data-bind="visible: height" class="bgm-amber c-white">
-                                        <span data-bind="text: 'Height: ' + height()"></span>
+                                        <span data-bind="text: 'Height: ' + height() + ' inches'"></span>
                                     </li>
 
                                     <li data-bind="visible: weight" class="bgm-green c-white">
-                                        <span data-bind="text: 'Weight: ' + weight()"></span>
+                                        <span data-bind="text: 'Weight: ' + weight() + ' lbs'"></span>
                                     </li>
                                     <li data-bind="visible: headCircumference" class="bgm-blue c-white">
-                                        <span data-bind="text: 'Head Circumference: ' + headCircumference()"></span>
+                                        <span data-bind="text: 'Head Circumference: ' + headCircumference() + ' cm'"></span>
                                     </li>
                                 </ul>
                             </div>

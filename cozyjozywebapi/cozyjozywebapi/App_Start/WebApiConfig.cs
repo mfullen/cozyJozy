@@ -23,15 +23,40 @@ namespace cozyjozywebapi
             // Web API routes
             config.MapHttpAttributeRoutes();
 
+            //config.Routes.MapHttpRoute(
+            //    name: "ApiWithAction",
+            //    routeTemplate: "api/{controller}/{action}/{id}",
+            //    defaults: new { id = RouteParameter.Optional }
+            //);
+            //config.Routes.MapHttpRoute(
+            //    name: "DefaultApi",
+            //    routeTemplate: "api/{controller}/{id}",
+            //    defaults: new { id = RouteParameter.Optional }
+            //);
+
             config.Routes.MapHttpRoute(
-                name: "ApiWithAction",
+                name: "ControllerActionIdApi",
                 routeTemplate: "api/{controller}/{action}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                defaults: new { },
+                constraints: new { id = @"\d+" }
             );
+            //
+
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
+                name: "ControllerIdApi",
                 routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                defaults: new { },
+                constraints: new { id = @"\d+" }
+            );
+            //
+            config.Routes.MapHttpRoute(
+                name: "ControllerActionApi",
+                routeTemplate: "api/{controller}/{action}"
+            );
+            //
+            config.Routes.MapHttpRoute(
+                name: "ControllerApi",
+                routeTemplate: "api/{controller}"
             );
         }
     }
