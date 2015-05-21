@@ -94,6 +94,18 @@ function DashboardStats(data) {
     this.childId = ko.observable(data.childId);
 }
 
+/**
+Sleep Session data model
+*/
+function SleepSession(data) {
+    this.id = ko.observable(data.id);
+    this.startTime = ko.observable(data.startTime).extend({ required: true });
+    this.endTime = ko.observable(data.endTime).extend({ required: true });
+    this.childId = ko.observable(data.childId);
+    this.notes = ko.observable(data.notes);
+}
+
+
 function convertMlToOz(ml) {
     return +(Math.round((ml * 0.033814) + "e+2") + "e-2");
 }

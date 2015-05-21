@@ -233,6 +233,7 @@
     <Compile Include="Controllers\MeasurementController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\FeedingStatsController.cs" />
+    <Compile Include="Controllers\SleepController.cs" />
     <Compile Include="Controllers\TitleController.cs" />
     <Compile Include="Entity\CozyJozyContext.cs" />
     <Compile Include="Entity\Repositories\ChildPermissionsRepository.cs" />
@@ -240,6 +241,7 @@
     <Compile Include="Entity\Repositories\DiaperChangesRepository.cs" />
     <Compile Include="Entity\Repositories\FeedingRepository.cs" />
     <Compile Include="Entity\Repositories\IdentityRoleRepository.cs" />
+    <Compile Include="Entity\Repositories\SleepRepository.cs" />
     <Compile Include="Entity\Repositories\TitleRepository.cs" />
     <Compile Include="Entity\Repositories\UserRepository.cs" />
     <Compile Include="Filters\ChildPermissionFilter.cs" />
@@ -254,6 +256,7 @@
     <Compile Include="Infrastructure\IChildRepository.cs" />
     <Compile Include="Infrastructure\IFeedingRepository.cs" />
     <Compile Include="Infrastructure\IRoleRepository.cs" />
+    <Compile Include="Infrastructure\ISleepRepository.cs" />
     <Compile Include="Infrastructure\ITitleRepository.cs" />
     <Compile Include="Infrastructure\IUserRepository.cs" />
     <Compile Include="Infrastructure\RepositoryBase.cs" />
@@ -297,11 +300,16 @@
     <Compile Include="Migrations\201505061506095_AdditionalUserInfo-EmailAndNames.Designer.cs">
       <DependentUpon>201505061506095_AdditionalUserInfo-EmailAndNames.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505210158364_SleepTracking.cs" />
+    <Compile Include="Migrations\201505210158364_SleepTracking.Designer.cs">
+      <DependentUpon>201505210158364_SleepTracking.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Child.cs" />
     <Compile Include="Models\ChildPermissions.cs" />
+    <Compile Include="Models\SleepSession.cs" />
     <Compile Include="Models\Stats\DashboardStatistics.cs" />
     <Compile Include="Models\Title.cs" />
     <Compile Include="Models\User.cs" />
@@ -491,6 +499,7 @@
     <Content Include="Scripts\app\diapermgt.viewmodel.js" />
     <Content Include="Scripts\app\feeding.viewmodel.js" />
     <Content Include="Scripts\app\measurements.viewmodel.js" />
+    <Content Include="Scripts\app\sleep.viewmodel.js" />
     <Content Include="Scripts\app\stats.diaper.viewmodel.js" />
     <Content Include="Scripts\app\stats.feeding.viewmodel.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
@@ -638,6 +647,7 @@
     <Content Include="Views\Shared\_Layout2.cshtml" />
     <Content Include="Views\Home\_FeedingStats.cshtml" />
     <Content Include="Views\Home\_DiaperStats.cshtml" />
+    <Content Include="Views\Home\_SleepMgt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -673,6 +683,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505061506095_AdditionalUserInfo-EmailAndNames.resx">
       <DependentUpon>201505061506095_AdditionalUserInfo-EmailAndNames.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505210158364_SleepTracking.resx">
+      <DependentUpon>201505210158364_SleepTracking.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

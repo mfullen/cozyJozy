@@ -83,6 +83,7 @@ namespace cozyjozywebapi.App_Start
             kernel.Bind<IRoleRepository>().To<IdentityRoleRepository>().InRequestScope();
             kernel.Bind<IUserRepository>().To<UserRepository>().InRequestScope();
             kernel.Bind<ITitleRepository>().To<TitleRepository>().InRequestScope();
+            kernel.Bind<ISleepRepository>().To<SleepRepository>().InRequestScope();
         }        
     }
 

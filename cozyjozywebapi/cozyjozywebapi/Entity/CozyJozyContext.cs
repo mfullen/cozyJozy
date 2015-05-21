@@ -20,6 +20,7 @@ namespace cozyjozywebapi.Entity
         public DbSet<Measurement> Measurements { get; set; }
         public DbSet<ChildPermissions> ChildPermissions { get; set; }
         public DbSet<Title> Title { get; set; }
+        public DbSet<SleepSession> SleepSessions { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
