@@ -15,5 +15,6 @@ namespace cozyjozywebapi.Infrastructure.Core
         IRoleRepository RoleRepository { get; }
         IUserRepository UserRepository { get;  }
         ITitleRepository TitleRepository { get; }
+        ISleepRepository SleepRepository { get; }
     }
 }

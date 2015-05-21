@@ -38,6 +38,7 @@ namespace cozyjozywebapi
                 "~/Scripts/app/childmgt.viewmodel.js",
                 "~/Scripts/app/childPermission.viewmodel.js",
                 "~/Scripts/app/feeding.viewmodel.js",
+                "~/Scripts/app/sleep.viewmodel.js",
                 "~/Scripts/app/diapermgt.viewmodel.js",
                 "~/Scripts/app/measurements.viewmodel.js",
                 "~/Scripts/app/login.viewmodel.js",
