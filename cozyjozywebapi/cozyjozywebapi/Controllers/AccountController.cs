@@ -542,7 +542,7 @@ namespace cozyjozywebapi.Controllers
                     ProviderKey = providerKeyClaim.Value,
                     UserName = userName,
                     Email = email,
-                    Gender = gender.ToLower().Equals("male"),
+                    Gender = gender != null && gender.ToLower().Equals("male"),
                     // Birthday = dob != null ? DateTime.Parse(dob) : null,
                     FirstName = firstName,
                     LastName = lastName,
