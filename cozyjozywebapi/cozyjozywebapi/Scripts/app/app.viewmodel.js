@@ -271,8 +271,21 @@
                         else if (typeof (sessionStorage["loginUrl"]) !== "undefined") {
                             loginUrl = sessionStorage["loginUrl"];
                             sessionStorage.removeItem("loginUrl");
-                            self.navigateToRegisterExternal(data.userName, data.loginProvider, fragment.access_token,
-                                loginUrl, fragment.state);
+                            //if email exists from the external provider just use it, otherwise prompt to enter it
+                            if (data.email) {
+
+                                var registerVm = new RegisterExternalViewModel(app, dataModel);
+
+                                registerVm.userName(data.email);
+                                registerVm.loginProvider(data.loginProvider);
+                                registerVm.externalAccessToken = fragment.access_token;
+                                registerVm.loginUrl = loginUrl;
+                                registerVm.state = fragment.state;
+                                registerVm.register();
+                            } else {
+                                self.navigateToRegisterExternal(data.userName, data.loginProvider, fragment.access_token,
+                               loginUrl, fragment.state);
+                            }
                         }
                         else {
                             self.navigateToLogin();

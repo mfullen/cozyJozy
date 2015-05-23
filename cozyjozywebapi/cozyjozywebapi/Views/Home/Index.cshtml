@@ -47,7 +47,15 @@
                     app.errors.push('Your request could not be authenicated. Please login again!');
                     break;
                 default:
-                    app.errors.push('Error: ' + xhr.status + ' ' + err);
+                    //xhr.responseJSON.modelState[""][0]
+                    var errorMessage = 'Error: ' + xhr.status + ' ' + err;
+                    if (xhr.responseJSON) {
+                        var errorList = xhr.responseJSON.modelState[""];
+                        if (errorList && errorList.length > 0) {
+                            errorMessage = errorList[0];
+                        }
+                    }
+                    app.errors.push(errorMessage);
                     break;
             }
         });

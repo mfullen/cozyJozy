@@ -53,6 +53,7 @@ namespace cozyjozywebapi.Controllers
             return new UserInfoViewModel
             {
                 UserName = User.Identity.GetUserName(),
+                Email = externalLogin != null ? externalLogin.Email : null,
                 HasRegistered = externalLogin == null,
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
             };
@@ -373,9 +374,14 @@ namespace cozyjozywebapi.Controllers
                 return InternalServerError();
             }
 
-            User user = new User
+            //If they need to enter an email when coming from an external provider, we are forcing the username to be an Email
+
+            var user = new User
             {
-                UserName = model.UserName
+                UserName = model.UserName,
+                Email = model.UserName,
+                FirstName = externalLogin.FirstName,
+                LastName = externalLogin.LastName
             };
             user.Logins.Add(new IdentityUserLogin
             {
@@ -487,7 +493,7 @@ namespace cozyjozywebapi.Controllers
 
                 if (LastName != null)
                 {
-                    claims.Add(new Claim(claimBase + "last_name", FirstName, null, LoginProvider));
+                    claims.Add(new Claim(claimBase + "last_name", LastName, null, LoginProvider));
                 }
 
                 if (Link != null)

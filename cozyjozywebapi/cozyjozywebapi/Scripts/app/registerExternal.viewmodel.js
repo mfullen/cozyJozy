@@ -4,7 +4,7 @@
 
     // Data
     self.loginProvider = ko.observable();
-    self.userName = ko.observable(null).extend({ required: true });
+    self.userName = ko.observable(null).extend({ required: true, email: true });
 
     // Other UI state
     self.registering = ko.observable(false);
@@ -43,6 +43,7 @@
             } else {
                 self.errors.push("An unknown error occurred.");
             }
+            app.navigateToLogin();
         });
     };
 }
