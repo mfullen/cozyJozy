@@ -11,6 +11,12 @@
 .pie-legend {
     list-style: none;    
 }
+
+html, body {
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+}
+
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;

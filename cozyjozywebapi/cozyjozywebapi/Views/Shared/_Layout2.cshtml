@@ -20,30 +20,32 @@
 
     <div data-bind="visible: loading">Loading...</div>
 
-    <header id="header" data-bind="if: loggedIn, style: { backgroundColor: app.themeBackgroundColorClassName }">
-        <ul class="header-inner">
-            <li id="menu-trigger" data-trigger="#sidebar">
-                <div class="line-wrap">
-                    <div class="line top"></div>
-                    <div class="line center"></div>
-                    <div class="line bottom"></div>
-                </div>
-            </li>
+    <header id="header">
+        <img src="~/Content/images/cozyjozy-150-trans.png" class="pull-right img-responsive" style="height:100%"/>
+        <div data-bind="if: loggedIn, style: { backgroundColor: app.themeBackgroundColorClassName }">
+            <ul class="header-inner">
+                <li id="menu-trigger" data-trigger="#sidebar">
+                    <div class="line-wrap">
+                        <div class="line top"></div>
+                        <div class="line center"></div>
+                        <div class="line bottom"></div>
+                    </div>
+                </li>
 
-            <li class="logo hidden-xs">
-                <a href="" data-bind="click: navigateToHome">CozyJozy</a>
-            </li>
-            <li><span class="c-white" data-bind="text: app.childDisplayName(selectedChild())"></span></li>
+                <li class="logo hidden-xs">
+                    <a href="" data-bind="click: navigateToHome">CozyJozy</a>
+                </li>
+                <li><span class="c-white" data-bind="text: app.childDisplayName(selectedChild())"></span></li>
 
-            <li class="pull-right">
-                <ul class="top-menu">
-                    <li id="toggle-width">
-                        <div class="toggle-switch">
-                            <input id="tw-switch" type="checkbox" hidden="hidden">
-                            <label for="tw-switch" class="ts-helper"></label>
-                        </div>
-                    </li>
-                    @*<li id="top-search">
+                <li class="pull-right">
+                    <ul class="top-menu">
+                        <li id="toggle-width">
+                            <div class="toggle-switch">
+                                <input id="tw-switch" type="checkbox" hidden="hidden">
+                                <label for="tw-switch" class="ts-helper"></label>
+                            </div>
+                        </li>
+                        @*<li id="top-search">
                             <a class="tm-search" href=""></a>
                         </li>
                         <li class="dropdown">
@@ -271,14 +273,15 @@
                         <li class="hidden-xs" id="chat-trigger" data-trigger="#chat">
                             <a class="tm-chat" href=""></a>
                         </li>*@
-                </ul>
-            </li>
-        </ul>
+                    </ul>
+                </li>
+            </ul>
 
-        <!-- Top Search Content -->
-        <div id="top-search-wrap">
-            <input type="text">
-            <i id="top-search-close">&times;</i>
+            <!-- Top Search Content -->
+            <div id="top-search-wrap">
+                <input type="text">
+                <i id="top-search-close">&times;</i>
+            </div>
         </div>
     </header>
 
