@@ -21,7 +21,7 @@
 
     self.isEditing = ko.observable(false);
     self.isCreatingNew = ko.observable(false);
-
+    self.isSaving = ko.observable(false);
     //The selected date we are looking at for feedings
     self.sDate = ko.observable();
 
@@ -79,6 +79,11 @@
     }
 
     self.create = function () {
+        if (self.isSaving()) {
+            return;
+        }
+
+        self.isSaving(true);
         self.item().childId(app.selectedChild().child().id());
         $.ajax({
             url: baseUrl,
@@ -94,6 +99,7 @@
             error: function (xhr, textStatus, err) {
                 self.addError("Failed to create " + itemName + ". Please try again!");
                 console.log("Error", xhr, textStatus, err);
+                self.isSaving(false);
             }
         });
     }
@@ -107,6 +113,7 @@
         self.isEditing(false);
         self.isCreatingNew(false);
         self.clearErrors();
+        self.isSaving(false);
     }
 
     self.edit = function (f) {
@@ -116,6 +123,11 @@
     }
 
     self.update = function () {
+        if (self.isSaving()) {
+            return;
+        }
+
+        self.isSaving(true);
         var dc = self.item();
         $.ajax({
             url: baseUrl,
@@ -135,6 +147,7 @@
             error: function (xhr, textStatus, err) {
                 self.addError("Failed to update " + itemName + ". Please try again!");
                 console.log("Error", xhr, textStatus, err);
+                self.isSaving(false);
             }
         });
     }
