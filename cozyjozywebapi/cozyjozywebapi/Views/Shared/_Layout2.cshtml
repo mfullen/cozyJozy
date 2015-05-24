@@ -337,8 +337,8 @@
                             <a href=""><i class="md md-now-widgets"></i> Statistics</a>
 
                             <ul>
-                                <li data-bind="css: activeMenuClass('FeedingStats')"><a href="#" data-bind="click: navigateToFeedingStats">Feedings</a></li>
-                                <li data-bind="css: activeMenuClass('DiaperStats')"><a href="#" data-bind="click: navigateToDiaperStats">Diapers</a></li>
+                                <li data-bind="css: activeMenuClass('FeedingStats')"><a href="#" data-bind="visible: selectedChild(), click: navigateToFeedingStats">Feedings</a></li>
+                                <li data-bind="css: activeMenuClass('DiaperStats')"><a href="#" data-bind="visible: selectedChild(), click: navigateToDiaperStats">Diapers</a></li>
                             </ul>
                         </li>
                        <li data-bind="css: activeMenuClass('ChildManagement')"><a href="#" data-bind="click: navigateToChildManagement"><i class="md md-face-unlock"></i>Child Management</a></li>

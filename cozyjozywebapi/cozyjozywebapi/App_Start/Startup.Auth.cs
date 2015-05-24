@@ -132,9 +132,13 @@ namespace cozyjozywebapi
 
             if (!(redditconsumer.IsEmpty() && redditSecret.IsEmpty()))
             {
-                //app.UseRedditAuthentication(
-                //clientId: redditconsumer,
-                //clientSecret: redditSecret);
+                var redditOptions = new RedditAuthenticationOptions()
+                {
+                    ClientId = redditconsumer,
+                    ClientSecret = redditSecret,
+                    CallbackPath = new PathString("/Account/ExternalLogin")
+                };
+                app.UseRedditAuthentication(redditOptions);
             }
             #endregion
 
