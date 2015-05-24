@@ -62,69 +62,6 @@ namespace cozyjozywebapi
             //    clientId: "",
             //    clientSecret: "");
 
-            var twitterSecret = ConfigurationManager.AppSettings["twitterSecretKey"];
-            var twitterconsumer = ConfigurationManager.AppSettings["twitterConsumerKey"];
-
-            if (!(twitterconsumer.IsEmpty() && twitterSecret.IsEmpty()))
-            {
-                app.UseTwitterAuthentication(
-                    consumerKey: twitterconsumer,
-                    consumerSecret: twitterSecret);
-            }
-
-
-            var fbsecret = ConfigurationManager.AppSettings["facebookSecretKey"];
-            var fbconsumer = ConfigurationManager.AppSettings["facebookConsumerKey"];
-
-            if (!(fbconsumer.IsEmpty() && fbsecret.IsEmpty()))
-            {
-                app.UseFacebookAuthentication(new FacebookAuthenticationOptions
-               {
-                   AppId = fbconsumer,
-                   AppSecret = fbsecret,
-                   Scope = { "email" },
-                   Provider = new FacebookAuthenticationProvider()
-                   {
-                       OnAuthenticated = async (context) =>
-                       {
-                           context.Identity.AddClaim(new System.Security.Claims.Claim("FacebookAccessToken", context.AccessToken));
-                           foreach (var claim in context.User)
-                           {
-                               var claimType = string.Format("urn:facebook:{0}", claim.Key);
-                               string claimValue = claim.Value.ToString();
-                               if (!context.Identity.HasClaim(claimType, claimValue))
-                                   context.Identity.AddClaim(new System.Security.Claims.Claim(claimType, claimValue, "XmlSchemaString", "Facebook"));
-                           }
-                       }
-                   }
-               });
-            }
-
-            #region google login
-            var googleSecret = ConfigurationManager.AppSettings["googleSecretKey"];
-            var googleconsumer = ConfigurationManager.AppSettings["googleConsumerKey"];
-
-            if (!(googleconsumer.IsEmpty() && googleSecret.IsEmpty()))
-            {
-                app.UseGoogleAuthentication(
-                clientId: googleconsumer,
-                clientSecret: googleSecret);
-            }
-            #endregion
-
-            #region yahoo login
-            var yahooSecret = ConfigurationManager.AppSettings["yahooSecretKey"];
-            var yahooconsumer = ConfigurationManager.AppSettings["yahooConsumerKey"];
-
-            if (!(yahooconsumer.IsEmpty() && yahooSecret.IsEmpty()))
-            {
-                //app.UseYahooAuthentication(
-                //consumerKey: yahooconsumer,
-                //consumerSecret: yahooSecret);
-                app.UseOpenIDAuthentication("http://me.yahoo.com/", "Yahoo");
-            }
-
-            #endregion
 
             #region reddit login
             var redditSecret = ConfigurationManager.AppSettings["redditSecretKey"];
@@ -142,7 +79,72 @@ namespace cozyjozywebapi
             }
             #endregion
 
- 
+            #region yahoo login
+            var yahooSecret = ConfigurationManager.AppSettings["yahooSecretKey"];
+            var yahooconsumer = ConfigurationManager.AppSettings["yahooConsumerKey"];
+
+            if (!(yahooconsumer.IsEmpty() && yahooSecret.IsEmpty()))
+            {
+                //app.UseYahooAuthentication(
+                //consumerKey: yahooconsumer,
+                //consumerSecret: yahooSecret);
+                app.UseOpenIDAuthentication("http://me.yahoo.com/", "Yahoo");
+            }
+
+            #endregion
+
+            #region google login
+            var googleSecret = ConfigurationManager.AppSettings["googleSecretKey"];
+            var googleconsumer = ConfigurationManager.AppSettings["googleConsumerKey"];
+
+            if (!(googleconsumer.IsEmpty() && googleSecret.IsEmpty()))
+            {
+                app.UseGoogleAuthentication(
+                clientId: googleconsumer,
+                clientSecret: googleSecret);
+            }
+            #endregion
+
+            #region twitter login
+            var twitterSecret = ConfigurationManager.AppSettings["twitterSecretKey"];
+            var twitterconsumer = ConfigurationManager.AppSettings["twitterConsumerKey"];
+
+            if (!(twitterconsumer.IsEmpty() && twitterSecret.IsEmpty()))
+            {
+                app.UseTwitterAuthentication(
+                    consumerKey: twitterconsumer,
+                    consumerSecret: twitterSecret);
+            }
+            #endregion
+
+            #region facebook login
+            var fbsecret = ConfigurationManager.AppSettings["facebookSecretKey"];
+            var fbconsumer = ConfigurationManager.AppSettings["facebookConsumerKey"];
+
+            if (!(fbconsumer.IsEmpty() && fbsecret.IsEmpty()))
+            {
+                app.UseFacebookAuthentication(new FacebookAuthenticationOptions
+                {
+                    AppId = fbconsumer,
+                    AppSecret = fbsecret,
+                    Scope = { "email" },
+                    Provider = new FacebookAuthenticationProvider()
+                    {
+                        OnAuthenticated = async (context) =>
+                        {
+                            context.Identity.AddClaim(new System.Security.Claims.Claim("FacebookAccessToken", context.AccessToken));
+                            foreach (var claim in context.User)
+                            {
+                                var claimType = string.Format("urn:facebook:{0}", claim.Key);
+                                string claimValue = claim.Value.ToString();
+                                if (!context.Identity.HasClaim(claimType, claimValue))
+                                    context.Identity.AddClaim(new System.Security.Claims.Claim(claimType, claimValue, "XmlSchemaString", "Facebook"));
+                            }
+                        }
+                    }
+                });
+            }
+            #endregion
 
 
         }

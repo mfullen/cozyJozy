@@ -333,8 +333,9 @@
                         <li data-bind="css: activeMenuClass('Sleep')"><a href="#" data-bind="visible: selectedChild(), click: navigateToSleep"><i class="md md-snooze"></i>Sleep/Naps</a></li>
                         <li data-bind="css: activeMenuClass('Measurements')"><a href="#" data-bind="visible: selectedChild(), click: navigateToMeasurements"><i class="md md-track-changes"></i>Measurements</a></li>
 
-                        <li class="sub-menu toggled">
-                            <a href=""><i class="md md-now-widgets"></i> Statistics</a>
+                        <li class="sub-menu toggled" data-bind="visible: selectedChild()">
+                            <a href=" "><i class=" md md-now-widgets">
+                            </i> Statistics</a>
 
                             <ul>
                                 <li data-bind="css: activeMenuClass('FeedingStats')"><a href="#" data-bind="visible: selectedChild(), click: navigateToFeedingStats">Feedings</a></li>
