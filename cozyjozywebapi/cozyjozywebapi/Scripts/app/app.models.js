@@ -63,6 +63,8 @@ User model class
 function User(data) {
     this.id = ko.observable(data.id);
     this.userName = ko.observable(data.userName);
+    this.email = ko.observable(data.email);
+    this.profileImageUrl = ko.observable(data.profileImageUrl);
 }
 
 /**

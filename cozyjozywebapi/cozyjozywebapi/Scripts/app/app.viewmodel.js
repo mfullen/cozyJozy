@@ -69,6 +69,18 @@
     };
 
     //cozyJozy specific
+    self.userInfoModel = ko.observable();
+
+    self.profilePicUrl = ko.computed(function () {
+        var url = "/Content/material/images/profile-pics/1.jpg";
+        if (self.userInfoModel()) {
+            if (self.userInfoModel().profileImageUrl()) {
+                url = self.userInfoModel().profileImageUrl();
+            }
+        }
+        return url;
+    });
+
     self.selectedChild = ko.observable();
 
     self.availableChildren = ko.computed(function () {
@@ -245,6 +257,7 @@
 
             dataModel.getUserInfo()
                 .done(function (data) {
+                    self.userInfoModel(new User(data));
                     if (data.userName) {
                         self.navigateToLoggedIn(data.userName);
                         self.navigateToManage(externalAccessToken, externalError);
@@ -263,6 +276,7 @@
             cleanUpLocation();
             dataModel.getUserInfo(fragment.access_token)
                 .done(function (data) {
+                    self.userInfoModel(new User(data));
                     if (typeof (data.userName) !== "undefined" && typeof (data.hasRegistered) !== "undefined"
                         && typeof (data.loginProvider) !== "undefined") {
                         if (data.hasRegistered) {
@@ -300,6 +314,7 @@
         } else {
             dataModel.getUserInfo()
                 .done(function (data) {
+                    self.userInfoModel(new User(data));
                     if (data.userName) {
                         self.navigateToLoggedIn(data.userName);
                     } else {

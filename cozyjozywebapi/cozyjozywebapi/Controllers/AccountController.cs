@@ -46,16 +46,39 @@ namespace cozyjozywebapi.Controllers
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("UserInfo")]
         [AllowAnonymous]
-        public UserInfoViewModel GetUserInfo()
+        public async Task<UserInfoViewModel> GetUserInfo()
         {
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
+
+            string profileImageUrl = null;
+            if (User.Identity.GetUserId() != null)
+            {
+                try
+                {
+                    var logins = await UserManager.GetLoginsAsync(User.Identity.GetUserId());
+
+                    var fbLogin = logins.FirstOrDefault(l => l.LoginProvider.Equals("Facebook"));
+                    if (fbLogin != null)
+                    {
+                        profileImageUrl = "https://graph.facebook.com/" + fbLogin.ProviderKey + "/picture";
+                    }
+                }
+                catch (Exception e)
+                {
+                    
+                   //do nothing
+                }
+               
+            }
+
 
             return new UserInfoViewModel
             {
                 UserName = User.Identity.GetUserName(),
                 Email = externalLogin != null ? externalLogin.Email : null,
                 HasRegistered = externalLogin == null,
-                LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
+                LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null,
+                ProfileImageUrl = profileImageUrl
             };
         }
 
@@ -366,8 +389,8 @@ namespace cozyjozywebapi.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
+            var claimsIdentify = User.Identity as ClaimsIdentity;
+            ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(claimsIdentify);
 
             if (externalLogin == null)
             {
@@ -389,11 +412,22 @@ namespace cozyjozywebapi.Controllers
                 ProviderKey = externalLogin.ProviderKey
             });
             IdentityResult result = await UserManager.CreateAsync(user);
+
             IHttpActionResult errorResult = GetErrorResult(result);
 
             if (errorResult != null)
             {
                 return errorResult;
+            }
+
+            if (result.Succeeded)
+            {
+                foreach (var claim in claimsIdentify.Claims)
+                {
+                    var c = new Claim(claim.Issuer + "_" + claim.Type, claim.Value);
+                    await UserManager.AddClaimAsync(user.Id, c);
+
+                }
             }
 
             return Ok();
