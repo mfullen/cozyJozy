@@ -56,6 +56,9 @@
                             errorMessage = errorList[0];
                         }
                     }
+                    else if (xhr.responseJSON.message) {
+                        errorMessage = xhr.responseJSON.message;
+                    }
                     else if (xhr.responseJSON) {
                         errorMessage = xhr.responseJSON;
                     }
