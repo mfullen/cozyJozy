@@ -50,18 +50,21 @@
                     //xhr.responseJSON.modelState[""][0]
                     var errorMessage = 'Error: ' + xhr.status + ' ' + err;
                    
-                    if (xhr.responseJSON.modelState) {
-                        var errorList = xhr.responseJSON.modelState[""];
-                        if (errorList && errorList.length > 0) {
-                            errorMessage = errorList[0];
+                    if (xhr.responseJSON) {
+                        if (xhr.responseJSON.modelState) {
+                            var errorList = xhr.responseJSON.modelState[""];
+                            if (errorList && errorList.length > 0) {
+                                errorMessage = errorList[0];
+                            }
+                        }
+                        else if (xhr.responseJSON.message) {
+                            errorMessage = xhr.responseJSON.message;
+                        }
+                        else if (xhr.responseJSON) {
+                            errorMessage = xhr.responseJSON;
                         }
                     }
-                    else if (xhr.responseJSON.message) {
-                        errorMessage = xhr.responseJSON.message;
-                    }
-                    else if (xhr.responseJSON) {
-                        errorMessage = xhr.responseJSON;
-                    }
+                   
                     app.errors.push(errorMessage);
                     break;
             }
