@@ -14,22 +14,18 @@ using Microsoft.AspNet.Identity;
 namespace cozyjozywebapi.Controllers
 {
     [ChildPermissionFilter]
-    public class FeedingController : ApiController
+    public class FeedingController : BaseTrackingController
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private const string Authorthizedchildren = "authorthizedChildren";
-        private const int MaxPageSize = 100;
+
         private readonly IFeedingRepository _feedingRepository;
-        public UserManager<User> UserManager { get; private set; }
 
         public FeedingController(IUnitOfWork uow)
+            : base(uow)
         {
-            _unitOfWork = uow;
             _feedingRepository = uow.FeedingRepository;
-            UserManager = Startup.UserManagerFactory();
         }
 
-        class FeedingResponse 
+        class FeedingResponse
         {
             public int Id { get; set; }
             public DateTime StartTime { get; set; }
@@ -41,6 +37,7 @@ namespace cozyjozywebapi.Controllers
             public string Notes { get; set; }
             public int ChildId { get; set; }
             public string UserId { get; set; }
+            public UserRestModel ReportedByUser { get; set; }
 
             public FeedingResponse(Feedings model)
             {
@@ -55,29 +52,8 @@ namespace cozyjozywebapi.Controllers
                 ChildId = model.ChildId;
                 UserId = model.UserId;
             }
-
-            public UserRestModel ReportedByUser { get; set; }
         }
 
-        async Task<UserRestModel> GetById(string userId, int childId)
-        {
-            var user = _unitOfWork.UserRepository.GetById(userId);
-            var title = _unitOfWork.ChildPermissionsRepository
-                .Where(c => c.ChildId == childId)
-                .Where(u => u.IdentityUserId == user.Id)
-                .Select(t => t.Title.Name).FirstOrDefault();
-
-            var model = new UserRestModel
-            {
-                Email = user.Email,
-                Id = user.Id,
-                UserName = user.UserName,
-                Title = title
-            };
-
-            model.ProfileImageUrl = await ExternalAccountHelper.GetProfileImageUrl(UserManager, model.Id);
-            return model;
-        }
 
         public async Task<IHttpActionResult> Get(int childId,
             int pagesize = 25, int page = 0,
@@ -129,15 +105,15 @@ namespace cozyjozywebapi.Controllers
 
             var results = data.Skip(page * pagesize).Take(pagesize).ToList();
 
-           var userResults = await Task.WhenAll(results.Select(async s =>
-            {
-                var f = new FeedingResponse(s);
-                var userResponse = await GetById(s.UserId, childId);
-                f.ReportedByUser = userResponse;
-                return f;
-            }));
+            var userResults = await Task.WhenAll(results.Select(async s =>
+             {
+                 var f = new FeedingResponse(s);
+                 var userResponse = await GetById(s.UserId, childId);
+                 f.ReportedByUser = userResponse;
+                 return f;
+             }));
 
-           return Ok(userResults);
+            return Ok(userResults);
         }
 
         // GET api/<controller>/5

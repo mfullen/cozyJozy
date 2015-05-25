@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using cozyjozywebapi.Filters;
@@ -14,18 +15,36 @@ using Microsoft.AspNet.Identity;
 namespace cozyjozywebapi.Controllers
 {
      [ChildPermissionFilter]
-    public class SleepController : ApiController
+    public class SleepController : BaseTrackingController
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private const string Authorthizedchildren = "authorthizedChildren";
-        private const int MaxPageSize = 100;
-
-        public SleepController(IUnitOfWork uow)
+        public SleepController(IUnitOfWork uow) : base(uow)
         {
-            _unitOfWork = uow;
+
         }
 
-        public IHttpActionResult Get(int childId,
+         public class SleepResponse
+         {
+             public int Id { get; set; }
+             public DateTime StartTime { get; set; }
+             public DateTime EndTime { get; set; }
+             public string Notes { get; set; }
+             public string UserId { get; set; }
+             public int ChildId { get; set; }
+
+             public UserRestModel ReportedByUser { get; set; }
+
+             public SleepResponse(SleepSession model)
+             {
+                 Id = model.Id;
+                 StartTime = model.StartTime;
+                 EndTime = model.EndTime;
+                 Notes = model.Notes;
+                 UserId = model.UserId;
+                 ChildId = model.ChildId;
+             }
+         }
+
+        public async Task<IHttpActionResult> Get(int childId,
          int pagesize = 25, int page = 0,
          DateTime? startDate = null,
          DateTime? endDate = null)
@@ -74,7 +93,16 @@ namespace cozyjozywebapi.Controllers
             }
 
             var results = data.Skip(page * pagesize).Take(pagesize).ToList();
-            return Ok(results);
+
+            var userResults = await Task.WhenAll(results.Select(async s =>
+            {
+                var f = new SleepResponse(s);
+                var userResponse = await GetById(s.UserId, childId);
+                f.ReportedByUser = userResponse;
+                return f;
+            }));
+
+            return Ok(userResults);
         }
 
         public bool HasWritePermission(int childId)
@@ -87,7 +115,7 @@ namespace cozyjozywebapi.Controllers
         }
 
 
-        public IHttpActionResult Post(SleepSession sleepSession)
+        public async Task<IHttpActionResult> Post(SleepSession sleepSession)
         {
             var authorthizedChildren = HttpContext.Current.Items[Authorthizedchildren] as List<int>;
             if (!authorthizedChildren.Contains(sleepSession.ChildId))
@@ -112,10 +140,14 @@ namespace cozyjozywebapi.Controllers
             var entity = _unitOfWork.SleepRepository.Add(newFeeding);
             _unitOfWork.Commit();
             var myUri = Request.RequestUri + entity.Id.ToString();
-            return Created(myUri, entity);
+
+            var item = new SleepResponse(entity);
+            var userResponse = await GetById(entity.UserId, sleepSession.ChildId);
+            item.ReportedByUser = userResponse;
+            return Created(myUri, item);
         }
 
-        public IHttpActionResult Put(SleepSession sleepSession)
+        public async Task<IHttpActionResult> Put(SleepSession sleepSession)
         {
             var authorthizedChildren = HttpContext.Current.Items[Authorthizedchildren] as List<int>;
 
@@ -127,7 +159,7 @@ namespace cozyjozywebapi.Controllers
             var existingFeed = _unitOfWork.SleepRepository.All().FirstOrDefault(i => i.Id == sleepSession.Id);
             if (existingFeed == null || existingFeed.Id < 1)
             {
-                return Post(sleepSession);
+                return await Post(sleepSession);
             }
 
             if (!HasWritePermission(existingFeed.ChildId))
@@ -137,7 +169,11 @@ namespace cozyjozywebapi.Controllers
 
             _unitOfWork.SleepRepository.Update(sleepSession, f => f.Id);
             _unitOfWork.Commit();
-            return Ok(existingFeed);
+
+            var item = new SleepResponse(existingFeed);
+            var userResponse = await GetById(existingFeed.UserId, sleepSession.ChildId);
+            item.ReportedByUser = userResponse;
+            return Ok(item);
         }
 
         [HttpDelete]

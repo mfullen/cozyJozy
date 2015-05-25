@@ -27,6 +27,9 @@ function DC(data) {
     this.urine = ko.observable(data.urine);
     this.stool = ko.observable(data.stool);
     this.childId = ko.observable(data.childId);
+    if (data.reportedByUser) {
+        this.reportedByUser = ko.observable(new User(data.reportedByUser));
+    }
 }
 
 /**
@@ -110,6 +113,9 @@ function SleepSession(data) {
     this.endTime = ko.observable(data.endTime).extend({ required: true });
     this.childId = ko.observable(data.childId);
     this.notes = ko.observable(data.notes);
+    if (data.reportedByUser) {
+        this.reportedByUser = ko.observable(new User(data.reportedByUser));
+    }
 }
 
 
