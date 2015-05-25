@@ -71,8 +71,12 @@
     //cozyJozy specific
     self.userInfoModel = ko.observable();
 
+    self.noUserProfilePic = function () {
+        return "/Content/images/user.png";
+    }
+
     self.profilePicUrl = ko.computed(function () {
-        var url = "/Content/material/images/profile-pics/1.jpg";
+        var url = self.noUserProfilePic();
         if (self.userInfoModel()) {
             if (self.userInfoModel().profileImageUrl()) {
                 url = self.userInfoModel().profileImageUrl();
@@ -80,6 +84,8 @@
         }
         return url;
     });
+
+  
 
     self.selectedChild = ko.observable();
 

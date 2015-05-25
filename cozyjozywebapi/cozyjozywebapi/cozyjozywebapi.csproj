@@ -238,6 +238,7 @@
     <Compile Include="Controllers\FeedingStatsController.cs" />
     <Compile Include="Controllers\SleepController.cs" />
     <Compile Include="Controllers\TitleController.cs" />
+    <Compile Include="Controllers\ControllerHelper.cs" />
     <Compile Include="Entity\CozyJozyContext.cs" />
     <Compile Include="Entity\Repositories\ChildPermissionsRepository.cs" />
     <Compile Include="Entity\Repositories\ChildRepository.cs" />
@@ -345,6 +346,7 @@
     <Content Include="Content\images\cozyjozy-150-trans.png" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
+    <Content Include="Content\images\user.png" />
     <Content Include="Content\material\animate.css" />
     <Content Include="Content\material\animate.min.css" />
     <Content Include="Content\material\app.css" />

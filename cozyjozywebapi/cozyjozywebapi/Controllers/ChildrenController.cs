@@ -125,7 +125,8 @@ namespace cozyjozywebapi.Controllers
              {
                  ChildId = savedChild.Id,
                  ReadOnly = false,
-                 IdentityUserId = userId
+                 IdentityUserId = userId,
+                 TitleId = _unitOfWork.TitleRepository.Where(t => t.Name.Equals("Parent/Guardian")).FirstOrDefault().Id
              });
             await _unitOfWork.CommitAsync();
             var myUri = Request.RequestUri + cp.ChildId.ToString();

@@ -11,6 +11,10 @@ function FEED(data) {
     this.childId = ko.observable(data.childId);
     this.spitUp = ko.observable(data.spitUp);
     this.notes = ko.observable(data.notes);
+    if (data.reportedByUser) {
+        this.reportedByUser = ko.observable(new User(data.reportedByUser));
+    }
+
 }
 
 /**
@@ -65,6 +69,7 @@ function User(data) {
     this.userName = ko.observable(data.userName);
     this.email = ko.observable(data.email);
     this.profileImageUrl = ko.observable(data.profileImageUrl);
+    this.title = ko.observable(data.title);
 }
 
 /**

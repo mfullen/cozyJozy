@@ -50,26 +50,9 @@ namespace cozyjozywebapi.Controllers
         {
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
 
-            string profileImageUrl = null;
-            if (User.Identity.GetUserId() != null)
-            {
-                try
-                {
-                    var logins = await UserManager.GetLoginsAsync(User.Identity.GetUserId());
-
-                    var fbLogin = logins.FirstOrDefault(l => l.LoginProvider.Equals("Facebook"));
-                    if (fbLogin != null)
-                    {
-                        profileImageUrl = "https://graph.facebook.com/" + fbLogin.ProviderKey + "/picture";
-                    }
-                }
-                catch (Exception e)
-                {
-                    
-                   //do nothing
-                }
-               
-            }
+            var profileImageUrl = User.Identity.GetUserId() != null ?
+                await ExternalAccountHelper.GetProfileImageUrl(UserManager, User.Identity.GetUserId()) 
+                : null;
 
 
             return new UserInfoViewModel

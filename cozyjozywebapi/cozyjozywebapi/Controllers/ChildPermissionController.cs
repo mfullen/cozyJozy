@@ -24,13 +24,9 @@ namespace cozyjozywebapi.Controllers
         public class Permission
         {
             public int Id { get; set; }
-            public class PUser
-            {
-                public string Id { get; set; }
-                public string UserName { get; set; }
-            }
 
-            public PUser User { get; set; }
+
+            public UserRestModel User { get; set; }
 
             public Child Child { get; set; }
             public bool ReadOnly { get; set; }
@@ -121,7 +117,7 @@ namespace cozyjozywebapi.Controllers
                 Id = cp.Id,
                 Child = cp.Child,
                 ReadOnly = cp.ReadOnly,
-                User = new Permission.PUser
+                User = new UserRestModel
                 {
                     Id = cp.IdentityUser.Id,
                     UserName = cp.IdentityUser.UserName
