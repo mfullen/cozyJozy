@@ -69,6 +69,24 @@
     };
 
     //cozyJozy specific
+    self.userInfoModel = ko.observable();
+
+    self.noUserProfilePic = function () {
+        return "/Content/images/user.png";
+    }
+
+    self.profilePicUrl = ko.computed(function () {
+        var url = self.noUserProfilePic();
+        if (self.userInfoModel()) {
+            if (self.userInfoModel().profileImageUrl()) {
+                url = self.userInfoModel().profileImageUrl();
+            }
+        }
+        return url;
+    });
+
+  
+
     self.selectedChild = ko.observable();
 
     self.availableChildren = ko.computed(function () {
@@ -245,6 +263,7 @@
 
             dataModel.getUserInfo()
                 .done(function (data) {
+                    self.userInfoModel(new User(data));
                     if (data.userName) {
                         self.navigateToLoggedIn(data.userName);
                         self.navigateToManage(externalAccessToken, externalError);
@@ -263,6 +282,7 @@
             cleanUpLocation();
             dataModel.getUserInfo(fragment.access_token)
                 .done(function (data) {
+                    self.userInfoModel(new User(data));
                     if (typeof (data.userName) !== "undefined" && typeof (data.hasRegistered) !== "undefined"
                         && typeof (data.loginProvider) !== "undefined") {
                         if (data.hasRegistered) {
@@ -271,8 +291,21 @@
                         else if (typeof (sessionStorage["loginUrl"]) !== "undefined") {
                             loginUrl = sessionStorage["loginUrl"];
                             sessionStorage.removeItem("loginUrl");
-                            self.navigateToRegisterExternal(data.userName, data.loginProvider, fragment.access_token,
-                                loginUrl, fragment.state);
+                            //if email exists from the external provider just use it, otherwise prompt to enter it
+                            if (data.email) {
+
+                                var registerVm = new RegisterExternalViewModel(app, dataModel);
+
+                                registerVm.userName(data.email);
+                                registerVm.loginProvider(data.loginProvider);
+                                registerVm.externalAccessToken = fragment.access_token;
+                                registerVm.loginUrl = loginUrl;
+                                registerVm.state = fragment.state;
+                                registerVm.register();
+                            } else {
+                                self.navigateToRegisterExternal(data.userName, data.loginProvider, fragment.access_token,
+                               loginUrl, fragment.state);
+                            }
                         }
                         else {
                             self.navigateToLogin();
@@ -287,6 +320,7 @@
         } else {
             dataModel.getUserInfo()
                 .done(function (data) {
+                    self.userInfoModel(new User(data));
                     if (data.userName) {
                         self.navigateToLoggedIn(data.userName);
                     } else {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using cozyjozywebapi.Infrastructure.Core;
@@ -11,33 +12,27 @@ using Microsoft.AspNet.Identity;
 
 namespace cozyjozywebapi.Controllers
 {
-    public class ChildPermissionController : ApiController
+    public class ChildPermissionController : BaseTrackingController
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private const int MaxPageSize = 100;
 
         public ChildPermissionController(IUnitOfWork uow)
+            : base(uow)
         {
-            _unitOfWork = uow;
         }
 
         public class Permission
         {
             public int Id { get; set; }
-            public class PUser
-            {
-                public string Id { get; set; }
-                public string UserName { get; set; }
-            }
 
-            public PUser User { get; set; }
+
+            public UserRestModel User { get; set; }
 
             public Child Child { get; set; }
             public bool ReadOnly { get; set; }
             public string Title { get; set; }
         }
 
-        public IHttpActionResult Get(int childId, int pagesize = 25, int page = 0)
+        public async Task<IHttpActionResult> Get(int childId, int pagesize = 25, int page = 0)
         {
 
             if (pagesize > MaxPageSize)
@@ -58,10 +53,14 @@ namespace cozyjozywebapi.Controllers
                 //We only want to select all users who belong to permissions but we don't want to select our own user. This will prevent
                 //the user from accidently deleting their own permissions and eventually not be able to see their child again
 
-                 _unitOfWork.ChildPermissionsRepository.All()
+                var cpItems = _unitOfWork.ChildPermissionsRepository.All()
                    .Where(c => c.ChildId == childId)
-                   .Where(c => c.IdentityUserId != userId).ToList()
-                   .ForEach(c => permissions.Add(Convert(c)));
+                   .Where(c => c.IdentityUserId != userId).ToList();
+                foreach (var childPermissionse in cpItems)
+                {
+                    var c = await Convert(childPermissionse);
+                    permissions.Add(c);
+                }
             }
 
             var results = permissions.Skip(page * pagesize).Take(pagesize);
@@ -78,7 +77,7 @@ namespace cozyjozywebapi.Controllers
             return Ok(data);
         }
 
-        public IHttpActionResult Post(Permission permission)
+        public async Task<IHttpActionResult> Post(Permission permission)
         {
             var userId = HttpContext.Current.User.Identity.GetUserId();
             var hasWritePermission = _unitOfWork.ChildPermissionsRepository.All()
@@ -96,7 +95,7 @@ namespace cozyjozywebapi.Controllers
                 return BadRequest();
             }
 
-            var permisionAlreadyExists =_unitOfWork.ChildPermissionsRepository.Where(c => c.ChildId == child.Id).Any(u => u.IdentityUserId == userToGivePermission.Id);
+            var permisionAlreadyExists = _unitOfWork.ChildPermissionsRepository.Where(c => c.ChildId == child.Id).Any(u => u.IdentityUserId == userToGivePermission.Id);
 
             if (permisionAlreadyExists)
             {
@@ -108,24 +107,21 @@ namespace cozyjozywebapi.Controllers
             var entity = _unitOfWork.ChildPermissionsRepository.Add(newCp);
             _unitOfWork.Commit();
 
-            var p = Convert(entity);
+            var p = await Convert(entity);
 
             var myUri = Request.RequestUri + "/" + p.Id;
             return Created(myUri, p);
         }
 
-        protected Permission Convert(ChildPermissions cp)
+        protected async Task<Permission> Convert(ChildPermissions cp)
         {
+            var u = await GetById(cp.IdentityUserId, cp.ChildId);
             var p = new Permission()
             {
                 Id = cp.Id,
                 Child = cp.Child,
                 ReadOnly = cp.ReadOnly,
-                User = new Permission.PUser
-                {
-                    Id = cp.IdentityUser.Id,
-                    UserName = cp.IdentityUser.UserName
-                },
+                User = u,
                 Title = cp.Title.Name
             };
             return p;
@@ -144,7 +140,7 @@ namespace cozyjozywebapi.Controllers
         }
 
         // PUT api/<controller>/5
-        public IHttpActionResult Put(Permission permission)
+        public async Task<IHttpActionResult> Put(Permission permission)
         {
             var userId = HttpContext.Current.User.Identity.GetUserId();
             var hasWritePermission = _unitOfWork.ChildPermissionsRepository.All()
@@ -165,7 +161,7 @@ namespace cozyjozywebapi.Controllers
             var existingFeed = _unitOfWork.ChildPermissionsRepository.Where(cp => cp.Id == permission.Id).FirstOrDefault();
             if (existingFeed == null || existingFeed.Id < 1)
             {
-                return Post(permission);
+                return await Post(permission);
             }
 
             existingFeed.Id = permission.Id;
@@ -176,7 +172,9 @@ namespace cozyjozywebapi.Controllers
 
             _unitOfWork.ChildPermissionsRepository.Update(existingFeed, f => f.Id);
             _unitOfWork.Commit();
-            return Ok(Convert(existingFeed));
+
+            var p = await Convert(existingFeed);
+            return Ok(p);
         }
 
         // DELETE api/<controller>/5

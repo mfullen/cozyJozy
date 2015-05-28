@@ -5,28 +5,52 @@
     <li data-bind="text: $data"></li>
 </ul>
 
-<section class="col-md-4" data-bind="visible: hasExternalLogin()">
-    <h4>Use another service to login.</h4>
-    <hr />
-    <div data-bind="visible: loadingExternalLogin">Loading...</div>
-    <div data-bind="visible: !loadingExternalLogin()">
-        <div data-bind="visible: !hasExternalLogin()">
-            <p>
-                There are no external authentication services configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=313242">this article</a>
-                for details on setting up this ASP.NET application to support logging in via external services.
-            </p>
-        </div>
-        <form class="form-horizontal" role="form" data-bind="visible: hasExternalLogin">
-            <p data-bind="foreach: externalLoginProviders">
-                <button type="submit" class="btn btn-default" data-bind="text: name, attr: { title: 'Log in using your ' + name() + ' account' }, click: login"></button>
-            </p>
-        </form>
-    </div>
-</section>
+@*<section class="col-md-4" data-bind="visible: hasExternalLogin()">
+        <h4>Login with any of these provivers</h4>
+        <hr />
+        <div data-bind="visible: loadingExternalLogin">Loading...</div>
+        <div data-bind="visible: !loadingExternalLogin()">
+            <div data-bind="visible: !hasExternalLogin()">
+                <p>
+                    There are no external authentication services configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=313242">this article</a>
+                    for details on setting up this ASP.NET application to support logging in via external services.
+                </p>
+            </div>
+            <form class="form-horizontal" role="form" data-bind="visible: hasExternalLogin">
+                <p data-bind="foreach: externalLoginProviders">
+                    <a class="col-xs-4" href="">
+                        <img data-bind="attr: { src: '/Content/material/images/social/' + name().toLowerCase() + '-128.png',  title: 'Log in using your ' + name() + ' account' }, click: login, css: 'img-responsive'" />
+                    </a>
 
-<p><a href="#" data-bind="click: register">Register</a> if you don't have a local account.</p>
+                </p>
+            </form>
+        </div>
+    </section>*@
+
+
+
+<div class="card go-social col-md-8">
+    <div class="card-header">
+        <h2>Login with the following providers <small></small></h2>
+    </div>
+
+    <div class="card-body clearfix" data-bind="visible: hasExternalLogin">
+        <!-- ko foreach: externalLoginProviders -->
+        <a class="col-xs-4" href="">
+            <img data-bind="attr: { src: '/Content/material/images/social/' + name().toLowerCase() + '-128.png',  title: 'Log in using your ' + name() + ' account' }, click: login, css: 'img-responsive'" />
+        </a>
+        <!-- /ko -->
+    </div>
+</div>
 
 <div class="card col-md-8">
+    <p><a href="#" data-bind="click: register">Register</a> for an account if you don't want to use the above providers. Creating an account is free and only takes a few seconds.</p>
+</div>
+
+<div class="card col-md-8">
+    <div class="card-header">
+        <h2>Already have an account? Login here</h2>
+    </div>
     <div class="card-body card-padding">
         <div class="row">
             <div class="col-md-12 col-sm-4 input-group m-b-20">
@@ -56,10 +80,10 @@
                 @*<a href="" class="btn btn-login btn-danger btn-float pull-right"><i class="md md-arrow-forward"></i></a>*@
                 <button class="btn btn-login btn-danger btn-float pull-right" data-bind="click: login, disable: loggingIn, style: { position: 'relative'}"><i class="md md-arrow-forward"></i></button>
             </div>
-          
+
         </div>
-      
-       
+
+
     </div>
 </div>
 <!-- /ko -->

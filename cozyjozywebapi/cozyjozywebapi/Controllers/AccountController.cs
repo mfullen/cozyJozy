@@ -46,15 +46,22 @@ namespace cozyjozywebapi.Controllers
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("UserInfo")]
         [AllowAnonymous]
-        public UserInfoViewModel GetUserInfo()
+        public async Task<UserInfoViewModel> GetUserInfo()
         {
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
+
+            var profileImageUrl = User.Identity.GetUserId() != null ?
+                await ExternalAccountHelper.GetProfileImageUrl(UserManager, User.Identity.GetUserId()) 
+                : null;
+
 
             return new UserInfoViewModel
             {
                 UserName = User.Identity.GetUserName(),
+                Email = externalLogin != null ? externalLogin.Email : null,
                 HasRegistered = externalLogin == null,
-                LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
+                LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null,
+                ProfileImageUrl = profileImageUrl
             };
         }
 
@@ -365,17 +372,22 @@ namespace cozyjozywebapi.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
+            var claimsIdentify = User.Identity as ClaimsIdentity;
+            ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(claimsIdentify);
 
             if (externalLogin == null)
             {
                 return InternalServerError();
             }
 
-            User user = new User
+            //If they need to enter an email when coming from an external provider, we are forcing the username to be an Email
+
+            var user = new User
             {
-                UserName = model.UserName
+                UserName = model.UserName,
+                Email = model.UserName,
+                FirstName = externalLogin.FirstName,
+                LastName = externalLogin.LastName
             };
             user.Logins.Add(new IdentityUserLogin
             {
@@ -383,11 +395,22 @@ namespace cozyjozywebapi.Controllers
                 ProviderKey = externalLogin.ProviderKey
             });
             IdentityResult result = await UserManager.CreateAsync(user);
+
             IHttpActionResult errorResult = GetErrorResult(result);
 
             if (errorResult != null)
             {
                 return errorResult;
+            }
+
+            if (result.Succeeded)
+            {
+                foreach (var claim in claimsIdentify.Claims)
+                {
+                    var c = new Claim(claim.Issuer + "_" + claim.Type, claim.Value);
+                    await UserManager.AddClaimAsync(user.Id, c);
+
+                }
             }
 
             return Ok();
@@ -487,7 +510,7 @@ namespace cozyjozywebapi.Controllers
 
                 if (LastName != null)
                 {
-                    claims.Add(new Claim(claimBase + "last_name", FirstName, null, LoginProvider));
+                    claims.Add(new Claim(claimBase + "last_name", LastName, null, LoginProvider));
                 }
 
                 if (Link != null)
@@ -542,7 +565,7 @@ namespace cozyjozywebapi.Controllers
                     ProviderKey = providerKeyClaim.Value,
                     UserName = userName,
                     Email = email,
-                    Gender = gender.ToLower().Equals("male"),
+                    Gender = gender != null && gender.ToLower().Equals("male"),
                     // Birthday = dob != null ? DateTime.Parse(dob) : null,
                     FirstName = firstName,
                     LastName = lastName,

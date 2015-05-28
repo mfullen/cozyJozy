@@ -11,17 +11,22 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using cozyjozywebapi.Entity;
 using cozyjozywebapi.Filters;
+using cozyjozywebapi.Infrastructure.Core;
 using cozyjozywebapi.Models;
 using Microsoft.AspNet.Identity;
 
 namespace cozyjozywebapi.Controllers
 {
-     [ChildPermissionFilter]
-    public class MeasurementController : ApiController
+    [ChildPermissionFilter]
+    public class MeasurementController : BaseTrackingController
     {
-        private CozyJozyContext context = new CozyJozyContext();
-        private const int MaxPageSize = 100;
-        private const string Authorthizedchildren = "authorthizedChildren";
+        private readonly CozyJozyContext context = new CozyJozyContext();
+
+        public MeasurementController(IUnitOfWork uow)
+            : base(uow)
+        {
+
+        }
 
         // GET: api/Measurement
         public IHttpActionResult Get(int pagesize = 25, int page = 0, int childId = 0)
@@ -73,7 +78,7 @@ namespace cozyjozywebapi.Controllers
             {
                 return BadRequest();
             }
-          
+
 
             context.Entry(measurement).State = EntityState.Modified;
 
@@ -107,7 +112,7 @@ namespace cozyjozywebapi.Controllers
                 return BadRequest(ModelState);
             }
 
-       
+
             context.Measurements.Add(measurement);
 
             try

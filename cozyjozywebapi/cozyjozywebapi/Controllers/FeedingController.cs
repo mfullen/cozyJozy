@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using cozyjozywebapi.Filters;
@@ -13,20 +14,48 @@ using Microsoft.AspNet.Identity;
 namespace cozyjozywebapi.Controllers
 {
     [ChildPermissionFilter]
-    public class FeedingController : ApiController
+    public class FeedingController : BaseTrackingController
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private const string Authorthizedchildren = "authorthizedChildren";
-        private const int MaxPageSize = 100;
+
         private readonly IFeedingRepository _feedingRepository;
 
         public FeedingController(IUnitOfWork uow)
+            : base(uow)
         {
-            _unitOfWork = uow;
             _feedingRepository = uow.FeedingRepository;
         }
 
-        public IHttpActionResult Get(int childId,
+        class FeedingResponse
+        {
+            public int Id { get; set; }
+            public DateTime StartTime { get; set; }
+            public DateTime EndTime { get; set; }
+            public DeliveryType? DeliveryType { get; set; }
+            public double? Amount { get; set; }
+            public DateTime DateReported { get; set; }
+            public bool SpitUp { get; set; }
+            public string Notes { get; set; }
+            public int ChildId { get; set; }
+            public string UserId { get; set; }
+            public UserRestModel ReportedByUser { get; set; }
+
+            public FeedingResponse(Feedings model)
+            {
+                Id = model.Id;
+                StartTime = model.StartTime;
+                EndTime = model.EndTime;
+                DeliveryType = model.DeliveryType;
+                Amount = model.Amount;
+                DateReported = model.DateReported;
+                SpitUp = model.SpitUp;
+                Notes = model.Notes;
+                ChildId = model.ChildId;
+                UserId = model.UserId;
+            }
+        }
+
+
+        public async Task<IHttpActionResult> Get(int childId,
             int pagesize = 25, int page = 0,
             DateTime? startDate = null,
             DateTime? endDate = null)
@@ -75,11 +104,20 @@ namespace cozyjozywebapi.Controllers
             }
 
             var results = data.Skip(page * pagesize).Take(pagesize).ToList();
-            return Ok(results);
+
+            var userResults = await Task.WhenAll(results.Select(async s =>
+             {
+                 var f = new FeedingResponse(s);
+                 var userResponse = await GetById(s.UserId, childId);
+                 f.ReportedByUser = userResponse;
+                 return f;
+             }));
+
+            return Ok(userResults);
         }
 
         // GET api/<controller>/5
-        public IHttpActionResult Get(int id)
+        public async Task<IHttpActionResult> Get(int id)
         {
             var authorthizedChildren = HttpContext.Current.Items[Authorthizedchildren] as List<int>;
 
@@ -87,11 +125,15 @@ namespace cozyjozywebapi.Controllers
             if (data == null || !authorthizedChildren.Contains(data.ChildId))
                 return NotFound();
 
-            return Ok(data);
+            var feed = new FeedingResponse(data);
+            var userResponse = await GetById(data.UserId, id);
+            feed.ReportedByUser = userResponse;
+
+            return Ok(feed);
         }
 
         // POST api/<controller>
-        public IHttpActionResult Post(Feedings feeding)
+        public async Task<IHttpActionResult> Post(Feedings feeding)
         {
             var authorthizedChildren = HttpContext.Current.Items[Authorthizedchildren] as List<int>;
             if (!authorthizedChildren.Contains(feeding.ChildId))
@@ -120,11 +162,16 @@ namespace cozyjozywebapi.Controllers
             var entity = _feedingRepository.Add(newFeeding);
             _unitOfWork.Commit();
             var myUri = Request.RequestUri + entity.Id.ToString();
-            return Created(myUri, entity);
+
+            var feed = new FeedingResponse(entity);
+            var userResponse = await GetById(entity.UserId, feeding.ChildId);
+            feed.ReportedByUser = userResponse;
+
+            return Created(myUri, feed);
         }
 
         // PUT api/<controller>/5
-        public IHttpActionResult Put(Feedings feeding)
+        public async Task<IHttpActionResult> Put(Feedings feeding)
         {
             var authorthizedChildren = HttpContext.Current.Items[Authorthizedchildren] as List<int>;
 
@@ -137,7 +184,7 @@ namespace cozyjozywebapi.Controllers
             var existingFeed = _feedingRepository.All().FirstOrDefault(i => i.Id == feeding.Id);
             if (existingFeed == null || existingFeed.Id < 1)
             {
-                return Post(feeding);
+                return await Post(feeding);
             }
 
             if (!HasWritePermission(existingFeed.ChildId))
@@ -147,7 +194,11 @@ namespace cozyjozywebapi.Controllers
 
             _feedingRepository.Update(feeding, f => f.Id);
             _unitOfWork.Commit();
-            return Ok(existingFeed);
+
+            var feed = new FeedingResponse(existingFeed);
+            var userResponse = await GetById(existingFeed.UserId, feeding.ChildId);
+            feed.ReportedByUser = userResponse;
+            return Ok(feed);
         }
 
         // DELETE api/<controller>/5

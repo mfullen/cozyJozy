@@ -16,13 +16,13 @@
                 <div class="col-sm-4 m-b-20">
                     <p class="c-black f-500 m-b-20">Start Time</p>
                     <div class="form-group fg-line">
-                        <input type='datetime' class="form-control" data-bind="datetimepicker: startTime" data-toggle="dropdown" placeholder="Start Time">
+                        <input type='text' class="form-control" data-bind="datetimepicker: startTime" data-toggle="dropdown" placeholder="Start Time">
                     </div>
                 </div>
                 <div class="col-sm-4 m-b-20">
                     <p class="c-black f-500 m-b-20">End Time</p>
                     <div class="form-group fg-line">
-                        <input type='datetime' class="form-control" data-bind="datetimepicker: endTime" data-toggle="dropdown" placeholder="End Time">
+                        <input type='text' class="form-control" data-bind="datetimepicker: endTime" data-toggle="dropdown" placeholder="End Time">
                     </div>
                 </div>
 
@@ -122,8 +122,14 @@
                     <div class="lv-item">
                         <div class="media">
                             <div class="pull-left">
-                                @*<img class="lv-img-sm" src="~/Content/material/images/widgets/mate7.jpg" alt="">*@
-                                <i class="md md-restaurant-menu" style="font-size:30px;"></i>
+                                <div class="profile-pic" data-bind="ifnot: reportedByUser().profileImageUrl()">
+                                    <img style="border-radius: 50%" data-bind="attr: { src: app.noUserProfilePic(), alt: reportedByUser().userName() }">
+                                    <div data-bind="text: reportedByUser().title()" style="text-align: center"></div>
+                                </div>
+                                <div class="profile-pic" data-bind="if: reportedByUser().profileImageUrl()">
+                                    <img style="border-radius: 50%" data-bind="attr: { src: reportedByUser().profileImageUrl(), alt: reportedByUser().userName() }" alt="">
+                                    <div data-bind="text: reportedByUser().title()" style="text-align: center"></div>
+                                </div>
                             </div>
                             <div class="media-body">
                                 <div class="lv-actions actions dropdown">

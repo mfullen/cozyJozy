@@ -20,19 +20,40 @@ using Microsoft.AspNet.Identity;
 namespace cozyjozywebapi.Controllers
 {
     [ChildPermissionFilter]
-    public class DiaperChangesController : ApiController
+    public class DiaperChangesController : BaseTrackingController
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private const int MaxPageSize = 100;
-        private const string Authorthizedchildren = "authorthizedChildren";
 
         public DiaperChangesController(IUnitOfWork uow)
+            : base(uow)
         {
-            _unitOfWork = uow;
+        }
+
+        public class DiaperResponse
+        {
+            public int Id { get; set; }
+            public DateTime OccurredOn { get; set; }
+            public string Notes { get; set; }
+            public bool Urine { get; set; }
+            public bool Stool { get; set; }
+            public int ChildId { get; set; }
+
+            public string UserId { get; set; }
+            public UserRestModel ReportedByUser { get; set; }
+
+            public DiaperResponse(DiaperChanges model)
+            {
+                Id = model.Id;
+                OccurredOn = model.OccurredOn;
+                Urine = model.Urine;
+                Stool = model.Stool;
+                Notes = model.Notes;
+                ChildId = model.ChildId;
+                UserId = model.UserId;
+            }
         }
 
         // GET: api/DiaperChanges
-        public IHttpActionResult Get(int childId, int pagesize = 25, int page = 0,
+        public async Task<IHttpActionResult> Get(int childId, int pagesize = 25, int page = 0,
             DateTime? startDate = null,
             DateTime? endDate = null)
         {
@@ -63,27 +84,38 @@ namespace cozyjozywebapi.Controllers
                .Where(c => c.ChildId == childId)
                .Where(d => DbFunctions.TruncateTime(d.OccurredOn) >= startDate)
                .Where(d => DbFunctions.TruncateTime(d.OccurredOn) <= endDate);
-          
-            return Ok(data.Skip(page * pagesize).Take(pagesize).ToList());
+
+            var results = data.Skip(page*pagesize).Take(pagesize).ToList();
+            var userResults = await Task.WhenAll(results.Select(async s =>
+            {
+                var f = new DiaperResponse(s);
+                var userResponse = await GetById(s.UserId, childId);
+                f.ReportedByUser = userResponse;
+                return f;
+            }));
+
+            return Ok(userResults);
         }
 
         // GET: api/DiaperChanges/5
-        [ResponseType(typeof(DiaperChanges))]
         public async Task<IHttpActionResult> GetDiaperChanges(int id)
         {
             var authorthizedChildren = HttpContext.Current.Items[Authorthizedchildren] as List<int>;
 
-            DiaperChanges diaperChanges = await _unitOfWork.DiaperChangesRepository.FindAsync(c=> c.Id == id);
+            DiaperChanges diaperChanges = await _unitOfWork.DiaperChangesRepository.FindAsync(c => c.Id == id);
             if (diaperChanges == null || !authorthizedChildren.Contains(diaperChanges.ChildId))
             {
                 return NotFound();
             }
 
-            return Ok(diaperChanges);
+            var item = new DiaperResponse(diaperChanges);
+            var userResponse = await GetById(diaperChanges.UserId, id);
+            item.ReportedByUser = userResponse;
+
+            return Ok(item);
         }
 
         // PUT: api/DiaperChanges/5
-        [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutDiaperChanges(DiaperChanges diaperChanges)
         {
             var id = diaperChanges.Id;
@@ -101,8 +133,8 @@ namespace cozyjozywebapi.Controllers
             var userId = HttpContext.Current.User.Identity.GetUserId();
             diaperChanges.UserId = userId;
 
-            _unitOfWork.DiaperChangesRepository.Update(diaperChanges, d=> d.Id);
-            
+            _unitOfWork.DiaperChangesRepository.Update(diaperChanges, d => d.Id);
+
 
             try
             {
@@ -120,11 +152,14 @@ namespace cozyjozywebapi.Controllers
                 }
             }
 
-            return Ok(diaperChanges);
+            var item = new DiaperResponse(diaperChanges);
+            var userResponse = await GetById(diaperChanges.UserId, diaperChanges.ChildId);
+            item.ReportedByUser = userResponse;
+
+            return Ok(item);
         }
 
         // POST: api/DiaperChanges
-        [ResponseType(typeof(DiaperChanges))]
         public async Task<IHttpActionResult> PostDiaperChanges(DiaperChanges diaperChanges)
         {
             var authorthizedChildren = HttpContext.Current.Items[Authorthizedchildren] as List<int>;
@@ -140,7 +175,7 @@ namespace cozyjozywebapi.Controllers
 
             try
             {
-               await _unitOfWork.CommitAsync();
+                await _unitOfWork.CommitAsync();
             }
             catch (DbUpdateException e)
             {
@@ -154,7 +189,11 @@ namespace cozyjozywebapi.Controllers
                 }
             }
             var myUri = Request.RequestUri + diaperChanges.Id.ToString();
-            return Created(myUri, diaperChanges);
+            var item = new DiaperResponse(diaperChanges);
+            var userResponse = await GetById(diaperChanges.UserId, diaperChanges.ChildId);
+            item.ReportedByUser = userResponse;
+
+            return Created(myUri, item);
         }
 
         // DELETE: api/DiaperChanges/5
@@ -163,7 +202,7 @@ namespace cozyjozywebapi.Controllers
         {
             var authorthizedChildren = HttpContext.Current.Items[Authorthizedchildren] as List<int>;
 
-            DiaperChanges diaperChanges = await _unitOfWork.DiaperChangesRepository.FindAsync(d=> d.Id == id);
+            DiaperChanges diaperChanges = await _unitOfWork.DiaperChangesRepository.FindAsync(d => d.Id == id);
             if (diaperChanges == null || !authorthizedChildren.Contains(diaperChanges.ChildId))
             {
                 return NotFound();

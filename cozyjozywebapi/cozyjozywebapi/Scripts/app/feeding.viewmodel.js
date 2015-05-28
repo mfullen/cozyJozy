@@ -133,7 +133,7 @@ app.addViewModel({
                 endTime: moment().add(15, 'minutes').format(dateFormater),
                 dateReported: '',
                 spitUp: '',
-                deliveryType: 2,
+                deliveryType: 2
             });
         }
 
