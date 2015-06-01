@@ -5,29 +5,6 @@
     <li data-bind="text: $data"></li>
 </ul>
 
-@*<section class="col-md-4" data-bind="visible: hasExternalLogin()">
-        <h4>Login with any of these provivers</h4>
-        <hr />
-        <div data-bind="visible: loadingExternalLogin">Loading...</div>
-        <div data-bind="visible: !loadingExternalLogin()">
-            <div data-bind="visible: !hasExternalLogin()">
-                <p>
-                    There are no external authentication services configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=313242">this article</a>
-                    for details on setting up this ASP.NET application to support logging in via external services.
-                </p>
-            </div>
-            <form class="form-horizontal" role="form" data-bind="visible: hasExternalLogin">
-                <p data-bind="foreach: externalLoginProviders">
-                    <a class="col-xs-4" href="">
-                        <img data-bind="attr: { src: '/Content/material/images/social/' + name().toLowerCase() + '-128.png',  title: 'Log in using your ' + name() + ' account' }, click: login, css: 'img-responsive'" />
-                    </a>
-
-                </p>
-            </form>
-        </div>
-    </section>*@
-
-
 
 <div class="card go-social col-md-8">
     <div class="card-header">
@@ -50,6 +27,7 @@
 <div class="card col-md-8">
     <div class="card-header">
         <h2>Already have an account? Login here</h2>
+        <a href="#" data-bind="click: app.navigateToForgotPassword"> Forgot Password? Click here.</a>
     </div>
     <div class="card-body card-padding">
         <div class="row">

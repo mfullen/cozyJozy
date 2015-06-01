@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using cozyjozywebapi.Infrastructure.Core;
 
 namespace cozyjozywebapi.Services
@@ -21,11 +22,34 @@ namespace cozyjozywebapi.Services
     }
     public class InMemoryTokenRepository : ITokenRepository
     {
-        private readonly ISet<Token> _tokens = new HashSet<Token>();
+        private static readonly object CacheLockObject = new object();
+        //private readonly ISet<Token> _tokens = new HashSet<Token>();
+        private string CreateCacheKey(Token entity)
+        {
+            return CreateCacheKey(entity.UserId, entity.TokenType.ToString());
+        }
+
+        private string CreateCacheKey(string userId, string tokenType)
+        {
+            var cacheKey = string.Join("|", new[] { userId, tokenType });
+            return cacheKey;
+        }
+
+        protected Token InsertIntoCache(string cacheKey, Token entity)
+        {
+            lock (CacheLockObject)
+            {
+                HttpRuntime.Cache.Insert(cacheKey, entity, null, DateTime.Now.AddHours(24), TimeSpan.Zero);
+            }
+
+            return entity;
+        }
 
         public Token Add(Token entity)
         {
-            _tokens.Add(entity);
+            // _tokens.Add(entity);
+
+            InsertIntoCache(CreateCacheKey(entity), entity);
             return entity;
         }
 
@@ -36,13 +60,9 @@ namespace cozyjozywebapi.Services
 
         public Token Delete(Token entity)
         {
-            var token = _tokens.Where(t => t.TokenCode == entity.TokenCode)
-                .Where(t => t.TokenType == entity.TokenType)
-                .FirstOrDefault(t => t.UserId == entity.UserId);
-            if (token == null)
-                return null;
-            _tokens.Remove(token);
-            return token;
+            var removal = HttpRuntime.Cache.Remove(CreateCacheKey(entity));
+
+            return entity;
         }
 
         public IQueryable<Token> Delete(Expression<Func<Token, bool>> @where)
@@ -62,7 +82,7 @@ namespace cozyjozywebapi.Services
 
         public IQueryable<Token> All()
         {
-            return _tokens.AsQueryable();
+            throw new NotImplementedException();
         }
 
         public IQueryable<Token> Where(Expression<Func<Token, bool>> @where)
@@ -92,14 +112,19 @@ namespace cozyjozywebapi.Services
 
         public Token Find(string userId, TokenType tokenType)
         {
-            var token = _tokens.Where(t => t.UserId == userId).FirstOrDefault(t => t.TokenType == tokenType);
-            return token;
+            var result = HttpRuntime.Cache[CreateCacheKey(userId, tokenType.ToString())] as Token;
+
+            return result;
         }
 
         public Token Find(string userId, string code)
         {
-            var token = _tokens.Where(t => t.UserId == userId).FirstOrDefault(t => t.TokenCode == code);
-            return token;
+            var result = HttpRuntime.Cache[CreateCacheKey(userId, TokenType.PasswordReset.ToString())] as Token;
+            if (result != null && result.TokenCode == code)
+            {
+                return result;
+            }
+            return null;
         }
     }
 

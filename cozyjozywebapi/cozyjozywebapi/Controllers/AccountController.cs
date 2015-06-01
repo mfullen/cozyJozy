@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using System.Web.Http.ModelBinding;
-
-using System.Web.UI.WebControls;
-using cozyjozywebapi.Infrastructure.Core;
 using cozyjozywebapi.Services;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
@@ -24,8 +19,8 @@ using cozyjozywebapi.Results;
 
 namespace cozyjozywebapi.Controllers
 {
-    [System.Web.Http.Authorize]
-    [System.Web.Http.RoutePrefix("api/Account")]
+    [Authorize]
+    [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
@@ -34,12 +29,8 @@ namespace cozyjozywebapi.Controllers
         public UserManager<User> UserManager { get; private set; }
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
-        //public AccountController()
-        //{
 
-        //}
         public AccountController(UserManager<User> userManager,
-            //ISecureDataFormat<AuthenticationTicket> accessTokenFormat,
             IUserService userService,
             IEmailService emailService)
         {
@@ -53,8 +44,8 @@ namespace cozyjozywebapi.Controllers
 
         // GET api/Account/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
-        [System.Web.Http.Route("UserInfo")]
-        [System.Web.Http.AllowAnonymous]
+        [Route("UserInfo")]
+        [AllowAnonymous]
         public async Task<UserInfoViewModel> GetUserInfo()
         {
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
@@ -75,7 +66,7 @@ namespace cozyjozywebapi.Controllers
         }
 
         // POST api/Account/Logout
-        [System.Web.Http.Route("Logout")]
+        [Route("Logout")]
         public IHttpActionResult Logout()
         {
             Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
@@ -83,7 +74,7 @@ namespace cozyjozywebapi.Controllers
         }
 
         // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
-        [System.Web.Http.Route("ManageInfo")]
+        [Route("ManageInfo")]
         public async Task<ManageInfoViewModel> GetManageInfo(string returnUrl, bool generateState = false)
         {
             IdentityUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
@@ -123,7 +114,7 @@ namespace cozyjozywebapi.Controllers
         }
 
         // POST api/Account/ChangePassword
-        [System.Web.Http.Route("ChangePassword")]
+        [Route("ChangePassword")]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -144,7 +135,7 @@ namespace cozyjozywebapi.Controllers
         }
 
         // POST api/Account/SetPassword
-        [System.Web.Http.Route("SetPassword")]
+        [Route("SetPassword")]
         public async Task<IHttpActionResult> SetPassword(SetPasswordBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -164,7 +155,7 @@ namespace cozyjozywebapi.Controllers
         }
 
         // POST api/Account/AddExternalLogin
-        [System.Web.Http.Route("AddExternalLogin")]
+        [Route("AddExternalLogin")]
         public async Task<IHttpActionResult> AddExternalLogin(AddExternalLoginBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -214,7 +205,7 @@ namespace cozyjozywebapi.Controllers
         }
 
         // POST api/Account/RemoveLogin
-        [System.Web.Http.Route("RemoveLogin")]
+        [Route("RemoveLogin")]
         public async Task<IHttpActionResult> RemoveLogin(RemoveLoginBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -245,10 +236,10 @@ namespace cozyjozywebapi.Controllers
         }
 
         // GET api/Account/ExternalLogin
-        [System.Web.Http.OverrideAuthentication]
+        [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]
-        [System.Web.Http.AllowAnonymous]
-        [System.Web.Http.Route("ExternalLogin", Name = "ExternalLogin")]
+        [AllowAnonymous]
+        [Route("ExternalLogin", Name = "ExternalLogin")]
         public async Task<IHttpActionResult> GetExternalLogin(string provider, string error = null)
         {
             if (error != null)
@@ -302,8 +293,8 @@ namespace cozyjozywebapi.Controllers
 
 
         // GET api/Account/ExternalLogins?returnUrl=%2F&generateState=true
-        [System.Web.Http.AllowAnonymous]
-        [System.Web.Http.Route("ExternalLogins")]
+        [AllowAnonymous]
+        [Route("ExternalLogins")]
         public IEnumerable<ExternalLoginViewModel> GetExternalLogins(string returnUrl, bool generateState = false)
         {
             IEnumerable<AuthenticationDescription> descriptions = Authentication.GetExternalAuthenticationTypes();
@@ -343,8 +334,8 @@ namespace cozyjozywebapi.Controllers
         }
 
         // POST api/Account/Register
-        [System.Web.Http.AllowAnonymous]
-        [System.Web.Http.Route("Register")]
+        [AllowAnonymous]
+        [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -372,9 +363,9 @@ namespace cozyjozywebapi.Controllers
         }
 
         // POST api/Account/RegisterExternal
-        [System.Web.Http.OverrideAuthentication]
+        [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
-        [System.Web.Http.Route("RegisterExternal")]
+        [Route("RegisterExternal")]
         public async Task<IHttpActionResult> RegisterExternal(RegisterExternalBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -442,27 +433,18 @@ namespace cozyjozywebapi.Controllers
                     return BadRequest();
                 }
 
-                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
-                //string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                string code = _userService.GeneratePasswordResetToken(user.Id);
-                //var callbackUrl = Url.Route("ControllerActionIdApi", new { controller = "Account", action = "ResetPassword", id = code });
-                //await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
                 try
                 {
-                    //await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by using the following code " + HttpUtility.UrlEncode(code));
-                    _emailService.SendEmail(user.Email, "Reset Password", "Please reset your password by using the following code " + HttpUtility.UrlEncode(code));
+                    //generate unique code (Token) for this password reset
+                    var code = _userService.GeneratePasswordResetToken(user.Id);
+                    _emailService.SendEmail(user.Email, "CozyJozy.net - Password Reset", "Please reset your password by using the following code on the password reset page. " + HttpUtility.UrlEncode(code));
 
                 }
                 catch (Exception e)
                 {
-
                     throw e;
                 }
                 return Ok();
-                //var response = Redirect(callbackUrl);
-                //return response;
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form
@@ -479,18 +461,19 @@ namespace cozyjozywebapi.Controllers
                 return BadRequest();
             }
             var user = await UserManager.FindByNameAsync(model.Email);
+            string errorMessage = "The Email / Code combo doesn't exist.";
             if (user == null)
             {
                 // Don't reveal that the user does not exist
-                return BadRequest();
+                return BadRequest(errorMessage);
             }
-            // var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+
             var result = _userService.ResetPassword(user.Id, model.Code, model.Password);
             if (result.Succeeded)
             {
                 return Ok();
             }
-            return BadRequest();
+            return BadRequest(errorMessage);
         }
 
         protected override void Dispose(bool disposing)

@@ -18,6 +18,7 @@
     self.newPassword = ko.observable("").extend({ required: true });
     self.confirmPassword = ko.observable("").extend({ required: true, equal: self.newPassword });
     self.code = ko.observable("").extend({ required: true });
+    self.successMessages = ko.observableArray();
 
     // Other UI state
     self.changing = ko.observable(false);
@@ -27,6 +28,7 @@
     // Operations
     self.forgotPasswordEmail = function () {
         self.errors.removeAll();
+        self.successMessages.removeAll();
         if (self.forgotPasswordValidationErrors().length > 0) {
             self.forgotPasswordValidationErrors.showAllMessages();
             return;
@@ -37,7 +39,7 @@
         }).done(function (data) {
             self.changing(false);
             reset();
-            console.log("An email has been sent to " + self.email() + ". Please check it and use the code to reset your password");
+            self.successMessages.push("An email has been sent to " + self.email() + ". Please check it and use the code to reset your password");
         }).failJSON(function (data) {
             var errors;
             self.changing(false);
@@ -53,6 +55,7 @@
 
     self.resetPassword = function () {
         self.errors.removeAll();
+        self.successMessages.removeAll();
         if (self.validationErrors().length > 0) {
             self.validationErrors.showAllMessages();
             return;
@@ -66,7 +69,7 @@
         }).done(function (data) {
             reset();
             self.changing(false);
-            console.log("Your password has been reset. Please try to login");
+            self.successMessages.push("Your password has been reset. Please try to login");
         }).failJSON(function (data) {
             var errors;
             self.changing(false);
