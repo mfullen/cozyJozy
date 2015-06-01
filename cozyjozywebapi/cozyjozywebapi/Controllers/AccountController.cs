@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using cozyjozywebapi.Infrastructure.Core;
 using cozyjozywebapi.Services;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
@@ -28,16 +30,18 @@ namespace cozyjozywebapi.Controllers
         private readonly IEmailService _emailService;
         public UserManager<User> UserManager { get; private set; }
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
-
+        private readonly IUnitOfWork _unitOfWork;
 
         public AccountController(UserManager<User> userManager,
             IUserService userService,
-            IEmailService emailService)
+            IEmailService emailService,
+            IUnitOfWork unitOfWork)
         {
             UserManager = userManager;
             AccessTokenFormat = Startup.OAuthOptions.AccessTokenFormat;
             _userService = userService;
             _emailService = emailService;
+            _unitOfWork = unitOfWork;
         }
 
       
@@ -343,6 +347,13 @@ namespace cozyjozywebapi.Controllers
                 return BadRequest(ModelState);
             }
 
+            var existingUser =  _unitOfWork.UserRepository.All().FirstOrDefault(u=> u.Email.ToLower() == model.Email.ToLower());
+
+            if (existingUser != null)
+            {
+                return BadRequest(string.Format("The email address {0} is already registered. Please choose another email address.", model.Email));
+            }
+
             var user = new User
             {
                 UserName = model.UserName,
@@ -426,7 +437,8 @@ namespace cozyjozywebapi.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
+                var user = _unitOfWork.UserRepository.All().FirstOrDefault(u=> u.Email.ToLower() == model.Email.ToLower());
+
                 if (user == null) // || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
@@ -460,8 +472,8 @@ namespace cozyjozywebapi.Controllers
             {
                 return BadRequest();
             }
-            var user = await UserManager.FindByNameAsync(model.Email);
-            string errorMessage = "The Email / Code combo doesn't exist.";
+            var user = _unitOfWork.UserRepository.All().FirstOrDefault(u => u.Email.ToLower() == model.Email.ToLower());
+            const string errorMessage = "The Email / Code combo doesn't exist.";
             if (user == null)
             {
                 // Don't reveal that the user does not exist
