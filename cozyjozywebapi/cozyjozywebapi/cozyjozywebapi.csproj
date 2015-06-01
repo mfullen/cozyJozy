@@ -328,6 +328,15 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AppSecretsRelease.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="AppSecretsQa.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="AppSecretsDev.config">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="App_Data\CozyJozy.mdf" />
     <Content Include="App_Data\CozyJozy_log.ldf">
       <DependentUpon>CozyJozy.mdf</DependentUpon>
