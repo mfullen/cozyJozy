@@ -20,6 +20,7 @@
     @Html.Partial("_Register")
     @Html.Partial("_RegisterExternal")
     @Html.Partial("_Manage")
+    @Html.Partial("_PasswordReset")
 }
 @section Scripts{
     @Scripts.Render("~/bundles/knockout")
@@ -49,7 +50,7 @@
                 default:
                     //xhr.responseJSON.modelState[""][0]
                     var errorMessage = 'Error: ' + xhr.status + ' ' + err;
-                   
+
                     if (xhr.responseJSON) {
                         if (xhr.responseJSON.modelState) {
                             var errorList = xhr.responseJSON.modelState[""];
@@ -64,7 +65,7 @@
                             errorMessage = xhr.responseJSON;
                         }
                     }
-                   
+
                     app.errors.push(errorMessage);
                     break;
             }

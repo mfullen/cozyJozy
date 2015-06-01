@@ -45,6 +45,7 @@ namespace cozyjozywebapi
                 "~/Scripts/app/register.viewmodel.js",
                 "~/Scripts/app/registerExternal.viewmodel.js",
                 "~/Scripts/app/manage.viewmodel.js",
+                "~/Scripts/app/forgotpw.viewmodel.js",
                 "~/Scripts/app/userInfo.viewmodel.js",
                 "~/Scripts/app/stats.feeding.viewmodel.js",
                 "~/Scripts/app/stats.diaper.viewmodel.js",

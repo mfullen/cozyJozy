@@ -1,28 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using cozyjozywebapi.Entity;
-using cozyjozywebapi.Infrastructure;
-using cozyjozywebapi.Infrastructure.Core;
 using Microsoft.AspNet.Identity;
-using Ninject;
 
 namespace cozyjozywebapi.Filters
 {
     public class ChildPermissionFilter : ActionFilterAttribute
     {
-        private  IUnitOfWork _unitOfWork;
- 
-        [Inject]
-        public void SetUow(IUnitOfWork uow)
-        {
-            _unitOfWork = uow;
-        }
 
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
