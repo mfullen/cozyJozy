@@ -40,5 +40,14 @@ namespace cozyjozywebapi.Models
         /// Virtual Object to allow navigation to the Title table
         /// </summary>
         public virtual Title Title { get; set; }
+
+        public bool? FeedingWriteAccess { get; set; }
+        public bool? DiaperChangeWriteAccess { get; set; }
+        public bool? SleepWriteAccess { get; set; }
+        public bool? MeasurementWriteAccess { get; set; }
+        public bool? ChildManagementWriteAccess { get; set; }
+        public bool? PermissionsWriteAccess { get; set; }
+        public bool FeedingStatAccess { get; set; }
+        public bool DiaperStatAccess { get; set; }
     }
 }

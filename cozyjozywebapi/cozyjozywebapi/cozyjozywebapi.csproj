@@ -233,6 +233,7 @@
     <Compile Include="Controllers\FeedingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MeasurementController.cs" />
+    <Compile Include="Controllers\Permission.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\FeedingStatsController.cs" />
     <Compile Include="Controllers\SleepController.cs" />
@@ -306,6 +307,10 @@
     <Compile Include="Migrations\201505210158364_SleepTracking.cs" />
     <Compile Include="Migrations\201505210158364_SleepTracking.Designer.cs">
       <DependentUpon>201505210158364_SleepTracking.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506020122350_EnhancedPermissions.cs" />
+    <Compile Include="Migrations\201506020122350_EnhancedPermissions.Designer.cs">
+      <DependentUpon>201506020122350_EnhancedPermissions.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -705,6 +710,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505210158364_SleepTracking.resx">
       <DependentUpon>201505210158364_SleepTracking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506020122350_EnhancedPermissions.resx">
+      <DependentUpon>201506020122350_EnhancedPermissions.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

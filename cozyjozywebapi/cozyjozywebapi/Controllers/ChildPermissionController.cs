@@ -20,18 +20,6 @@ namespace cozyjozywebapi.Controllers
         {
         }
 
-        public class Permission
-        {
-            public int Id { get; set; }
-
-
-            public UserRestModel User { get; set; }
-
-            public Child Child { get; set; }
-            public bool ReadOnly { get; set; }
-            public string Title { get; set; }
-        }
-
         public async Task<IHttpActionResult> Get(int childId, int pagesize = 25, int page = 0)
         {
 
@@ -102,7 +90,7 @@ namespace cozyjozywebapi.Controllers
                 return StatusCode(HttpStatusCode.Conflict);
             }
 
-            var newCp = Convert(userToGivePermission.Id, child.Id, permission.ReadOnly, permission.Title);
+            var newCp = Convert(userToGivePermission.Id, child.Id, permission);
 
             var entity = _unitOfWork.ChildPermissionsRepository.Add(newCp);
             _unitOfWork.Commit();
@@ -113,31 +101,7 @@ namespace cozyjozywebapi.Controllers
             return Created(myUri, p);
         }
 
-        protected async Task<Permission> Convert(ChildPermissions cp)
-        {
-            var u = await GetById(cp.IdentityUserId, cp.ChildId);
-            var p = new Permission()
-            {
-                Id = cp.Id,
-                Child = cp.Child,
-                ReadOnly = cp.ReadOnly,
-                User = u,
-                Title = cp.Title.Name
-            };
-            return p;
-        }
-
-        protected ChildPermissions Convert(String userId, int childId, bool readO, string title)
-        {
-            var newCp = new ChildPermissions()
-            {
-                ChildId = childId,
-                IdentityUserId = userId,
-                ReadOnly = readO,
-                Title = _unitOfWork.TitleRepository.Where(t => t.Name == title).FirstOrDefault()
-            };
-            return newCp;
-        }
+       
 
         // PUT api/<controller>/5
         public async Task<IHttpActionResult> Put(Permission permission)
@@ -158,22 +122,31 @@ namespace cozyjozywebapi.Controllers
                 return BadRequest();
             }
 
-            var existingFeed = _unitOfWork.ChildPermissionsRepository.Where(cp => cp.Id == permission.Id).FirstOrDefault();
-            if (existingFeed == null || existingFeed.Id < 1)
+            var existingPermission = _unitOfWork.ChildPermissionsRepository.Where(cp => cp.Id == permission.Id).FirstOrDefault();
+            if (existingPermission == null || existingPermission.Id < 1)
             {
                 return await Post(permission);
             }
 
-            existingFeed.Id = permission.Id;
-            existingFeed.ChildId = permission.Child.Id;
-            existingFeed.IdentityUserId = permission.User.Id;
-            existingFeed.ReadOnly = permission.ReadOnly;
-            existingFeed.Title = _unitOfWork.TitleRepository.Where(t => t.Name == permission.Title).FirstOrDefault();
+            existingPermission.Id = permission.Id;
+            existingPermission.ChildId = permission.Child.Id;
+            existingPermission.IdentityUserId = permission.User.Id;
+            existingPermission.ReadOnly = permission.ReadOnly;
+            existingPermission.Title = _unitOfWork.TitleRepository.Where(t => t.Name == permission.Title).FirstOrDefault();
+            existingPermission.FeedingStatAccess = permission.FeedingStatAccess;
+            existingPermission.FeedingWriteAccess = permission.FeedingWriteAccess;
+            existingPermission.DiaperChangeWriteAccess = permission.DiaperChangeWriteAccess;
+            existingPermission.DiaperStatAccess = permission.DiaperStatAccess;
+            existingPermission.SleepWriteAccess = permission.SleepWriteAccess;
+            existingPermission.MeasurementWriteAccess = permission.MeasurementWriteAccess;
+            existingPermission.ChildManagementWriteAccess = permission.ChildManagementWriteAccess;
+            existingPermission.PermissionsWriteAccess = permission.PermissionsWriteAccess;
 
-            _unitOfWork.ChildPermissionsRepository.Update(existingFeed, f => f.Id);
+
+            _unitOfWork.ChildPermissionsRepository.Update(existingPermission, f => f.Id);
             _unitOfWork.Commit();
 
-            var p = await Convert(existingFeed);
+            var p = await Convert(existingPermission);
             return Ok(p);
         }
 

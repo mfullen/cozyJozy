@@ -44,5 +44,47 @@ namespace cozyjozywebapi.Controllers
             model.ProfileImageUrl = await ExternalAccountHelper.GetProfileImageUrl(UserManager, model.Id);
             return model;
         }
+
+        protected async Task<Permission> Convert(ChildPermissions cp)
+        {
+            var u = await GetById(cp.IdentityUserId, cp.ChildId);
+            var p = new Permission()
+            {
+                Id = cp.Id,
+                Child = cp.Child,
+                ReadOnly = cp.ReadOnly,
+                User = u,
+                Title = cp.Title.Name,
+                FeedingStatAccess = cp.FeedingStatAccess,
+                FeedingWriteAccess = cp.FeedingWriteAccess,
+                DiaperChangeWriteAccess = cp.DiaperChangeWriteAccess,
+                DiaperStatAccess = cp.DiaperStatAccess,
+                SleepWriteAccess = cp.SleepWriteAccess,
+                MeasurementWriteAccess = cp.MeasurementWriteAccess,
+                ChildManagementWriteAccess = cp.ChildManagementWriteAccess,
+                PermissionsWriteAccess = cp.PermissionsWriteAccess
+            };
+            return p;
+        }
+
+        protected ChildPermissions Convert(string userId, int childId, Permission permission)
+        {
+            var newCp = new ChildPermissions()
+            {
+                ChildId = childId,
+                IdentityUserId = userId,
+                ReadOnly = permission.ReadOnly,
+                Title = _unitOfWork.TitleRepository.Where(t => t.Name == permission.Title).FirstOrDefault(),
+                FeedingStatAccess = permission.FeedingStatAccess,
+                FeedingWriteAccess = permission.FeedingWriteAccess,
+                DiaperChangeWriteAccess = permission.DiaperChangeWriteAccess,
+                DiaperStatAccess = permission.DiaperStatAccess,
+                SleepWriteAccess = permission.SleepWriteAccess,
+                MeasurementWriteAccess = permission.MeasurementWriteAccess,
+                ChildManagementWriteAccess = permission.ChildManagementWriteAccess,
+                PermissionsWriteAccess = permission.PermissionsWriteAccess
+            };
+            return newCp;
+        }
     }
 }
