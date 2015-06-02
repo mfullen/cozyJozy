@@ -159,15 +159,24 @@ namespace cozyjozywebapi.Controllers
             newFeeding.ChildId = newFeeding.Child.Id;
             var userId = HttpContext.Current.User.Identity.GetUserId();
             newFeeding.UserId = userId;
-            var entity = _feedingRepository.Add(newFeeding);
-            _unitOfWork.Commit();
-            var myUri = Request.RequestUri + entity.Id.ToString();
+            try
+            {
+                var entity = _feedingRepository.Add(newFeeding);
+                _unitOfWork.Commit();
+                var myUri = Request.RequestUri + entity.Id.ToString();
 
-            var feed = new FeedingResponse(entity);
-            var userResponse = await GetById(entity.UserId, feeding.ChildId);
-            feed.ReportedByUser = userResponse;
+                var feed = new FeedingResponse(entity);
+                var userResponse = await GetById(entity.UserId, feeding.ChildId);
+                feed.ReportedByUser = userResponse;
 
-            return Created(myUri, feed);
+                return Created(myUri, feed);
+            }
+            catch (Exception e)
+            {
+                
+                throw e;
+            }
+           
         }
 
         // PUT api/<controller>/5

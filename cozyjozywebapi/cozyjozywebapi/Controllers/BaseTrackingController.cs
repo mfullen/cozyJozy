@@ -8,20 +8,21 @@ using System.Web.Http;
 using cozyjozywebapi.Infrastructure.Core;
 using cozyjozywebapi.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.Practices.Unity;
 
 namespace cozyjozywebapi.Controllers
 {
     public class BaseTrackingController : ApiController
     {
         protected readonly IUnitOfWork _unitOfWork;
-        private readonly UserManager<User> UserManager;
         protected const string Authorthizedchildren = "authorthizedChildren";
         protected const int MaxPageSize = 100;
+        [Dependency]
+        public UserManager<User> UserManager { get; set; }
 
         public BaseTrackingController(IUnitOfWork uow)
         {
             _unitOfWork = uow;
-            UserManager = Startup.UserManagerFactory();
         }
 
         protected async Task<UserRestModel> GetById(string userId, int childId)

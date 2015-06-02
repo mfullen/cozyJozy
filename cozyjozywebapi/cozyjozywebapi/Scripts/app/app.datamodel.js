@@ -3,6 +3,8 @@
         // Routes
         addExternalLoginUrl = "/api/Account/AddExternalLogin",
         changePasswordUrl = "/api/Account/changePassword",
+        forgotPasswordUrl = "/api/Account/ForgotPassword",
+        resetPasswordUrl = "/api/Account/ResetPassword",
         loginUrl = "/Token",
         logoutUrl = "/api/Account/Logout",
         registerUrl = "/api/Account/Register",
@@ -152,6 +154,22 @@
 
     self.changePassword = function (data) {
         return $.ajax(changePasswordUrl, {
+            type: "POST",
+            data: data,
+            headers: getSecurityHeaders()
+        });
+    };
+
+    self.forgotPassword = function (data) {
+        return $.ajax(forgotPasswordUrl, {
+            type: "POST",
+            data: data,
+            headers: getSecurityHeaders()
+        });
+    };
+
+    self.resetPassword = function (data) {
+        return $.ajax(resetPasswordUrl, {
             type: "POST",
             data: data,
             headers: getSecurityHeaders()

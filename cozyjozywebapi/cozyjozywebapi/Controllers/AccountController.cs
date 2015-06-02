@@ -7,8 +7,8 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using System.Web.Http.ModelBinding;
-using System.Web.UI.WebControls;
+using cozyjozywebapi.Infrastructure.Core;
+using cozyjozywebapi.Services;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -26,21 +26,25 @@ namespace cozyjozywebapi.Controllers
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
-
-        public AccountController()
-            : this(Startup.UserManagerFactory(), Startup.OAuthOptions.AccessTokenFormat)
-        {
-        }
-
-        public AccountController(UserManager<User> userManager,
-            ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
-        {
-            UserManager = userManager;
-            AccessTokenFormat = accessTokenFormat;
-        }
-
+        private readonly IUserService _userService;
+        private readonly IEmailService _emailService;
         public UserManager<User> UserManager { get; private set; }
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
+        private readonly IUnitOfWork _unitOfWork;
+
+        public AccountController(UserManager<User> userManager,
+            IUserService userService,
+            IEmailService emailService,
+            IUnitOfWork unitOfWork)
+        {
+            UserManager = userManager;
+            AccessTokenFormat = Startup.OAuthOptions.AccessTokenFormat;
+            _userService = userService;
+            _emailService = emailService;
+            _unitOfWork = unitOfWork;
+        }
+
+      
 
         // GET api/Account/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
@@ -51,7 +55,7 @@ namespace cozyjozywebapi.Controllers
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
 
             var profileImageUrl = User.Identity.GetUserId() != null ?
-                await ExternalAccountHelper.GetProfileImageUrl(UserManager, User.Identity.GetUserId()) 
+                await ExternalAccountHelper.GetProfileImageUrl(UserManager, User.Identity.GetUserId())
                 : null;
 
 
@@ -343,6 +347,13 @@ namespace cozyjozywebapi.Controllers
                 return BadRequest(ModelState);
             }
 
+            var existingUser =  _unitOfWork.UserRepository.All().FirstOrDefault(u=> u.Email.ToLower() == model.Email.ToLower());
+
+            if (existingUser != null)
+            {
+                return BadRequest(string.Format("The email address {0} is already registered. Please choose another email address.", model.Email));
+            }
+
             var user = new User
             {
                 UserName = model.UserName,
@@ -414,6 +425,67 @@ namespace cozyjozywebapi.Controllers
             }
 
             return Ok();
+        }
+
+
+
+        // POST: /Account/ForgotPassword
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("ForgotPassword")]
+        public async Task<IHttpActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = _unitOfWork.UserRepository.All().FirstOrDefault(u=> u.Email.ToLower() == model.Email.ToLower());
+
+                if (user == null) // || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                {
+                    // Don't reveal that the user does not exist or is not confirmed
+                    return BadRequest();
+                }
+
+                try
+                {
+                    //generate unique code (Token) for this password reset
+                    var code = _userService.GeneratePasswordResetToken(user.Id);
+                    _emailService.SendEmail(user.Email, "CozyJozy.net - Password Reset", "Please reset your password by using the following code on the password reset page. " + HttpUtility.UrlEncode(code));
+
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+                return Ok();
+            }
+
+            // If we got this far, something failed, redisplay form
+            return BadRequest();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("ResetPassword")]
+        public async Task<IHttpActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var user = _unitOfWork.UserRepository.All().FirstOrDefault(u => u.Email.ToLower() == model.Email.ToLower());
+            const string errorMessage = "The Email / Code combo doesn't exist.";
+            if (user == null)
+            {
+                // Don't reveal that the user does not exist
+                return BadRequest(errorMessage);
+            }
+
+            var result = _userService.ResetPassword(user.Id, model.Code, model.Password);
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+            return BadRequest(errorMessage);
         }
 
         protected override void Dispose(bool disposing)
