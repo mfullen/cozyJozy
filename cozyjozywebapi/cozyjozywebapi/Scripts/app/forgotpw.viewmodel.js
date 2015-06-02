@@ -23,7 +23,7 @@
     // Other UI state
     self.changing = ko.observable(false);
     self.errors = ko.observableArray();
-    self.validationErrors = ko.validation.group([self.code, self.newPassword, self.confirmPassword]);
+    self.validationErrors = ko.validation.group([self.email,self.code, self.newPassword, self.confirmPassword]);
     self.forgotPasswordValidationErrors = ko.validation.group([self.email]);
     // Operations
     self.forgotPasswordEmail = function () {
