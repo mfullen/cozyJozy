@@ -141,7 +141,8 @@ app.addViewModel({
             modelFunc: FEED,
             newItem: newFeed,
             url: 'api/feeding',
-            itemName: 'feeding'
+            itemName: 'feeding',
+            canCrud: app.canWriteFeedings()
         };
         Feeding.prototype = new BaseVm();
         Feeding.prototype.constructor = Feeding;

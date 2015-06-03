@@ -47,7 +47,5 @@ namespace cozyjozywebapi.Models
         public bool? MeasurementWriteAccess { get; set; }
         public bool? ChildManagementWriteAccess { get; set; }
         public bool? PermissionsWriteAccess { get; set; }
-        public bool FeedingStatAccess { get; set; }
-        public bool DiaperStatAccess { get; set; }
     }
 }

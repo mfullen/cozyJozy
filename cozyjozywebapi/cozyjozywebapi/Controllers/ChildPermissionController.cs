@@ -133,10 +133,8 @@ namespace cozyjozywebapi.Controllers
             existingPermission.IdentityUserId = permission.User.Id;
             existingPermission.ReadOnly = permission.ReadOnly;
             existingPermission.Title = _unitOfWork.TitleRepository.Where(t => t.Name == permission.Title).FirstOrDefault();
-            existingPermission.FeedingStatAccess = permission.FeedingStatAccess;
             existingPermission.FeedingWriteAccess = permission.FeedingWriteAccess;
             existingPermission.DiaperChangeWriteAccess = permission.DiaperChangeWriteAccess;
-            existingPermission.DiaperStatAccess = permission.DiaperStatAccess;
             existingPermission.SleepWriteAccess = permission.SleepWriteAccess;
             existingPermission.MeasurementWriteAccess = permission.MeasurementWriteAccess;
             existingPermission.ChildManagementWriteAccess = permission.ChildManagementWriteAccess;

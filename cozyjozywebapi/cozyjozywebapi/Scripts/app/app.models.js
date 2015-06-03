@@ -61,8 +61,6 @@ function Permission(data) {
     this.measurementWriteAccess = ko.observable(data.measurementWriteAccess);
     this.childManagementWriteAccess = ko.observable(data.childManagementWriteAccess);
     this.permissionsWriteAccess = ko.observable(data.permissionsWriteAccess);
-    this.feedingStatAccess = ko.observable(data.feedingStatAccess);
-    this.diaperStatAccess = ko.observable(data.diaperStatAccess);
 }
 
 /**

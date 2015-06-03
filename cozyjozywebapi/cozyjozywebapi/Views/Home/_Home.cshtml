@@ -2,10 +2,10 @@
 <div class="jumbotron">
     <h1>CozyJozy.net!</h1>
     <p class="lead">Welcome to CozyJozy, a place to document your child's growth.</p>
-    <p><a class="btn btn-primary btn-lg waves-effect waves-button" data-bind="click: app.navigateToFeeding, style: { backgroundColor: app.themeBackgroundColorClassName }">Log Feedings &raquo;</a></p>
-    <p><a class="btn btn-primary btn-lg waves-effect waves-button" data-bind="click: app.navigateToDiaper, style: { backgroundColor: app.themeBackgroundColorClassName }">Log Diaper Changes &raquo;</a></p>
-    <p><a class="btn btn-primary btn-lg waves-effect waves-button" data-bind="click: app.navigateToSleep, style: { backgroundColor: app.themeBackgroundColorClassName }">Log Sleep Event &raquo;</a></p>
-    <p><a class="btn btn-primary btn-lg waves-effect waves-button" data-bind="click: app.navigateToMeasurements, style: { backgroundColor: app.themeBackgroundColorClassName }">Log Measurements &raquo;</a></p>
+    <p><a class="btn btn-primary btn-lg waves-effect waves-button" data-bind="visible: app.canAccessFeedings(), click: app.navigateToFeeding, style: { backgroundColor: app.themeBackgroundColorClassName }">Log Feedings &raquo;</a></p>
+    <p><a class="btn btn-primary btn-lg waves-effect waves-button" data-bind="visible: app.canAccessDiaperChanges(),click: app.navigateToDiaper, style: { backgroundColor: app.themeBackgroundColorClassName }">Log Diaper Changes &raquo;</a></p>
+    <p><a class="btn btn-primary btn-lg waves-effect waves-button" data-bind="visible: app.canAccessSleepSessions(),click: app.navigateToSleep, style: { backgroundColor: app.themeBackgroundColorClassName }">Log Sleep Event &raquo;</a></p>
+    <p><a class="btn btn-primary btn-lg waves-effect waves-button" data-bind="visible: app.canAccessMeasurements(),click: app.navigateToMeasurements, style: { backgroundColor: app.themeBackgroundColorClassName }">Log Measurements &raquo;</a></p>
 
     <p><a class="btn btn-primary btn-lg waves-effect waves-button" data-bind="click: app.navigateToFeedingStats, style: { backgroundColor: app.themeBackgroundColorClassName }">View Feeding Stats &raquo;</a></p>
     <p><a class="btn btn-primary btn-lg waves-effect waves-button" data-bind="click: app.navigateToDiaperStats, style: { backgroundColor: app.themeBackgroundColorClassName }">View Diaper Stats &raquo;</a></p>

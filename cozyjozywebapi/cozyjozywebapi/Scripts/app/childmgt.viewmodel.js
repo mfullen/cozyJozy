@@ -161,15 +161,15 @@ function ChildManagement(app, dataModel) {
     }, self);
 
     self.canAdd = ko.computed(function () {
-        return true;
+        return app.canWriteChildManagement();
     }, self);
 
     self.canEdit = ko.computed(function () {
-        return true;
+        return app.canWriteChildManagement();
     }, self);
 
     self.canDelete = ko.computed(function () {
-        return true;
+        return app.canWriteChildManagement();
     }, self);
 
 }

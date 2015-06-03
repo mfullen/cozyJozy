@@ -85,22 +85,74 @@
         return url;
     });
 
-  
+
 
     self.selectedChild = ko.observable();
 
+    //Permission helpers Access
+    self.canAccessFeedings = ko.computed(function () {
+        return self.selectedChild() && self.selectedChild().feedingWriteAccess() !== null;
+    });
+
+    self.canAccessDiaperChanges = ko.computed(function () {
+        return self.selectedChild() && self.selectedChild().diaperChangeWriteAccess() !== null;
+    });
+
+    self.canAccessSleepSessions = ko.computed(function () {
+        return self.selectedChild() && self.selectedChild().sleepWriteAccess() !== null;
+    });
+
+    self.canAccessMeasurements = ko.computed(function () {
+        return self.selectedChild() && self.selectedChild().measurementWriteAccess() !== null;
+    });
+
+    self.canAccessChildManagement = ko.computed(function () {
+        return self.selectedChild() && self.selectedChild().childManagementWriteAccess() !== null;
+    });
+
+    self.canAccessPermissions = ko.computed(function () {
+        return self.selectedChild() && self.selectedChild().permissionsWriteAccess() !== null;
+    });
+
+    //Permission Helpers Read/Write
+    self.canWriteFeedings = ko.computed(function () {
+        return self.canAccessFeedings() && self.selectedChild().feedingWriteAccess() === true;
+    });
+
+    self.canWriteDiaperChanges = ko.computed(function () {
+        return self.canAccessDiaperChanges() && self.canAccessFeedings() && self.selectedChild().diaperChangeWriteAccess() === true;
+    });
+
+    self.canWriteSleepSessions = ko.computed(function () {
+        return self.canAccessSleepSessions() && self.selectedChild().sleepWriteAccess() === true;
+    });
+
+    self.canWriteMeasurements = ko.computed(function () {
+        return self.canAccessMeasurements() && self.selectedChild().measurementWriteAccess() === true;
+    });
+
+    self.canWriteChildManagement = ko.computed(function () {
+        return self.canAccessChildManagement() && self.selectedChild().childManagementWriteAccess() === true;
+    });
+
+    self.canWritePermissions = ko.computed(function () {
+        return self.canAccessPermissions() && self.selectedChild().permissionsWriteAccess() === true;
+    });
+
+
+    //END permission helpers
     self.availableChildren = ko.computed(function () {
         return dataModel.getChildren();
     });
 
     self.availableTitles = ko.observableArray();
 
-    self.setAvailableTitles = function(t) {
+    self.setAvailableTitles = function (t) {
         self.availableTitles(t);
     }
 
     self.blueTheme = '#4285F4'; //blue theme
-    self.pinkTheme =  "#e91e63"; //pink;
+    self.pinkTheme = "#e91e63"; //pink;
 
     self.themeBackgroundColorClassName = ko.computed(function () {
         if (self.selectedChild()) {
@@ -122,15 +174,15 @@
     }
 
 
-    self.activeMenuClass = function(bit) {
+    self.activeMenuClass = function (bit) {
         return ko.computed({
-            read: function() {
+            read: function () {
                 if (bit === self.view().name) {
                     return "active";
                 }
                 return "";
             },
-            write: function(cname) {
+            write: function (cname) {
 
                 return "";
             }
@@ -185,7 +237,7 @@
             dataModel.setAccessToken(accessToken, persistent);
         }
 
-        dataModel.fetchChildren(function() {
+        dataModel.fetchChildren(function () {
             self.user(new UserInfoViewModel(self, userName, dataModel));
 
             dataModel.fetchTitles(function (d) { return self.availableTitles(d); });

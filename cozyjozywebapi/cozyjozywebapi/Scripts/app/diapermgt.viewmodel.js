@@ -48,7 +48,8 @@ app.addViewModel({
             modelFunc: DC,
             newItem: newDc,
             url: 'api/diaperchanges',
-            itemName: 'diaper'
+            itemName: 'diaper',
+            canCrud: app.canWriteDiaperChanges()
         };
         DiaperManagement.prototype = new BaseVm(app, dataModel, options);
         DiaperManagement.prototype.constructor = DiaperManagement;

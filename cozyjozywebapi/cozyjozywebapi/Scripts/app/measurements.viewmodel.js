@@ -68,7 +68,8 @@ app.addViewModel({
             modelFunc: MeasurementClass,
             newItem: newMeasurement,
             url: 'api/measurement',
-            itemName: 'measurement'
+            itemName: 'measurement',
+            canCrud: app.canWriteMeasurements()
         };
         Measurement.prototype = new BaseVm(app, dataModel, options);
         Measurement.prototype.constructor = Measurement;

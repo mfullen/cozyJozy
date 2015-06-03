@@ -312,6 +312,10 @@
     <Compile Include="Migrations\201506020122350_EnhancedPermissions.Designer.cs">
       <DependentUpon>201506020122350_EnhancedPermissions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506031523264_RemoveStatPermissions.cs" />
+    <Compile Include="Migrations\201506031523264_RemoveStatPermissions.Designer.cs">
+      <DependentUpon>201506031523264_RemoveStatPermissions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -713,6 +717,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201506020122350_EnhancedPermissions.resx">
       <DependentUpon>201506020122350_EnhancedPermissions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506031523264_RemoveStatPermissions.resx">
+      <DependentUpon>201506031523264_RemoveStatPermissions.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

@@ -111,7 +111,8 @@ app.addViewModel({
             modelFunc: Permission,
             newItem: newDc,
             url: 'api/childpermission',
-            itemName: 'Permission'
+            itemName: 'Permission',
+            canCrud: app.canWritePermissions()
         };
         ChildPermissionViewModel.prototype = new BaseVm();
         ChildPermissionViewModel.prototype.constructor = ChildPermissionViewModel;
