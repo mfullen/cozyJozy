@@ -52,7 +52,6 @@ namespace cozyjozywebapi.Controllers
             {
                 Id = cp.Id,
                 Child = cp.Child,
-                ReadOnly = cp.ReadOnly,
                 User = u,
                 Title = cp.Title.Name,
                 FeedingWriteAccess = cp.FeedingWriteAccess,
@@ -71,7 +70,6 @@ namespace cozyjozywebapi.Controllers
             {
                 ChildId = childId,
                 IdentityUserId = userId,
-                ReadOnly = permission.ReadOnly,
                 Title = _unitOfWork.TitleRepository.Where(t => t.Name == permission.Title).FirstOrDefault(),
                 FeedingWriteAccess = permission.FeedingWriteAccess,
                 DiaperChangeWriteAccess = permission.DiaperChangeWriteAccess,

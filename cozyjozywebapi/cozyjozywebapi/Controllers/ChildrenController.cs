@@ -102,7 +102,6 @@ namespace cozyjozywebapi.Controllers
             var cp = _unitOfWork.ChildPermissionsRepository.Add(new ChildPermissions()
              {
                  ChildId = savedChild.Id,
-                 ReadOnly = false,
                  IdentityUserId = userId,
                  TitleId = _unitOfWork.TitleRepository.Where(t => t.Name.Equals("Parent/Guardian")).FirstOrDefault().Id,
                  FeedingWriteAccess = true,

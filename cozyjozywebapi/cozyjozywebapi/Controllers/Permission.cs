@@ -7,7 +7,6 @@ namespace cozyjozywebapi.Controllers
         public int Id { get; set; }
         public UserRestModel User { get; set; }
         public Child Child { get; set; }
-        public bool ReadOnly { get; set; }
         public string Title { get; set; }
         public bool? FeedingWriteAccess { get; set; }
         public bool? DiaperChangeWriteAccess { get; set; }

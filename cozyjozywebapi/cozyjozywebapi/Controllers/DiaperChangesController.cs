@@ -126,6 +126,11 @@ namespace cozyjozywebapi.Controllers
                 return BadRequest(ModelState);
             }
 
+            if (!HasWritePermission(diaperChanges.Child.Id))
+            {
+                return BadRequest();
+            }
+
             if (id != diaperChanges.Id)
             {
                 return BadRequest();
@@ -169,6 +174,11 @@ namespace cozyjozywebapi.Controllers
                 return BadRequest(ModelState);
             }
 
+            if (!HasWritePermission(diaperChanges.Child.Id))
+            {
+                return BadRequest();
+            }
+
             var userId = HttpContext.Current.User.Identity.GetUserId();
             diaperChanges.UserId = userId;
             _unitOfWork.DiaperChangesRepository.Add(diaperChanges);
@@ -208,6 +218,11 @@ namespace cozyjozywebapi.Controllers
                 return NotFound();
             }
 
+            if (!HasWritePermission(diaperChanges.ChildId))
+            {
+                return BadRequest();
+            }
+
             _unitOfWork.DiaperChangesRepository.Delete(diaperChanges);
 
             await _unitOfWork.CommitAsync();
@@ -227,6 +242,15 @@ namespace cozyjozywebapi.Controllers
         private bool DiaperChangesExists(int id)
         {
             return _unitOfWork.DiaperChangesRepository.All().Count(e => e.Id == id) > 0;
+        }
+
+        public bool HasWritePermission(int childId)
+        {
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+            var hasWritePermission = _unitOfWork.ChildPermissionsRepository
+               .Where(c => c.ChildId == childId)
+               .Where(c => c.IdentityUserId == userId).Any(c => c.DiaperChangeWriteAccess == true);
+            return hasWritePermission;
         }
     }
 }

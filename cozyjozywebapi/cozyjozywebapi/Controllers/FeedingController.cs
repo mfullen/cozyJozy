@@ -236,7 +236,7 @@ namespace cozyjozywebapi.Controllers
             var userId = HttpContext.Current.User.Identity.GetUserId();
             var hasWritePermission = _unitOfWork.ChildPermissionsRepository
                .Where(c => c.ChildId == childId)
-               .Where(c => c.IdentityUserId == userId).Any(c => c.ReadOnly == false);
+               .Where(c => c.IdentityUserId == userId).Any(c => c.FeedingWriteAccess == true);
             return hasWritePermission;
         }
 

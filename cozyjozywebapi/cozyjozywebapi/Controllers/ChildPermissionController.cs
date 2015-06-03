@@ -29,14 +29,14 @@ namespace cozyjozywebapi.Controllers
             }
 
             var userId = HttpContext.Current.User.Identity.GetUserId();
-            var hasWritePermission = _unitOfWork.ChildPermissionsRepository.All()
+            var hasWriteAccess = _unitOfWork.ChildPermissionsRepository.All()
                 .Where(c => c.ChildId == childId)
-                .Where(c => c.IdentityUserId == userId).Any(c => c.ReadOnly == false);
+                .Where(c => c.IdentityUserId == userId).Any(c => c.PermissionsWriteAccess != null);
 
             var permissions = new List<Permission>();
 
             //if the user requesting who has permissions to view their child, they must have write permissions (AKA NOT READ ONLY)
-            if (hasWritePermission)
+            if (hasWriteAccess)
             {
                 //We only want to select all users who belong to permissions but we don't want to select our own user. This will prevent
                 //the user from accidently deleting their own permissions and eventually not be able to see their child again
@@ -70,7 +70,7 @@ namespace cozyjozywebapi.Controllers
             var userId = HttpContext.Current.User.Identity.GetUserId();
             var hasWritePermission = _unitOfWork.ChildPermissionsRepository.All()
                 .Where(c => c.ChildId == permission.Child.Id)
-                .Where(c => c.IdentityUserId == userId).Any(c => c.ReadOnly == false);
+                .Where(c => c.IdentityUserId == userId).Any(c => c.PermissionsWriteAccess == true);
 
             if (!hasWritePermission)
                 return BadRequest();
@@ -109,7 +109,7 @@ namespace cozyjozywebapi.Controllers
             var userId = HttpContext.Current.User.Identity.GetUserId();
             var hasWritePermission = _unitOfWork.ChildPermissionsRepository.All()
                 .Where(c => c.ChildId == permission.Child.Id)
-                .Where(c => c.IdentityUserId == userId).Any(c => c.ReadOnly == false);
+                .Where(c => c.IdentityUserId == userId).Any(c => c.PermissionsWriteAccess == true);
 
             if (!hasWritePermission)
                 return BadRequest();
@@ -131,7 +131,6 @@ namespace cozyjozywebapi.Controllers
             existingPermission.Id = permission.Id;
             existingPermission.ChildId = permission.Child.Id;
             existingPermission.IdentityUserId = permission.User.Id;
-            existingPermission.ReadOnly = permission.ReadOnly;
             existingPermission.Title = _unitOfWork.TitleRepository.Where(t => t.Name == permission.Title).FirstOrDefault();
             existingPermission.FeedingWriteAccess = permission.FeedingWriteAccess;
             existingPermission.DiaperChangeWriteAccess = permission.DiaperChangeWriteAccess;
@@ -161,7 +160,7 @@ namespace cozyjozywebapi.Controllers
             var userId = HttpContext.Current.User.Identity.GetUserId();
             var hasWritePermission = _unitOfWork.ChildPermissionsRepository
                 .Where(c => c.ChildId == permission.ChildId)
-                .Where(c => c.IdentityUserId == userId).Any(c => c.ReadOnly == false);
+                .Where(c => c.IdentityUserId == userId).Any(c => c.PermissionsWriteAccess == true);
 
             if (!hasWritePermission)
                 return BadRequest();
