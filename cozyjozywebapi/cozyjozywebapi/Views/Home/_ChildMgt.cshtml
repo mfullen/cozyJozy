@@ -112,17 +112,17 @@
                                 <i class="md md-face-unlock" data-bind="style: { color: male() ?  app.blueTheme : app.pinkTheme, fontSize: '30px' }"></i>
                             </div>
                             <div class="media-body">
-                                <div class="lv-actions actions dropdown" data-bind="visible: $parent.canEdit">
+                                <div class="lv-actions actions dropdown" data-bind="visible: childManagementWriteAccess">
                                     <a href="" data-toggle="dropdown" aria-expanded="true">
                                         <i class="md md-more-vert" data-bind="style: { color: app.themeBackgroundColorClassName }"></i>
                                     </a>
 
                                     <ul class="dropdown-menu dropdown-menu-right">
                                         <li>
-                                            <a href="" data-bind="visible: $parent.canEdit, click: $parent.edit">Edit</a>
+                                            <a href="" data-bind="visible: childManagementWriteAccess, click: $parent.edit">Edit</a>
                                         </li>
                                         <li>
-                                            <a href="" data-bind="visible: $parent.canDelete, click: $parent.deleteItem">Delete</a>
+                                            <a href="" data-bind="visible: childManagementWriteAccess, click: $parent.deleteItem">Delete</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -140,9 +140,32 @@
                                 </span>
 
                                 <ul class="lv-attrs">
-                                    <li data-bind="visible: !readOnly" class="bgm-blue c-white">
-                                        <span data-bind="text: 'Admin'"></span>
+                                    <li data-bind="visible: feedingWriteAccess() !== null" class="bgm-blue c-white">
+                                        <span data-bind="text: 'Feedings: ' + (feedingWriteAccess() ? 'Write' : 'Read Only')"></span>
                                     </li>
+
+                                    <li data-bind="visible: diaperChangeWriteAccess() !== null" class="bgm-blue c-white">
+                                        <span data-bind="text: 'Diaper: ' + (diaperChangeWriteAccess() ? 'Write' : 'Read Only')"></span>
+                                    </li>
+
+                                    <li data-bind="visible: sleepWriteAccess() !== null" class="bgm-blue c-white">
+                                        <span data-bind="text: 'Sleep: ' + (sleepWriteAccess() ? 'Write' : 'Read Only')"></span>
+                                    </li>
+
+
+                                    <li data-bind="visible: measurementWriteAccess() !== null" class="bgm-blue c-white">
+                                        <span data-bind="text: 'Measurement: ' + (measurementWriteAccess() ? 'Write' : 'Read Only')"></span>
+                                    </li>
+
+                                    <li data-bind="visible: childManagementWriteAccess() !== null" class="bgm-blue c-white">
+                                        <span data-bind="text:'ChildManagement: ' +  (childManagementWriteAccess() ? 'Write' : 'Read Only')"></span>
+                                    </li>
+
+                                    <li data-bind="visible: permissionsWriteAccess() !== null" class="bgm-blue c-white">
+                                        <span data-bind="text:'Permission: ' +  (permissionsWriteAccess() ? 'Write' : 'Read Only')"></span>
+                                    </li>
+
+
                                 </ul>
                             </div>
                         </div>

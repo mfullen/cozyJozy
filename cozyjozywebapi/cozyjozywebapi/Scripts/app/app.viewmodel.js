@@ -92,52 +92,52 @@
     //Permission helpers Access
     self.canAccessFeedings = ko.computed(function () {
         return self.selectedChild() && self.selectedChild().feedingWriteAccess() !== null;
-    });
+    },self);
 
     self.canAccessDiaperChanges = ko.computed(function () {
         return self.selectedChild() && self.selectedChild().diaperChangeWriteAccess() !== null;
-    });
+    }, self);
 
     self.canAccessSleepSessions = ko.computed(function () {
         return self.selectedChild() && self.selectedChild().sleepWriteAccess() !== null;
-    });
+    }, self);
 
     self.canAccessMeasurements = ko.computed(function () {
         return self.selectedChild() && self.selectedChild().measurementWriteAccess() !== null;
-    });
+    }, self);
 
     self.canAccessChildManagement = ko.computed(function () {
         return self.selectedChild() && self.selectedChild().childManagementWriteAccess() !== null;
-    });
+    }, self);
 
     self.canAccessPermissions = ko.computed(function () {
         return self.selectedChild() && self.selectedChild().permissionsWriteAccess() !== null;
-    });
+    }, self);
 
     //Permission Helpers Read/Write
     self.canWriteFeedings = ko.computed(function () {
         return self.canAccessFeedings() && self.selectedChild().feedingWriteAccess() === true;
-    });
+    }, self);
 
     self.canWriteDiaperChanges = ko.computed(function () {
         return self.canAccessDiaperChanges() && self.canAccessFeedings() && self.selectedChild().diaperChangeWriteAccess() === true;
-    });
+    }, self);
 
     self.canWriteSleepSessions = ko.computed(function () {
         return self.canAccessSleepSessions() && self.selectedChild().sleepWriteAccess() === true;
-    });
+    }, self);
 
     self.canWriteMeasurements = ko.computed(function () {
         return self.canAccessMeasurements() && self.selectedChild().measurementWriteAccess() === true;
-    });
+    }, self);
 
     self.canWriteChildManagement = ko.computed(function () {
         return self.canAccessChildManagement() && self.selectedChild().childManagementWriteAccess() === true;
-    });
+    }, self);
 
     self.canWritePermissions = ko.computed(function () {
         return self.canAccessPermissions() && self.selectedChild().permissionsWriteAccess() === true;
-    });
+    }, self);
 
 
     //END permission helpers

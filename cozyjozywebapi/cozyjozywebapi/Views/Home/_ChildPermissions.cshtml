@@ -17,22 +17,159 @@
             <div class="row">
 
                 <div class="col-sm-2 m-b-20">
-                    <p class="c-black f-500 m-b-20">Access</p>
+                    <p class="c-black f-500 m-b-20">Feedings</p>
                     <div>
                         <label class="radio radio-inline m-r-20 m-b-20">
-                            <input type="radio" name="inlineRadioOptions" data-bind="checked: readOnly, checkedValue: true">
+                            <input type="radio" name="FeedingsinlineRadioOptions" data-bind="checked: feedingWriteAccess, checkedValue: null">
+                            <i class="input-helper"></i>
+                            No Access
+                        </label>
+                    </div>
+                    <div>
+                        <label class="radio radio-inline m-r-20 m-b-20">
+                            <input type="radio" name="FeedingsinlineRadioOptions" data-bind="checked: feedingWriteAccess, checkedValue: false">
                             <i class="input-helper"></i>
                             Read Only
                         </label>
                     </div>
                     <div>
                         <label class="radio radio-inline m-r-20 m-b-20">
-                            <input type="radio" name="inlineRadioOptions" data-bind="checked: readOnly, checkedValue: false">
+                            <input type="radio" name="FeedingsinlineRadioOptions" data-bind="checked: feedingWriteAccess, checkedValue: true">
                             <i class="input-helper"></i>
-                            Admin
+                            Write (Create, Update, Delete)
                         </label>
                     </div>
                 </div>
+
+                <div class="col-sm-2 m-b-20">
+                    <p class="c-black f-500 m-b-20">Diaper</p>
+                    <div>
+                        <label class="radio radio-inline m-r-20 m-b-20">
+                            <input type="radio" name="DiaperinlineRadioOptions" data-bind="checked: diaperChangeWriteAccess, checkedValue: null">
+                            <i class="input-helper"></i>
+                            No Access
+                        </label>
+                    </div>
+                    <div>
+                        <label class="radio radio-inline m-r-20 m-b-20">
+                            <input type="radio" name="DiaperinlineRadioOptions" data-bind="checked: diaperChangeWriteAccess, checkedValue: false">
+                            <i class="input-helper"></i>
+                            Read Only
+                        </label>
+                    </div>
+                    <div>
+                        <label class="radio radio-inline m-r-20 m-b-20">
+                            <input type="radio" name="DiaperinlineRadioOptions" data-bind="checked: diaperChangeWriteAccess, checkedValue: true">
+                            <i class="input-helper"></i>
+                            Write (Create, Update, Delete)
+                        </label>
+                    </div>
+                </div>
+
+
+                <div class="col-sm-2 m-b-20">
+                    <p class="c-black f-500 m-b-20">Sleep</p>
+                    <div>
+                        <label class="radio radio-inline m-r-20 m-b-20">
+                            <input type="radio" name="SleepinlineRadioOptions" data-bind="checked: sleepWriteAccess, checkedValue: null">
+                            <i class="input-helper"></i>
+                            No Access
+                        </label>
+                    </div>
+                    <div>
+                        <label class="radio radio-inline m-r-20 m-b-20">
+                            <input type="radio" name="SleepinlineRadioOptions" data-bind="checked: sleepWriteAccess, checkedValue: false">
+                            <i class="input-helper"></i>
+                            Read Only
+                        </label>
+                    </div>
+                    <div>
+                        <label class="radio radio-inline m-r-20 m-b-20">
+                            <input type="radio" name="SleepinlineRadioOptions" data-bind="checked: sleepWriteAccess, checkedValue: true">
+                            <i class="input-helper"></i>
+                            Write (Create, Update, Delete)
+                        </label>
+                    </div>
+                </div>
+
+
+
+                <div class="col-sm-2 m-b-20">
+                    <p class="c-black f-500 m-b-20">Measurement</p>
+                    <div>
+                        <label class="radio radio-inline m-r-20 m-b-20">
+                            <input type="radio" name="MeasurementinlineRadioOptions" data-bind="checked: measurementWriteAccess, checkedValue: null">
+                            <i class="input-helper"></i>
+                            No Access
+                        </label>
+                    </div>
+                    <div>
+                        <label class="radio radio-inline m-r-20 m-b-20">
+                            <input type="radio" name="MeasurementinlineRadioOptions" data-bind="checked: measurementWriteAccess, checkedValue: false">
+                            <i class="input-helper"></i>
+                            Read Only
+                        </label>
+                    </div>
+                    <div>
+                        <label class="radio radio-inline m-r-20 m-b-20">
+                            <input type="radio" name="MeasurementinlineRadioOptions" data-bind="checked: measurementWriteAccess, checkedValue: true">
+                            <i class="input-helper"></i>
+                            Write (Create, Update, Delete)
+                        </label>
+                    </div>
+                </div>
+
+
+                <div class="col-sm-2 m-b-20">
+                    <p class="c-black f-500 m-b-20">Child Management</p>
+                    <div>
+                        <label class="radio radio-inline m-r-20 m-b-20">
+                            <input type="radio" name="ChildManagementinlineRadioOptions" data-bind="checked: childManagementWriteAccess, checkedValue: null">
+                            <i class="input-helper"></i>
+                            No Access
+                        </label>
+                    </div>
+                    <div>
+                        <label class="radio radio-inline m-r-20 m-b-20">
+                            <input type="radio" name="ChildManagementinlineRadioOptions" data-bind="checked: childManagementWriteAccess, checkedValue: false">
+                            <i class="input-helper"></i>
+                            Read Only
+                        </label>
+                    </div>
+                    <div>
+                        <label class="radio radio-inline m-r-20 m-b-20">
+                            <input type="radio" name="ChildManagementinlineRadioOptions" data-bind="checked: childManagementWriteAccess, checkedValue: true">
+                            <i class="input-helper"></i>
+                            Write (Create, Update, Delete)
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-sm-2 m-b-20">
+                    <p class="c-black f-500 m-b-20">Permissions</p>
+                    <div>
+                        <label class="radio radio-inline m-r-20 m-b-20">
+                            <input type="radio" name="PermissionsinlineRadioOptions" data-bind="checked: permissionsWriteAccess, checkedValue: null">
+                            <i class="input-helper"></i>
+                            No Access
+                        </label>
+                    </div>
+                    <div>
+                        <label class="radio radio-inline m-r-20 m-b-20">
+                            <input type="radio" name="PermissionsinlineRadioOptions" data-bind="checked: permissionsWriteAccess, checkedValue: false">
+                            <i class="input-helper"></i>
+                            Read Only
+                        </label>
+                    </div>
+                    <div>
+                        <label class="radio radio-inline m-r-20 m-b-20">
+                            <input type="radio" name="PermissionsinlineRadioOptions" data-bind="checked: permissionsWriteAccess, checkedValue: true">
+                            <i class="input-helper"></i>
+                            Write (Create, Update, Delete)
+                        </label>
+                    </div>
+                </div>
+
 
 
 
@@ -122,7 +259,7 @@
                                 <div class="lv-title" style="font-weight: bold">
                                     <span data-bind="text: userName"></span>
                                 </div>
-                                <small class="lv-small" data-bind="text: id"></small>
+                                @*<small class="lv-small" data-bind="text: id"></small>*@
                                 <!-- /ko -->
 
                                 <span data-bind="visible: title">
@@ -130,12 +267,31 @@
                                 </span>
 
                                 <ul class="lv-attrs">
-                                    <li data-bind="visible: !readOnly()" class="bgm-blue c-white">
-                                        <span data-bind="text: 'Admin (Can Add/Edit/Delete)'"></span>
+                                    <li data-bind="visible: feedingWriteAccess() !== null" class="bgm-blue c-white">
+                                        <span data-bind="text: 'Feedings: ' + (feedingWriteAccess() ? 'Write' : 'Read Only')"></span>
                                     </li>
-                                    <li data-bind="visible: readOnly()" class="bgm-deeppurple c-white">
-                                        <span data-bind="text: 'Read Only (No Editing)'"></span>
+
+                                    <li data-bind="visible: diaperChangeWriteAccess() !== null" class="bgm-blue c-white">
+                                        <span data-bind="text: 'Diaper: ' + (diaperChangeWriteAccess() ? 'Write' : 'Read Only')"></span>
                                     </li>
+
+                                    <li data-bind="visible: sleepWriteAccess() !== null" class="bgm-blue c-white">
+                                        <span data-bind="text: 'Sleep: ' + (sleepWriteAccess() ? 'Write' : 'Read Only')"></span>
+                                    </li>
+
+
+                                    <li data-bind="visible: measurementWriteAccess() !== null" class="bgm-blue c-white">
+                                        <span data-bind="text: 'Measurement: ' + (measurementWriteAccess() ? 'Write' : 'Read Only')"></span>
+                                    </li>
+
+                                    <li data-bind="visible: childManagementWriteAccess() !== null" class="bgm-blue c-white">
+                                        <span data-bind="text:'ChildManagement: ' +  (childManagementWriteAccess() ? 'Write' : 'Read Only')"></span>
+                                    </li>
+
+                                    <li data-bind="visible: permissionsWriteAccess() !== null" class="bgm-blue c-white">
+                                        <span data-bind="text:'Permission: ' +  (permissionsWriteAccess() ? 'Write' : 'Read Only')"></span>
+                                    </li>
+
                                 </ul>
                             </div>
                         </div>

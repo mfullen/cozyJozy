@@ -51,7 +51,6 @@ function Permission(data) {
     this.id = ko.observable(data.id);
     this.user = ko.observable(new User(data.user)).extend({ required: true });
     this.child = ko.observable(new ChildClass(data.child));
-    this.readOnly = ko.observable(data.readOnly);
     this.childId = ko.observable(data.childId);
     this.title = ko.observable(data.title).extend({ required: true });
 
