@@ -79,6 +79,11 @@ namespace cozyjozywebapi.Controllers
                 return BadRequest();
             }
 
+            if (!HasWritePermission(measurement.ChildId))
+            {
+                return BadRequest();
+            }
+
 
             context.Entry(measurement).State = EntityState.Modified;
 
@@ -110,6 +115,11 @@ namespace cozyjozywebapi.Controllers
             if (!ModelState.IsValid || !authorthizedChildren.Contains(measurement.ChildId))
             {
                 return BadRequest(ModelState);
+            }
+
+            if (!HasWritePermission(measurement.ChildId))
+            {
+                return BadRequest();
             }
 
 
@@ -146,6 +156,11 @@ namespace cozyjozywebapi.Controllers
                 return NotFound();
             }
 
+            if (!HasWritePermission(measurement.ChildId))
+            {
+                return BadRequest();
+            }
+
             context.Measurements.Remove(measurement);
             await context.SaveChangesAsync();
 
@@ -164,6 +179,15 @@ namespace cozyjozywebapi.Controllers
         private bool MeasurementExists(int id)
         {
             return context.Measurements.Count(e => e.Id == id) > 0;
+        }
+
+        public bool HasWritePermission(int childId)
+        {
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+            var hasWritePermission = _unitOfWork.ChildPermissionsRepository
+               .Where(c => c.ChildId == childId)
+               .Where(c => c.IdentityUserId == userId).Any(c => c.MeasurementWriteAccess == true);
+            return hasWritePermission;
         }
     }
 }

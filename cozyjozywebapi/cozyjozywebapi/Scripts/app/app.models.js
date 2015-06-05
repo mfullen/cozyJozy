@@ -45,23 +45,21 @@ function ChildClass(data) {
 }
 
 /**
-ChildPermission is an aggregrate class that contains a child and the access settings for that user in the app
-*/
-function ChildPermission(data) {
-    this.child = ko.observable(new ChildClass(data.child));
-    this.readOnly = data.readOnly;
-}
-
-/**
 Permission class represents the actual data contained in granting a user permissions in the application
 */
 function Permission(data) {
     this.id = ko.observable(data.id);
     this.user = ko.observable(new User(data.user)).extend({ required: true });
     this.child = ko.observable(new ChildClass(data.child));
-    this.readOnly = ko.observable(data.readOnly);
     this.childId = ko.observable(data.childId);
     this.title = ko.observable(data.title).extend({ required: true });
+
+    this.feedingWriteAccess = ko.observable(data.feedingWriteAccess);
+    this.diaperChangeWriteAccess = ko.observable(data.diaperChangeWriteAccess);
+    this.sleepWriteAccess = ko.observable(data.sleepWriteAccess);
+    this.measurementWriteAccess = ko.observable(data.measurementWriteAccess);
+    this.childManagementWriteAccess = ko.observable(data.childManagementWriteAccess);
+    this.permissionsWriteAccess = ko.observable(data.permissionsWriteAccess);
 }
 
 /**

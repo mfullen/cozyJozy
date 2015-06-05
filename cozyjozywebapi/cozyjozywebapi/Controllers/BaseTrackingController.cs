@@ -44,5 +44,41 @@ namespace cozyjozywebapi.Controllers
             model.ProfileImageUrl = await ExternalAccountHelper.GetProfileImageUrl(UserManager, model.Id);
             return model;
         }
+
+        protected async Task<Permission> Convert(ChildPermissions cp)
+        {
+            var u = await GetById(cp.IdentityUserId, cp.ChildId);
+            var p = new Permission()
+            {
+                Id = cp.Id,
+                Child = cp.Child,
+                User = u,
+                Title = cp.Title.Name,
+                FeedingWriteAccess = cp.FeedingWriteAccess,
+                DiaperChangeWriteAccess = cp.DiaperChangeWriteAccess,
+                SleepWriteAccess = cp.SleepWriteAccess,
+                MeasurementWriteAccess = cp.MeasurementWriteAccess,
+                ChildManagementWriteAccess = cp.ChildManagementWriteAccess,
+                PermissionsWriteAccess = cp.PermissionsWriteAccess
+            };
+            return p;
+        }
+
+        protected ChildPermissions Convert(string userId, int childId, Permission permission)
+        {
+            var newCp = new ChildPermissions()
+            {
+                ChildId = childId,
+                IdentityUserId = userId,
+                Title = _unitOfWork.TitleRepository.Where(t => t.Name == permission.Title).FirstOrDefault(),
+                FeedingWriteAccess = permission.FeedingWriteAccess,
+                DiaperChangeWriteAccess = permission.DiaperChangeWriteAccess,
+                SleepWriteAccess = permission.SleepWriteAccess,
+                MeasurementWriteAccess = permission.MeasurementWriteAccess,
+                ChildManagementWriteAccess = permission.ChildManagementWriteAccess,
+                PermissionsWriteAccess = permission.PermissionsWriteAccess
+            };
+            return newCp;
+        }
     }
 }

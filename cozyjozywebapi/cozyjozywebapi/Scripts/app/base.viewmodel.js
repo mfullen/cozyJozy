@@ -199,15 +199,15 @@
     }
 
     self.canAdd = ko.computed(function () {
-        return !app.selectedChild().readOnly;
+        return options.canCrud;
     }, self);
 
     self.canEdit = ko.computed(function () {
-        return !app.selectedChild().readOnly;
+        return options.canCrud;
     }, self);
 
     self.canDelete = ko.computed(function () {
-        return !app.selectedChild().readOnly;
+        return options.canCrud;
     }, self);
 
     self.testMe = function () {

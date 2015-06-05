@@ -58,7 +58,7 @@ function ChildManagement(app, dataModel) {
             headers: dataModel.getSecurityHeaders(),
             data: ko.toJSON(self.item()),
             success: function (data) {
-                self.items.push(new ChildPermission(data));
+                self.items.push(new Permission(data));
                 self.reset();
                 dataModel.setChildren(self.items());
             },
@@ -89,7 +89,7 @@ function ChildManagement(app, dataModel) {
                     return titem.child().id() === data.child.id;
                 });
 
-                self.items.replace(target, new ChildPermission(data));
+                self.items.replace(target, new Permission(data));
                 self.reset();
                 dataModel.setChildren(self.items());
             },
@@ -165,11 +165,11 @@ function ChildManagement(app, dataModel) {
     }, self);
 
     self.canEdit = ko.computed(function () {
-        return true;
+        return app.canWriteChildManagement();
     }, self);
 
     self.canDelete = ko.computed(function () {
-        return true;
+        return app.canWriteChildManagement();
     }, self);
 
 }

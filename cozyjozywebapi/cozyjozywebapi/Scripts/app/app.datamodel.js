@@ -104,7 +104,7 @@
             success: function (data) {
                 var cTemp = [];
                 for (var i = 0; i < data.length; i++) {
-                    cTemp.push(new ChildPermission(data[i]));
+                    cTemp.push(new Permission(data[i]));
                 }
 
                 self.setChildren(cTemp);

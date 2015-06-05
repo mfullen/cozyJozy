@@ -103,15 +103,21 @@ app.addViewModel({
             return new Permission({
                 id: 0,
                 child: ko.toJS(app.selectedChild().child()),
-                readOnly: true,
-                user: { id: 0 }
+                user: { id: 0 },
+                feedingWriteAccess: null,
+                diaperChangeWriteAccess: null,
+                sleepWriteAccess: null,
+                measurementWriteAccess: null,
+                childManagementWriteAccess: null,
+                permissionsWriteAccess: null,
             });
         };
         var options = {
             modelFunc: Permission,
             newItem: newDc,
             url: 'api/childpermission',
-            itemName: 'Permission'
+            itemName: 'Permission',
+            canCrud: app.canWritePermissions()
         };
         ChildPermissionViewModel.prototype = new BaseVm();
         ChildPermissionViewModel.prototype.constructor = ChildPermissionViewModel;

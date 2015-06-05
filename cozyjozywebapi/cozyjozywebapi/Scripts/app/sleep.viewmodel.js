@@ -67,7 +67,8 @@ app.addViewModel({
             modelFunc: SleepSession,
             newItem: newSleepSession,
             url: 'api/sleep',
-            itemName: 'sleep session'
+            itemName: 'sleep session',
+            canCrud: app.canWriteSleepSessions()
         };
         SleepViewModel.prototype = new BaseVm();
         SleepViewModel.prototype.constructor = Feeding;
