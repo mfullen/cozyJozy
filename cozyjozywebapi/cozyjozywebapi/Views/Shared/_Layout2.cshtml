@@ -514,7 +514,7 @@
 
 
         <section id="content">
-            <div class="container">
+            <div class="container" style="display: none" data-bind="visible: true">
                 <div class="alert alert-danger" data-bind="visible: errors().length > 0">
                     <ul data-bind="foreach: errors">
                         <li data-bind="text: $data"></li>
