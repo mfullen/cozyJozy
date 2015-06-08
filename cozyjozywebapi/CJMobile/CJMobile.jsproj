@@ -1,0 +1,354 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Target Name="CopyLinkedFiles" BeforeTargets="Build">
+    <ItemGroup>
+      <LinkedItem Include="@(Content)" Condition="%(Content.Link) != ''" />
+    </ItemGroup>
+    <Copy SourceFiles="@(LinkedItem)" DestinationFiles="%(LinkedItem.Link)"/>
+  </Target>
+    <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Android">
+      <Configuration>Debug</Configuration>
+      <Platform>Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|iOS">
+      <Configuration>Debug</Configuration>
+      <Platform>iOS</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Windows-AnyCPU">
+      <Configuration>Debug</Configuration>
+      <Platform>Windows-AnyCPU</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Windows-x64">
+      <Configuration>Debug</Configuration>
+      <Platform>Windows-x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Windows-x86">
+      <Configuration>Debug</Configuration>
+      <Platform>Windows-x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Windows-ARM">
+      <Configuration>Debug</Configuration>
+      <Platform>Windows-ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Windows Phone 8">
+      <Configuration>Debug</Configuration>
+      <Platform>Windows Phone 8</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Windows Phone (Universal)">
+      <Configuration>Debug</Configuration>
+      <Platform>Windows Phone (Universal)</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Android">
+      <Configuration>Release</Configuration>
+      <Platform>Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|iOS">
+      <Configuration>Release</Configuration>
+      <Platform>iOS</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Windows-AnyCPU">
+      <Configuration>Release</Configuration>
+      <Platform>Windows-AnyCPU</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Windows-x64">
+      <Configuration>Release</Configuration>
+      <Platform>Windows-x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Windows-x86">
+      <Configuration>Release</Configuration>
+      <Platform>Windows-x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Windows-ARM">
+      <Configuration>Release</Configuration>
+      <Platform>Windows-ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Windows Phone 8">
+      <Configuration>Release</Configuration>
+      <Platform>Windows Phone 8</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Windows Phone (Universal)">
+      <Configuration>Release</Configuration>
+      <Platform>Windows Phone (Universal)</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\cozyjozywebapi\Scripts\app\ajaxPrefilters.js">
+      <Link>www\scripts\app\ajaxPrefilters.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\app\app.datamodel.js">
+      <Link>www\scripts\app\app.datamodel.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\app\app.models.js">
+      <Link>www\scripts\app\app.models.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\app\app.viewmodel.js">
+      <Link>www\scripts\app\app.viewmodel.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\app\base.viewmodel.js">
+      <Link>www\scripts\app\base.viewmodel.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\app\childmgt.viewmodel.js">
+      <Link>www\scripts\app\childmgt.viewmodel.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\app\childPermission.viewmodel.js">
+      <Link>www\scripts\app\childPermission.viewmodel.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\app\developer.viewmodel.js">
+      <Link>www\scripts\app\developer.viewmodel.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\app\diapermgt.viewmodel.js">
+      <Link>www\scripts\app\diapermgt.viewmodel.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\app\feeding.viewmodel.js">
+      <Link>www\scripts\app\feeding.viewmodel.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\app\forgotpw.viewmodel.js">
+      <Link>www\scripts\app\forgotpw.viewmodel.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\app\home.viewmodel.js">
+      <Link>www\scripts\app\home.viewmodel.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\app\login.viewmodel.js">
+      <Link>www\scripts\app\login.viewmodel.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\app\manage.viewmodel.js">
+      <Link>www\scripts\app\manage.viewmodel.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\app\measurements.viewmodel.js">
+      <Link>www\scripts\app\measurements.viewmodel.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\app\register.viewmodel.js">
+      <Link>www\scripts\app\register.viewmodel.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\app\registerExternal.viewmodel.js">
+      <Link>www\scripts\app\registerExternal.viewmodel.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\app\sleep.viewmodel.js">
+      <Link>www\scripts\app\sleep.viewmodel.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\app\stats.diaper.viewmodel.js">
+      <Link>www\scripts\app\stats.diaper.viewmodel.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\app\stats.feeding.viewmodel.js">
+      <Link>www\scripts\app\stats.feeding.viewmodel.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\app\userInfo.viewmodel.js">
+      <Link>www\scripts\app\userInfo.viewmodel.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\app\_run.js">
+      <Link>www\scripts\app\_run.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\bootstrap-datetimepicker.js">
+      <Link>www\scripts\bootstrap-datetimepicker.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\bootstrap-datetimepicker.min.js">
+      <Link>www\scripts\bootstrap-datetimepicker.min.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\bootstrap-growl.js">
+      <Link>www\scripts\bootstrap-growl.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\bootstrap-growl.min.js">
+      <Link>www\scripts\bootstrap-growl.min.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\bootstrap-slider.js">
+      <Link>www\scripts\bootstrap-slider.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\bootstrap-slider.min.js">
+      <Link>www\scripts\bootstrap-slider.min.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\bootstrap.js">
+      <Link>www\scripts\bootstrap.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\bootstrap.min.js">
+      <Link>www\scripts\bootstrap.min.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\c3.js">
+      <Link>www\scripts\c3.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\charts.js">
+      <Link>www\scripts\charts.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\curvedLines.js">
+      <Link>www\scripts\curvedLines.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\d3-LICENSE">
+      <Link>www\scripts\d3-LICENSE</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\d3.js">
+      <Link>www\scripts\d3.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\d3.min.js">
+      <Link>www\scripts\d3.min.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\fullcalendar.js">
+      <Link>www\scripts\fullcalendar.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\fullcalendar.min.js">
+      <Link>www\scripts\fullcalendar.min.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\functions.js">
+      <Link>www\scripts\functions.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\handlebars-v3.0.3.js">
+      <Link>www\scripts\handlebars-v3.0.3.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\jquery-1.10.2.intellisense.js">
+      <Link>www\scripts\jquery-1.10.2.intellisense.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\jquery-2.1.3.intellisense.js">
+      <Link>www\scripts\jquery-2.1.3.intellisense.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\jquery-2.1.3.js">
+      <Link>www\scripts\jquery-2.1.3.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\jquery-2.1.3.min.js">
+      <Link>www\scripts\jquery-2.1.3.min.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\jquery-2.1.3.min.map">
+      <Link>www\scripts\jquery-2.1.3.min.map</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\jquery.easypiechart.js">
+      <Link>www\scripts\jquery.easypiechart.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\jquery.easypiechart.min.js">
+      <Link>www\scripts\jquery.easypiechart.min.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\jquery.flot.js">
+      <Link>www\scripts\jquery.flot.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\jquery.flot.min.js">
+      <Link>www\scripts\jquery.flot.min.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\jquery.flot.resize.js">
+      <Link>www\scripts\jquery.flot.resize.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\jquery.flot.resize.min.js">
+      <Link>www\scripts\jquery.flot.resize.min.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\jquery.nicescroll.js">
+      <Link>www\scripts\jquery.nicescroll.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\jquery.nicescroll.min.js">
+      <Link>www\scripts\jquery.nicescroll.min.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\jquery.simpleWeather.js">
+      <Link>www\scripts\jquery.simpleWeather.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\jquery.simpleWeather.min.js">
+      <Link>www\scripts\jquery.simpleWeather.min.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\jquery.sparkline.js">
+      <Link>www\scripts\jquery.sparkline.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\jquery.sparkline.min.js">
+      <Link>www\scripts\jquery.sparkline.min.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\knockout-3.2.0.debug.js">
+      <Link>www\scripts\knockout-3.2.0.debug.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\knockout-3.2.0.js">
+      <Link>www\scripts\knockout-3.2.0.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\knockout.mapping-latest.debug.js">
+      <Link>www\scripts\knockout.mapping-latest.debug.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\knockout.mapping-latest.js">
+      <Link>www\scripts\knockout.mapping-latest.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\knockout.validation.debug.js">
+      <Link>www\scripts\knockout.validation.debug.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\knockout.validation.js">
+      <Link>www\scripts\knockout.validation.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\knockout.validation.min.js">
+      <Link>www\scripts\knockout.validation.min.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\knockout.validation.min.js.map">
+      <Link>www\scripts\knockout.validation.min.js.map</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\modernizr-2.6.2.js">
+      <Link>www\scripts\modernizr-2.6.2.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\moment-with-locales.js">
+      <Link>www\scripts\moment-with-locales.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\moment-with-locales.min.js">
+      <Link>www\scripts\moment-with-locales.min.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\moment.js">
+      <Link>www\scripts\moment.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\moment.min.js">
+      <Link>www\scripts\moment.min.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\respond.js">
+      <Link>www\scripts\respond.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\respond.min.js">
+      <Link>www\scripts\respond.min.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\typeahead.bundle.js">
+      <Link>www\scripts\typeahead.bundle.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\waves.js">
+      <Link>www\scripts\waves.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\waves.min.js">
+      <Link>www\scripts\waves.min.js</Link>
+    </Content>
+    <Content Include="..\cozyjozywebapi\Scripts\_references.js">
+      <Link>www\scripts\_references.js</Link>
+    </Content>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>1e1c7f4b-083b-4224-b958-78abd2ea23f7</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup Condition="'$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0'">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TypeScriptToolsVersion>1.4</TypeScriptToolsVersion>
+    <DefaultReferenceGroup>Implicit (Apache Cordova)</DefaultReferenceGroup>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptCompileOnSaveEnabled>false</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>true</TypeScriptSourceMap>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <TypeScriptCompileOnSaveEnabled>false</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>false</TypeScriptSourceMap>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\ApacheCordovaTools\vs-mda-targets\Microsoft.TypeScript.MDA.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\ApacheCordovaTools\vs-mda-targets\Microsoft.MDA.FileMirroring.targets" />
+  <PropertyGroup>
+    <ProjectUISubcaption>Tools for Apache Cordova</ProjectUISubcaption>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetPlatformIdentifier>MDD</TargetPlatformIdentifier>
+  </PropertyGroup>
+  <Target Name="EnsureBuildPrerequisites">
+    <!-- These errors will trigger if building from inside Visual Studio and requirements could not be determined -->
+    <Error Condition="$(MDAPropertiesEvaluated) == 'true' And $(NodeJsDir) == ''" Text="Path to NodeJs could not be determined. Please check that NodeJs has been installed." />
+    <Error Condition="$(MDAPropertiesEvaluated) == 'true' And $(MDAVsixDir) == ''" Text="Path to the Visual Studio Extension for Tools for Apache Cordova could not be determined. Please check that the extension has been installed." />
+    <!-- These errors will trigger if building from outside Visual Studio (e.g. command line) and environment variables have not been set -->
+    <Error Condition="$(MDAPropertiesEvaluated) == '' And $(NodeJsDir) == ''" Text="Path to NodeJs has not been specified. Please check that NodeJs has been installed and set the NodeJsDir environment variable before building." />
+    <Error Condition="$(MDAPropertiesEvaluated) == '' And $(MDAVsixDir) == ''" Text="Path to Visual Studio Extension for Tools for Apache Cordova has not been specified. Please install it and set the MDAVsixDir environment variable before building." />
+    <!-- Sanity check that things exist in the specified places. These are more likely to fail if building outside Visual Studio and the required environment variables have not been set, or set incorrectly. -->
+    <Error Condition="!Exists('$(NodeJsDir)') Or !Exists('$(NodeJsDir)\node.exe')" Text="The specified NodeJs directory $(NodeJsDir) either does not exist, or does not contain node.exe. Please check that NodeJs has been installed, and set the NodeJsDir variable to the correct directory." />
+    <Error Condition="!Exists('$(MDAVsixDir)') Or !Exists('$(MDAVsixDir)\packages\vs-tac')" Text="The specified directory to the Visual Studio extension $(MDAVsixDir)\node.exe either does not exist, or does not contain a packages\vs-tac sub-directory. Please check that the extension directory exists and set the MDAVsixDir variable to the correct directory." />
+    <!-- Installs (if necessary) the supporting Nodejs module -->
+    <Exec Command="&quot;$(MDAVsixDir)&quot;\packages\vs-tac\install &quot;$(NodeJsDir)&quot; &quot;$(MDAVsixDir)&quot;\packages\vs-tac" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties project_1json__JSONSchema="http://www.asp.net/media/4878834/project.json" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="_apacheCordovaProjectSourceItems.Targets" Condition="Exists('_apacheCordovaProjectSourceItems.Targets')" />
+</Project>

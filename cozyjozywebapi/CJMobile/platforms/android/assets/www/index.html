@@ -1,0 +1,2230 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>CJMobile</title>
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/material/app.css" rel="stylesheet" />
+    <link href="Content/material/c3.css" rel="stylesheet" />
+    <link href="Content/material/animate.min.css" rel="stylesheet" />
+    <!-- CJMobile references -->
+    <link href="css/index.css" rel="stylesheet" />
+
+
+    <script src="scripts/jquery-2.1.3.min.js"></script>
+    <script src="scripts/jquery.easypiechart.min.js"></script>
+    <script src="scripts/jquery.nicescroll.min.js"></script>
+    <script src="scripts/jquery.sparkline.min.js"></script>
+    <script src="scripts/jquery.simpleWeather.min.js"></script>
+
+</head>
+<body>
+    <div data-bind="visible: loading">Loading...</div>
+
+    <header id="header">
+        <img src="Content/images/cozyjozy-150-trans.png" class="pull-right img-responsive" style="height:100%" />
+        <div data-bind="if: loggedIn, style: { backgroundColor: app.themeBackgroundColorClassName }">
+            <ul class="header-inner">
+                <li id="menu-trigger" data-trigger="#sidebar">
+                    <div class="line-wrap">
+                        <div class="line top"></div>
+                        <div class="line center"></div>
+                        <div class="line bottom"></div>
+                    </div>
+                </li>
+
+                <li class="logo hidden-xs">
+                    <a href="" data-bind="click: navigateToHome">CozyJozy</a>
+                </li>
+                <li><span class="c-white" data-bind="text: app.childDisplayName(selectedChild())"></span></li>
+
+                <li class="pull-right">
+                    <ul class="top-menu">
+                        <li id="toggle-width">
+                            <div class="toggle-switch">
+                                <input id="tw-switch" type="checkbox" hidden="hidden">
+                                <label for="tw-switch" class="ts-helper"></label>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- Top Search Content -->
+            <div id="top-search-wrap">
+                <input type="text">
+                <i id="top-search-close">&times;</i>
+            </div>
+        </div>
+    </header>
+
+    <section id="main">
+        <aside id="sidebar" data-bind="visible: loggedIn()">
+            <div class="sidebar-inner">
+                <div class="si-inner">
+                    <div class="profile-menu">
+                        <a href="">
+                            <div class="profile-pic">
+                                <img data-bind="attr: { src: profilePicUrl() }" alt="">
+                            </div>
+
+                            <div class="profile-info" data-bind="with:user">
+                                <span data-bind="text:name"></span>
+
+                                <i class="md md-arrow-drop-down"></i>
+                            </div>
+                        </a>
+
+
+
+                        <ul class="main-menu" data-bind="with: user">
+
+                            <li>
+                                <a href="" data-bind="click: manage"><i class="md md-settings"></i> Settings</a>
+                            </li>
+                            <li>
+                                <a href="" data-bind="click: logOff"><i class="md md-history"></i> Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="select" style="width:95%">
+
+                        <select class="form-control" data-bind="options: availableChildren, optionsText: function(item) { return app.childDisplayName(item);}, value: selectedChild"></select>
+                    </div>
+
+                    <ul class="main-menu" data-bind="if: loggedIn">
+                        <li data-bind="css: activeMenuClass('Home')"><a href="#" data-bind="visible: selectedChild(), click: navigateToHome"><i class="md md-home"></i> Home</a></li>
+                        <li data-bind="css: activeMenuClass('Feeding')"><a href="#" data-bind="visible: canAccessFeedings(), click: navigateToFeeding"><i class="md md-restaurant-menu"></i>Feeding</a></li>
+                        <li data-bind="css: activeMenuClass('Diaper')"><a href="#" data-bind="visible: canAccessDiaperChanges(), click: navigateToDiaper"><i class="md md-shopping-basket"></i>Diaper</a></li>
+                        <li data-bind="css: activeMenuClass('Sleep')"><a href="#" data-bind="visible: canAccessSleepSessions(), click: navigateToSleep"><i class="md md-snooze"></i>Sleep/Naps</a></li>
+                        <li data-bind="css: activeMenuClass('Measurements')"><a href="#" data-bind="visible: canAccessMeasurements(), click: navigateToMeasurements"><i class="md md-track-changes"></i>Measurements</a></li>
+
+                        <li class="sub-menu toggled" data-bind="visible: selectedChild()">
+                            <a href="#">
+                                <i class=" md md-now-widgets">
+                                </i> Statistics
+                            </a>
+
+                            <ul>
+                                <li data-bind="css: activeMenuClass('FeedingStats')"><a href="#" data-bind="visible: canAccessFeedings(), click: navigateToFeedingStats">Feedings</a></li>
+                                <li data-bind="css: activeMenuClass('DiaperStats')"><a href="#" data-bind="visible: canAccessDiaperChanges(), click: navigateToDiaperStats">Diapers</a></li>
+                            </ul>
+                        </li>
+                        <li data-bind="css: activeMenuClass('ChildManagement')"><a href="#" data-bind="click: navigateToChildManagement"><i class="md md-face-unlock"></i>Child Management</a></li>
+                        <li data-bind="css: activeMenuClass('ChildPermissionViewModel')"><a href="#" data-bind="visible: canAccessPermissions(), click: navigateToChildPermissionViewModel"><i class="md md-assignment"></i>Permissions</a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </aside>
+
+
+
+        <section id="content">
+            <div id="pageBody" class="container">
+                <div class="alert alert-danger" data-bind="visible: errors().length > 0">
+                    <ul data-bind="foreach: errors">
+                        <li data-bind="text: $data"></li>
+                    </ul>
+                </div>
+
+                <!-- TODO ADD BODY CODE HERE-->
+                <!--_LOGIN.CSHTML-->
+                <!-- ko with: login -->
+
+                <ul class="text-danger" data-bind="foreach: errors">
+                    <li data-bind="text: $data"></li>
+                </ul>
+
+
+                <div class="card go-social col-md-8">
+                    <div class="card-header">
+                        <h2>Login with the following providers <small></small></h2>
+                    </div>
+
+                    <div class="card-body clearfix" data-bind="visible: hasExternalLogin">
+                        <!-- ko foreach: externalLoginProviders -->
+                        <a class="col-xs-4" href="">
+                            <img data-bind="attr: { src: 'Content/material/images/social/' + name().toLowerCase() + '-128.png',  title: 'Log in using your ' + name() + ' account' }, click: login, css: 'img-responsive'" />
+                        </a>
+                        <!-- /ko -->
+                    </div>
+                </div>
+
+                <div class="card col-md-8">
+                    <p><a href="#" data-bind="click: register">Register</a> for an account if you don't want to use the above providers. Creating an account is free and only takes a few seconds.</p>
+                </div>
+
+                <div class="card col-md-8">
+                    <div class="card-header">
+                        <h2>Already have an account? Login here</h2>
+                        <a href="#" data-bind="click: app.navigateToForgotPassword"> Forgot Password? Click here.</a>
+                    </div>
+                    <div class="card-body card-padding">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-4 input-group m-b-20">
+                                <span class="input-group-addon"><i class="md md-person"></i></span>
+                                <div class="fg-line">
+                                    <input type="text" class="form-control" placeholder="Username" data-bind="value: userName, hasFocus: true">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 col-sm-4 input-group m-b-20">
+                                <span class="input-group-addon"><i class="md md-accessibility"></i></span>
+                                <div class="fg-line">
+                                    <input type="password" class="form-control" placeholder="Password" data-bind="value: password">
+                                </div>
+                            </div>
+
+                            <div class="clearfix"></div>
+
+                            <div class="col-sm-4 checkbox">
+                                <label>
+                                    <input type="checkbox" value="" data-bind="checked: rememberMe">
+                                    <i class="input-helper"></i>
+                                    Keep me signed in for 2 weeks
+                                </label>
+                            </div>
+                            <div>
+                                <button class="btn btn-login btn-danger btn-float pull-right" data-bind="click: login, disable: loggingIn, style: { position: 'relative'}"><i class="md md-arrow-forward"></i></button>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+                <!-- /ko -->
+
+                <!--_Register.cshtml-->
+                <!-- ko with: register -->
+                <p><a href="#" data-bind="click: login">Log in</a> if you already have a local account.</p>
+                <ul class="text-danger" data-bind="foreach: errors">
+                    <li data-bind="text: $data"></li>
+                </ul>
+
+                <div class="card col-md-8">
+                    <div class="card-body card-padding">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-4 input-group m-b-20">
+                                <span class="input-group-addon"><i class="md md-person"></i></span>
+                                <div class="fg-line">
+                                    <input type="text" class="form-control" placeholder="Username" data-bind="value: userName, hasFocus: true">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 col-sm-4 input-group m-b-20">
+                                <span class="input-group-addon"><i class="md md-email"></i></span>
+                                <div class="fg-line">
+                                    <input type="text" class="form-control" placeholder="Email" data-bind="value: email">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 col-sm-4 input-group m-b-20">
+                                <span class="input-group-addon"><i class="md md-person"></i></span>
+                                <div class="fg-line">
+                                    <input type="text" class="form-control" placeholder="First Name" data-bind="value: firstName">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 col-sm-4 input-group m-b-20">
+                                <span class="input-group-addon"><i class="md md-person"></i></span>
+                                <div class="fg-line">
+                                    <input type="text" class="form-control" placeholder="Last Name" data-bind="value: lastName">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 col-sm-4 input-group m-b-20">
+                                <span class="input-group-addon"><i class="md md-accessibility"></i></span>
+                                <div class="fg-line">
+                                    <input type="password" class="form-control" placeholder="Password" data-bind="value: password">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 col-sm-4 input-group m-b-20">
+                                <span class="input-group-addon"><i class="md md-accessibility"></i></span>
+                                <div class="fg-line">
+                                    <input type="password" class="form-control" placeholder="Confirm Password" data-bind="value: confirmPassword">
+                                </div>
+                            </div>
+
+                            <div class="clearfix"></div>
+
+                            <div class="col-sm-4">
+                                <label>
+                                    <input type="checkbox" data-bind="checked: acceptAgreement">
+                                    <i class="input-helper"></i>
+                                    Accept the license agreement
+                                </label>
+                            </div>
+
+                            <div>
+                                <button class="btn btn-login btn-danger btn-float pull-right" data-bind="click: register, disable: registering, style: { position: 'relative'}"><i class="md md-arrow-forward"></i></button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- /ko -->
+
+
+                <!--Manage-->
+                <!-- ko with: manage -->
+                <div data-bind="visible: loading">Loading...</div>
+                <div data-bind="visible: !loading()">
+                    <p class="text-success" data-bind="text: message"></p>
+                    <h2>Manage Account</h2>
+                    <div class="card">
+                        <div class="card-body card-padding" data-bind="with: changePassword">
+                            <p class="text-info">You're logged in as <strong data-bind="text: name"></strong>.</p>
+                            <form class="form-horizontal" role="form">
+                                <h4>Change your password</h4>
+                                <hr />
+                                <ul class="text-danger" data-bind="foreach: errors">
+                                    <li data-bind="text: $data"></li>
+                                </ul>
+
+                                <div class="form-group fg-line">
+                                    <label for="ChangePasswordOldPassword" class="col-md-2 control-label">Old password</label>
+                                    <div class="col-md-10">
+                                        <input type="password" id="ChangePasswordOldPassword" class="form-control" data-bind="value: oldPassword" />
+                                    </div>
+                                </div>
+                                <div class="form-group fg-line">
+                                    <label for="ChangePasswordNewPassword" class="col-md-2 control-label">New password</label>
+                                    <div class="col-md-10">
+                                        <input type="password" id="ChangePasswordNewPassword" class="form-control" data-bind="value: newPassword" />
+                                    </div>
+                                </div>
+                                <div class="form-group fg-line">
+                                    <label for="ChangePasswordConfirmPassword" class="col-md-2 control-label">Confirm new password</label>
+                                    <div class="col-md-10">
+                                        <input type="password" id="ChangePasswordConfirmPassword" class="form-control" data-bind="value: confirmPassword" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <button type="submit" class="btn btn-default" data-bind="click: change, disable: changing">Change password</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div data-bind="with: setPassword">
+                            <p>You do not have a local username/password for this site. Add a local account so you can log in without an external login.</p>
+                            <form class="form-horizontal" role="form">
+                                <h4>Create Local Login</h4>
+                                <hr />
+                                <ul class="text-danger" data-bind="foreach: errors">
+                                    <li data-bind="text: $data"></li>
+                                </ul>
+                                <div class="form-group">
+                                    <label for="SetPasswordNewPassword" class="col-md-2 control-label">New password</label>
+                                    <div class="col-md-10">
+                                        <input type="password" id="SetPasswordNewPassword" class="form-control" data-bind="value: newPassword" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="SetPasswordConfirmPassword" class="col-md-2 control-label">Confirm new password</label>
+                                    <div class="col-md-10">
+                                        <input type="password" id="SetPasswordConfirmPassword" class="form-control" data-bind="value: confirmPassword" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <button type="submit" class="btn btn-default" data-bind="click: set, disable: setting">Set password</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <ul class="text-danger" data-bind="foreach: errors">
+                            <li data-bind="text: $data"></li>
+                        </ul>
+                        <div data-bind="if: logins().length > 0">
+                            <div class="card-header">
+                                <h4>Registered logins</h4>
+                            </div>
+                            <div class="card-body">
+                                <table class="table">
+                                    <tbody data-bind="foreach: logins">
+                                        <tr>
+                                            <td data-bind="text: loginProvider"></td>
+                                            <td>
+                                                <div data-bind="if: $parent.canRemoveLogin">
+                                                    <form>
+                                                        <div>
+                                                            <button type="submit" class="btn btn-default" data-bind="attr: { title: 'Remove this ' + loginProvider() + ' credential from your account' }, click: remove, disable: removing">Remove</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <span data-bind="if: !$parent.canRemoveLogin()">&nbsp;</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="card go-social col-md-8">
+                        <div class="card-header">
+                            <h2>Associate another provider with this account<small></small></h2>
+                        </div>
+
+                        <div class="card-body clearfix" data-bind="visible: hasExternalLogin">
+                            <!-- ko foreach: externalLoginProviders -->
+                            <a class="col-xs-4" href="">
+                                <img data-bind="attr: { src: 'Content/material/images/social/' + name().toLowerCase() + '-128.png',  title: 'Log in using your ' + name() + ' account' }, click: login, css: 'img-responsive'" />
+                            </a>
+                            <!-- /ko -->
+                        </div>
+                    </div>
+                </div>
+                <!-- /ko -->
+
+                <!--RegisterExternal-->
+                <!-- ko with: registerExternal -->
+                <h2>Register</h2>
+                <form class="form-horizontal" role="form">
+                    <h4 data-bind="text: 'Associate your ' + loginProvider() + ' account.'"></h4>
+                    <hr />
+                    <p class="text-success">
+                        You've successfully authenticated with <strong data-bind="text: loginProvider"></strong>.
+                        Please enter a user name for this site below and click the Register button to finish logging in.
+                    </p>
+                    <ul class="text-danger" data-bind="foreach: errors">
+                        <li data-bind="text: $data"></li>
+                    </ul>
+                    <div class="form-group">
+                        <label for="RegisterExternalUserName" class="col-md-2 control-label">User name</label>
+                        <div class="col-md-10">
+                            <input type="text" id="RegisterExternalUserName" class="form-control" data-bind="value: userName, hasFocus: true" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" class="btn btn-default" data-bind="click: register, disable: registering">Sign up</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- /ko -->
+
+
+                <!--Password Reset-->
+                <!-- ko with: forgotPassword -->
+
+                <div class="alert alert-success alert-dismissible" data-bind="visible: successMessages().length > 0">
+                    <ul data-bind="foreach: successMessages">
+                        <li data-bind="text: $data"></li>
+                    </ul>
+                </div>
+
+                <div class="card">
+
+                    <div class="card-body card-padding">
+                        <form class="form-horizontal" role="form">
+                            <h4>Enter your email to receive a password reset code. This code is only valid for 24 hours!</h4>
+                            <hr />
+
+                            <div class="col-md-12 col-sm-4 input-group m-b-20">
+                                <span class="input-group-addon"><i class="md md-email"></i></span>
+                                <div class="fg-line">
+                                    <input type="text" class="form-control" placeholder="Email" data-bind="value: email">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <button type="submit" class="btn btn-default" data-bind="click: forgotPasswordEmail, disable: changing">Send Email</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                    <div class="card-body card-padding">
+                        <form class="form-horizontal" role="form">
+                            <h4>Change your password</h4>
+                            <hr />
+
+                            <div class="col-md-12 col-sm-4 input-group m-b-20">
+                                <span class="input-group-addon"><i class="md md-email"></i></span>
+                                <div class="fg-line">
+                                    <input type="text" class="form-control" placeholder="Email" data-bind="value: email">
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-12 col-sm-4 input-group m-b-20">
+                                <span class="input-group-addon"><i class="md md-accessibility"></i></span>
+                                <div class="fg-line">
+                                    <input type="password" class="form-control" placeholder="New Password" data-bind="value: newPassword">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 col-sm-4 input-group m-b-20">
+                                <span class="input-group-addon"><i class="md md-accessibility"></i></span>
+                                <div class="fg-line">
+                                    <input type="password" class="form-control" placeholder="Confirm Password" data-bind="value: confirmPassword">
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-12 col-sm-4 input-group m-b-20">
+                                <span class="input-group-addon"><i class="md md-link"></i></span>
+                                <div class="fg-line">
+                                    <input type="text" class="form-control" placeholder="Verification Code" data-bind="value: code">
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <button type="submit" class="btn btn-default" data-bind="click: resetPassword, disable: changing">Change password</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-default" data-bind="click: app.navigateToLogin">Back To Login</button>
+                <!-- /ko -->
+
+
+                <!--Home.cshtml-->
+
+                <!-- ko with: home -->
+                <div class="jumbotron">
+                    <h1>CozyJozy.net!</h1>
+                    <p class="lead">Welcome to CozyJozy, a place to document your child's growth.</p>
+                    <p><a class="btn btn-primary btn-lg waves-effect waves-button" data-bind="visible: app.canAccessFeedings(), click: app.navigateToFeeding, style: { backgroundColor: app.themeBackgroundColorClassName }">Log Feedings &raquo;</a></p>
+                    <p><a class="btn btn-primary btn-lg waves-effect waves-button" data-bind="visible: app.canAccessDiaperChanges(),click: app.navigateToDiaper, style: { backgroundColor: app.themeBackgroundColorClassName }">Log Diaper Changes &raquo;</a></p>
+                    <p><a class="btn btn-primary btn-lg waves-effect waves-button" data-bind="visible: app.canAccessSleepSessions(),click: app.navigateToSleep, style: { backgroundColor: app.themeBackgroundColorClassName }">Log Sleep Event &raquo;</a></p>
+                    <p><a class="btn btn-primary btn-lg waves-effect waves-button" data-bind="visible: app.canAccessMeasurements(),click: app.navigateToMeasurements, style: { backgroundColor: app.themeBackgroundColorClassName }">Log Measurements &raquo;</a></p>
+
+                    <p><a class="btn btn-primary btn-lg waves-effect waves-button" data-bind="click: app.navigateToFeedingStats, style: { backgroundColor: app.themeBackgroundColorClassName }">View Feeding Stats &raquo;</a></p>
+                    <p><a class="btn btn-primary btn-lg waves-effect waves-button" data-bind="click: app.navigateToDiaperStats, style: { backgroundColor: app.themeBackgroundColorClassName }">View Diaper Stats &raquo;</a></p>
+                </div>
+
+                <div data-bind="with: stats">
+
+                    <div class="block-header">
+                        <h2>Birth Stats <small>Quick collection of statistics from your child's birth. For advanced statistics, please visit the Statistics page</small></h2>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-sm-3">
+                            <div class="mini-charts-item bgm-bluegray">
+                                <div class="clearfix">
+                                    <div class="count">
+                                        <label>Date of Birth</label>
+                                        <h2 data-bind="text: $parent.dob"></h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-3">
+                            <div class="mini-charts-item bgm-bluegray">
+                                <div class="clearfix">
+
+                                    <div class="count">
+                                        <label>Time Since Birth</label>
+                                        <h2 data-bind="text: $parent.timeSinceBirth"></h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+
+                            <div class="mini-charts-item bgm-bluegray">
+                                <div class="clearfix">
+
+                                    <div class="count">
+                                        <label>Next Birthday</label>
+                                        <h2 data-bind="text: $parent.timeTillBirthday"></h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="block-header">
+                        <h2>Feeding Stats <small>Quick collection of statistics for your child's feedings. For advanced statistics, please visit the Statistics page</small></h2>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-sm-3">
+                            <div class="mini-charts-item bgm-cyan">
+                                <div class="clearfix">
+                                    <div class="count">
+                                        <label>Last Feeding</label>
+                                        <h2 data-bind="text: $parent.timeSinceLastFeeding"></h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-3">
+                            <div class="mini-charts-item bgm-cyan">
+                                <div class="clearfix">
+                                    <div class="count">
+                                        <label>Number of Feedings Since Birth</label>
+                                        <h2 data-bind="text: totalFeedings"></h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+
+                            <div class="mini-charts-item bgm-cyan">
+                                <div class="clearfix">
+                                    <div class="count">
+                                        <label>Number Feedings in last 24 hours</label>
+                                        <h2 data-bind="text: numberOfRecentFeedings"></h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="mini-charts-item bgm-cyan">
+                                <div class="clearfix">
+                                    <div class="count">
+                                        <label>Avg Amount per Feed Since Birth</label>
+                                        <h2 data-bind="text: $parent.round2Decimals(totalAmountPerFeed()) + ' mL'"></h2>
+                                        <h2> or </h2>
+                                        <h2 data-bind="text: $parent.convertToOz(totalAmountPerFeed()) + ' oz'"></h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-sm-3">
+                            <div class="mini-charts-item bgm-cyan">
+                                <div class="clearfix">
+                                    <div class="count">
+                                        <label>Avg Amount per Feed in last 24 hours</label>
+                                        <h2 data-bind="text: $parent.round2Decimals(recentAmountPerFeed()) + ' mL'"></h2>
+                                        <h2> or </h2>
+                                        <h2 data-bind="text: $parent.convertToOz(recentAmountPerFeed()) + ' oz'"></h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="mini-charts-item bgm-cyan">
+                                <div class="clearfix">
+                                    <div class="count">
+                                        <label>Amount eaten in last 24 hours</label>
+                                        <h2 data-bind="text: $parent.round2Decimals(totalRecentAmount()) + ' mL'"></h2>
+                                        <h2> or </h2>
+                                        <h2 data-bind="text: $parent.convertToOz(totalRecentAmount()) + ' oz'"></h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="block-header">
+                        <h2>Diaper Stats <small>Quick collection of statistics for your child's Diaper Changes. For advanced statistics, please visit the Statistics page</small></h2>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-sm-3">
+                            <div class="mini-charts-item bgm-lightgreen">
+                                <div class="clearfix">
+                                    <div class="count">
+                                        <label>Last Diaper Change</label>
+                                        <h2 data-bind="text: $parent.timeSinceLastDiaperChange"></h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-3">
+                            <div class="mini-charts-item bgm-lightgreen">
+                                <div class="clearfix">
+                                    <div class="count">
+                                        <label>Number of Diaper Changes Since Birth</label>
+                                        <h2 data-bind="text: totalDiaperChanges"></h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+
+                            <div class="mini-charts-item bgm-lightgreen">
+                                <div class="clearfix">
+                                    <div class="count">
+                                        <label>Number Diaper Changes in last 24 hours</label>
+                                        <h2 data-bind="text: numberOfRecentDiaperChanges"></h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <!-- /ko -->
+
+
+
+
+                <!--Feeding Stats-->
+                <!-- ko with: feedingStats -->
+
+                <div>
+                    <h2>Amount Since Birth</h2>
+                    <div id="sinceBirth"></div>
+                </div>
+
+                <div>
+                    <h2>Amount Last Week</h2>
+                    <div id="feedAmountLastWeek"></div>
+                </div>
+
+                <div>
+                    <h2>Amount Last 3 months</h2>
+                    <div id="lastThreeMonths"></div>
+                </div>
+
+                <div>
+                    <h2>Total Feeds Last week</h2>
+                    <div id="feedCountLastWeek"></div>
+                </div>
+
+                <div>
+                    <h2>Total Feeds Last Month</h2>
+                    <div id="feedCountLastMonth"></div>
+                </div>
+
+
+
+                <!-- /ko -->
+                <!--Diaper Stats-->
+                <!-- ko with: diaperStats -->
+
+                <div>
+                    <h2>Amount Since Birth</h2>
+                    <div id="diaperSinceBirth"></div>
+
+                </div>
+
+                <div>
+                    <h2>Amount Last Week</h2>
+                    <div id="diaperLastWeek"></div>
+                </div>
+
+                <div>
+                    <h2>Amount Last Month</h2>
+                    <div id="diaperLastMonth"></div>
+                </div>
+
+                <div>
+                    <h2>Most Logged Pees</h2>
+                    <div id="mostLoggedPee"></div>
+                </div>
+
+                <div>
+                    <h2>Most Logged Poops</h2>
+                    <div id="mostLoggedPoop"></div>
+                </div>
+
+                <!-- /ko -->
+                <!--Developer-->
+                <!-- ko with: developer -->
+
+                <div class="card">
+                    <div>
+
+                        <div class="card-header">
+                            <h2 class="m-b-20">
+                                Developer Testing
+                            </h2>
+                        </div>
+
+
+                        <div class="card-body card-padding">
+                            <div class="row">
+                                <div class="col-sm-4 m-b-20">
+                                    <p class="c-black f-500 m-b-20">403 Forbidden</p>
+                                    <div class="form-group fg-line">
+                                        <button class="btn" data-bind="click: forbidden"><i class="md md-check"></i></button>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4 m-b-20">
+                                    <p class="c-black f-500 m-b-20">Server Error 500</p>
+                                    <div class="form-group fg-line">
+                                        <button class="btn" data-bind="click: serverError"><i class="md md-check"></i></button>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4 m-b-20">
+                                    <p class="c-black f-500 m-b-20">404 Not Found</p>
+                                    <div class="form-group fg-line">
+                                        <button class="btn" data-bind="click: notFound"><i class="md md-check"></i></button>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4 m-b-20">
+                                    <p class="c-black f-500 m-b-20">401 Unauthorized</p>
+                                    <div class="form-group fg-line">
+                                        <button class="btn" data-bind="click: unauthorized"><i class="md md-check"></i></button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- /ko -->
+
+                <!--ChildMgt-->
+                <!-- ko with: childmgt -->
+                <div class="card" data-bind="if: isCreatingNew() || isEditing()">
+                    <div data-bind=" with: item">
+
+                        <div class="card-header">
+                            <h2 class="m-b-20">
+                                <span data-bind="if: $parent.isCreatingNew() ">Add New </span>
+                                <span data-bind="if: $parent.isEditing() ">Update </span>
+                                Child
+                            </h2>
+                        </div>
+
+
+                        <div class="card-body card-padding">
+                            <div class="row">
+
+                                <div class="col-sm-4 m-b-20">
+                                    <p class="c-black f-500 m-b-20">Date Of Birth</p>
+                                    <div class="form-group fg-line">
+                                        <input type='text' class="form-control" data-bind="datetimepicker: dateOfBirth" data-toggle="dropdown" placeholder="Date Of Birth">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <p class="c-black f-500 m-b-20">Gender</p>
+                                    <div class="col-sm-2 m-b-20">
+                                        <label class="radio radio-inline m-r-20">
+                                            <input type="radio" name="inlineRadioOptions" data-bind="checked: male, checkedValue: true">
+                                            <i class="input-helper"></i>
+                                            Boy
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-2 m-b-20">
+                                        <label class="radio radio-inline m-r-20">
+                                            <input type="radio" name="inlineRadioOptions" data-bind="checked: male, checkedValue: false">
+                                            <i class="input-helper"></i>
+                                            Girl
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6 m-b-20">
+                                    <p class="c-black f-500 m-b-20">First Name</p>
+
+                                    <div class="col-md-6 col-sm-3 form-group fg-line">
+                                        <input class="form-control" data-bind="value: firstName" />
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 m-b-20">
+                                    <p class="c-black f-500 m-b-20">Middle Name</p>
+
+                                    <div class="col-md-6 col-sm-3 form-group fg-line">
+                                        <input class="form-control" data-bind="value: middleName" />
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6 col-sm-6 m-b-20">
+                                    <p class="c-black f-500 m-b-20">Last Name</p>
+
+                                    <div class="col-md-6 col-sm-3 form-group fg-line">
+                                        <input class="form-control" data-bind="value: lastName" />
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div data-bind="if: $parent.isEditing()">
+                                <button class="btn bgm-green btn-icon pull-right" data-bind="click: $parent.update, enable: $parent.canSave"><i class="md md-check"></i></button>
+                                <button class="btn bgm-red btn-icon" data-bind="click: $parent.cancel"><i class="md md-close"></i></button>
+                            </div>
+
+                            <div data-bind="if: $parent.isCreatingNew()">
+                                <button class="btn bgm-green btn-icon pull-right" data-bind="click: $parent.create, enable: $parent.canSave"><i class="md md-check"></i></button>
+                                <button class="btn bgm-red btn-icon" data-bind="click: $parent.cancel"><i class="md md-close"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="block-header">
+                    <h1>Child Management</h1>
+                </div>
+
+                <div>
+                    <div class="col-md-8 col-sm-6">
+                        <div class="card">
+                            <div class="listview lv-bordered lv-lg">
+                                <div class="lv-header-alt" data-bind="style: { backgroundColor: app.themeBackgroundColorClassName }">
+                                    <h2 class="lvh-label c-white" data-bind="text: 'My Children'"></h2>
+
+                                    <ul class="lv-actions actions">
+                                        <li data-bind="visible: canAdd">
+                                            <a href="#" data-bind="click: openNew">
+                                                <i class="md md-add c-white" style="font-size: 30px"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="lv-body" data-bind="if: sortedByDate().length > 0 ">
+                                    <!-- ko foreach: sortedByDate -->
+                                    <div class="lv-item">
+                                        <div class="media">
+                                            <div class="pull-left" data-bind="with: child">
+                                                <i class="md md-face-unlock" data-bind="style: { color: male() ?  app.blueTheme : app.pinkTheme, fontSize: '30px' }"></i>
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="lv-actions actions dropdown" data-bind="visible: childManagementWriteAccess">
+                                                    <a href="" data-toggle="dropdown" aria-expanded="true">
+                                                        <i class="md md-more-vert" data-bind="style: { color: app.themeBackgroundColorClassName }"></i>
+                                                    </a>
+
+                                                    <ul class="dropdown-menu dropdown-menu-right">
+                                                        <li>
+                                                            <a href="" data-bind="visible: childManagementWriteAccess, click: $parent.edit">Edit</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="" data-bind="visible: childManagementWriteAccess, click: $parent.deleteItem">Delete</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                <!-- ko with: child -->
+                                                <div class="lv-title" style="font-weight: bold">
+                                                    <span data-bind="visible: firstName, text: firstName"></span> <span data-bind="visible:middleName, text: middleName"> </span>
+                                                    <span data-bind="visible:lastName, text: lastName"> </span>
+                                                </div>
+                                                <small class="lv-small" data-bind="text: moment(dateOfBirth()).format('dddd, MMM Do YYYY hh:mm a')"></small>
+                                                <!-- /ko -->
+
+                                                <span>
+                                                    <span style="word-wrap: break-word" data-bind="text: ''"></span>
+                                                </span>
+
+                                                <ul class="lv-attrs">
+                                                    <li data-bind="visible: feedingWriteAccess() !== null" class="bgm-blue c-white">
+                                                        <span data-bind="text: 'Feedings: ' + (feedingWriteAccess() ? 'Write' : 'Read Only')"></span>
+                                                    </li>
+
+                                                    <li data-bind="visible: diaperChangeWriteAccess() !== null" class="bgm-blue c-white">
+                                                        <span data-bind="text: 'Diaper: ' + (diaperChangeWriteAccess() ? 'Write' : 'Read Only')"></span>
+                                                    </li>
+
+                                                    <li data-bind="visible: sleepWriteAccess() !== null" class="bgm-blue c-white">
+                                                        <span data-bind="text: 'Sleep: ' + (sleepWriteAccess() ? 'Write' : 'Read Only')"></span>
+                                                    </li>
+
+
+                                                    <li data-bind="visible: measurementWriteAccess() !== null" class="bgm-blue c-white">
+                                                        <span data-bind="text: 'Measurement: ' + (measurementWriteAccess() ? 'Write' : 'Read Only')"></span>
+                                                    </li>
+
+                                                    <li data-bind="visible: childManagementWriteAccess() !== null" class="bgm-blue c-white">
+                                                        <span data-bind="text:'ChildManagement: ' +  (childManagementWriteAccess() ? 'Write' : 'Read Only')"></span>
+                                                    </li>
+
+                                                    <li data-bind="visible: permissionsWriteAccess() !== null" class="bgm-blue c-white">
+                                                        <span data-bind="text:'Permission: ' +  (permissionsWriteAccess() ? 'Write' : 'Read Only')"></span>
+                                                    </li>
+
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- /ko -->
+                                </div>
+                                <div class="lv-body" data-bind="visible: sortedByDate().length == 0">
+                                    <a class="pull-right" data-bind="visible: canAdd, click: openNew, text: 'Add a new Child'"></a>
+                                    <div class="lv-title">
+                                        <span style="font-size: 16px">No Children found. Adding a child will enable the following features</span>
+                                        <ul>
+                                            <li>Statistics (Charts and Graphs)</li>
+                                            <li>Feeding Tracker</li>
+                                            <li>Diaper Tracker</li>
+                                            <li>Measurement Tracker</li>
+                                        </ul>
+                                    </div>
+                                    <div id='loadingDiv'>
+                                        Please wait...
+                                        <img src="Content/images/ajax-loader.gif" alt="loading" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /ko -->
+
+                <!--ChildPermissions-->
+                <!-- ko with: cpvm -->
+
+
+                <div class="card" data-bind="visible: isCreatingNew() || isEditing()">
+                    <div data-bind=" with: item">
+
+                        <div class="card-header">
+                            <h2 class="m-b-20">
+                                <span data-bind="if: $parent.isCreatingNew() ">Add New </span>
+                                <span data-bind="if: $parent.isEditing() ">Update </span>
+                                Permissions
+                            </h2>
+                        </div>
+
+
+                        <div class="card-body card-padding">
+                            <div class="row">
+
+                                <div class="col-sm-2 m-b-20">
+                                    <p class="c-black f-500 m-b-20">Feedings</p>
+                                    <div>
+                                        <label class="radio radio-inline m-r-20 m-b-20">
+                                            <input type="radio" name="FeedingsinlineRadioOptions" data-bind="checked: feedingWriteAccess, checkedValue: null">
+                                            <i class="input-helper"></i>
+                                            No Access
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label class="radio radio-inline m-r-20 m-b-20">
+                                            <input type="radio" name="FeedingsinlineRadioOptions" data-bind="checked: feedingWriteAccess, checkedValue: false">
+                                            <i class="input-helper"></i>
+                                            Read Only
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label class="radio radio-inline m-r-20 m-b-20">
+                                            <input type="radio" name="FeedingsinlineRadioOptions" data-bind="checked: feedingWriteAccess, checkedValue: true">
+                                            <i class="input-helper"></i>
+                                            Write (Create, Update, Delete)
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2 m-b-20">
+                                    <p class="c-black f-500 m-b-20">Diaper</p>
+                                    <div>
+                                        <label class="radio radio-inline m-r-20 m-b-20">
+                                            <input type="radio" name="DiaperinlineRadioOptions" data-bind="checked: diaperChangeWriteAccess, checkedValue: null">
+                                            <i class="input-helper"></i>
+                                            No Access
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label class="radio radio-inline m-r-20 m-b-20">
+                                            <input type="radio" name="DiaperinlineRadioOptions" data-bind="checked: diaperChangeWriteAccess, checkedValue: false">
+                                            <i class="input-helper"></i>
+                                            Read Only
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label class="radio radio-inline m-r-20 m-b-20">
+                                            <input type="radio" name="DiaperinlineRadioOptions" data-bind="checked: diaperChangeWriteAccess, checkedValue: true">
+                                            <i class="input-helper"></i>
+                                            Write (Create, Update, Delete)
+                                        </label>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-sm-2 m-b-20">
+                                    <p class="c-black f-500 m-b-20">Sleep</p>
+                                    <div>
+                                        <label class="radio radio-inline m-r-20 m-b-20">
+                                            <input type="radio" name="SleepinlineRadioOptions" data-bind="checked: sleepWriteAccess, checkedValue: null">
+                                            <i class="input-helper"></i>
+                                            No Access
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label class="radio radio-inline m-r-20 m-b-20">
+                                            <input type="radio" name="SleepinlineRadioOptions" data-bind="checked: sleepWriteAccess, checkedValue: false">
+                                            <i class="input-helper"></i>
+                                            Read Only
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label class="radio radio-inline m-r-20 m-b-20">
+                                            <input type="radio" name="SleepinlineRadioOptions" data-bind="checked: sleepWriteAccess, checkedValue: true">
+                                            <i class="input-helper"></i>
+                                            Write (Create, Update, Delete)
+                                        </label>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-sm-2 m-b-20">
+                                    <p class="c-black f-500 m-b-20">Measurement</p>
+                                    <div>
+                                        <label class="radio radio-inline m-r-20 m-b-20">
+                                            <input type="radio" name="MeasurementinlineRadioOptions" data-bind="checked: measurementWriteAccess, checkedValue: null">
+                                            <i class="input-helper"></i>
+                                            No Access
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label class="radio radio-inline m-r-20 m-b-20">
+                                            <input type="radio" name="MeasurementinlineRadioOptions" data-bind="checked: measurementWriteAccess, checkedValue: false">
+                                            <i class="input-helper"></i>
+                                            Read Only
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label class="radio radio-inline m-r-20 m-b-20">
+                                            <input type="radio" name="MeasurementinlineRadioOptions" data-bind="checked: measurementWriteAccess, checkedValue: true">
+                                            <i class="input-helper"></i>
+                                            Write (Create, Update, Delete)
+                                        </label>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-sm-2 m-b-20">
+                                    <p class="c-black f-500 m-b-20">Child Management</p>
+                                    <div>
+                                        <label class="radio radio-inline m-r-20 m-b-20">
+                                            <input type="radio" name="ChildManagementinlineRadioOptions" data-bind="checked: childManagementWriteAccess, checkedValue: null">
+                                            <i class="input-helper"></i>
+                                            No Access
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label class="radio radio-inline m-r-20 m-b-20">
+                                            <input type="radio" name="ChildManagementinlineRadioOptions" data-bind="checked: childManagementWriteAccess, checkedValue: false">
+                                            <i class="input-helper"></i>
+                                            Read Only
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label class="radio radio-inline m-r-20 m-b-20">
+                                            <input type="radio" name="ChildManagementinlineRadioOptions" data-bind="checked: childManagementWriteAccess, checkedValue: true">
+                                            <i class="input-helper"></i>
+                                            Write (Create, Update, Delete)
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2 m-b-20">
+                                    <p class="c-black f-500 m-b-20">Permissions</p>
+                                    <div>
+                                        <label class="radio radio-inline m-r-20 m-b-20">
+                                            <input type="radio" name="PermissionsinlineRadioOptions" data-bind="checked: permissionsWriteAccess, checkedValue: null">
+                                            <i class="input-helper"></i>
+                                            No Access
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label class="radio radio-inline m-r-20 m-b-20">
+                                            <input type="radio" name="PermissionsinlineRadioOptions" data-bind="checked: permissionsWriteAccess, checkedValue: false">
+                                            <i class="input-helper"></i>
+                                            Read Only
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label class="radio radio-inline m-r-20 m-b-20">
+                                            <input type="radio" name="PermissionsinlineRadioOptions" data-bind="checked: permissionsWriteAccess, checkedValue: true">
+                                            <i class="input-helper"></i>
+                                            Write (Create, Update, Delete)
+                                        </label>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="col-sm-4 m-b-20">
+                                    <p class="c-black f-500 m-b-20">User Name</p>
+                                    <div class="form-group" id="scrollable-dropdown-menu">
+                                        <div class="fg-line" data-bind="with: user">
+                                            <input class="typeahead form-control" type="text" placeholder="User Name" data-bind='value: userName'>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-sm-4 m-b-20">
+                                    <p class="c-black f-500 m-b-20">Title</p>
+                                    <div class="form-group">
+                                        <select class="form-control" data-bind="options: $parent.availableTitles, value: title"></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div data-bind="if: $parent.isEditing()">
+                                <button class="btn bgm-green btn-icon pull-right" data-bind="click: $parent.update, enable: $parent.canSave"><i class="md md-check"></i></button>
+                                <button class="btn bgm-red btn-icon" data-bind="click: $parent.cancel"><i class="md md-close"></i></button>
+                            </div>
+
+                            <div data-bind="if: $parent.isCreatingNew()">
+                                <button class="btn bgm-green btn-icon pull-right" data-bind="click: $parent.create, enable: $parent.canSave"><i class="md md-check"></i></button>
+                                <button class="btn bgm-red btn-icon" data-bind="click: $parent.cancel"><i class="md md-close"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="block-header">
+                    <h1>Permissions</h1>
+                </div>
+
+                <div>
+                    <div class="col-md-8 col-sm-6">
+                        <div class="card">
+                            <div class="listview lv-bordered lv-lg">
+                                <div class="lv-header-alt" data-bind="style: { backgroundColor: app.themeBackgroundColorClassName }">
+                                    <h2 class="lvh-label c-white" data-bind="text: ''"></h2>
+
+                                    <ul class="lv-actions actions">
+                                        <li data-bind="visible: canAdd">
+                                            <a href="#" data-bind="click: openNew">
+                                                <i class="md md-add c-white" style="font-size: 30px"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="lv-body" data-bind="if: sortedByDate().length > 0 ">
+                                    <!-- ko foreach: sortedByDate -->
+                                    <div class="lv-item">
+                                        <div class="media">
+                                            <div class="pull-left">
+                                                <div class="profile-pic" data-bind="ifnot: user().profileImageUrl()">
+                                                    <img style="border-radius: 50%" data-bind="attr: { src: app.noUserProfilePic(), alt: user().userName() }">
+                                                    <div data-bind="text: user().title()" style="text-align: center"></div>
+                                                </div>
+                                                <div class="profile-pic" data-bind="if: user().profileImageUrl()">
+                                                    <img style="border-radius: 50%" data-bind="attr: { src: user().profileImageUrl(), alt: user().userName() }" alt="">
+                                                    <div data-bind="text: user().title()" style="text-align: center"></div>
+                                                </div>
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="lv-actions actions dropdown" data-bind="visible: $parent.canEdit">
+                                                    <a href="" data-toggle="dropdown" aria-expanded="true">
+                                                        <i class="md md-more-vert" data-bind="style: { color: app.themeBackgroundColorClassName }"></i>
+                                                    </a>
+
+                                                    <ul class="dropdown-menu dropdown-menu-right">
+                                                        <li>
+                                                            <a href="" data-bind="visible: $parent.canEdit, click: $parent.edit">Edit</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="" data-bind="visible: $parent.canDelete, click: $parent.deleteItem">Delete</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                <!-- ko with: user -->
+                                                <div class="lv-title" style="font-weight: bold">
+                                                    <span data-bind="text: userName"></span>
+                                                </div>
+                                                <!-- /ko -->
+
+                                                <span data-bind="visible: title">
+                                                    <span style="word-wrap: break-word" data-bind="text: title"></span>
+                                                </span>
+
+                                                <ul class="lv-attrs">
+                                                    <li data-bind="visible: feedingWriteAccess() !== null" class="bgm-blue c-white">
+                                                        <span data-bind="text: 'Feedings: ' + (feedingWriteAccess() ? 'Write' : 'Read Only')"></span>
+                                                    </li>
+
+                                                    <li data-bind="visible: diaperChangeWriteAccess() !== null" class="bgm-blue c-white">
+                                                        <span data-bind="text: 'Diaper: ' + (diaperChangeWriteAccess() ? 'Write' : 'Read Only')"></span>
+                                                    </li>
+
+                                                    <li data-bind="visible: sleepWriteAccess() !== null" class="bgm-blue c-white">
+                                                        <span data-bind="text: 'Sleep: ' + (sleepWriteAccess() ? 'Write' : 'Read Only')"></span>
+                                                    </li>
+
+
+                                                    <li data-bind="visible: measurementWriteAccess() !== null" class="bgm-blue c-white">
+                                                        <span data-bind="text: 'Measurement: ' + (measurementWriteAccess() ? 'Write' : 'Read Only')"></span>
+                                                    </li>
+
+                                                    <li data-bind="visible: childManagementWriteAccess() !== null" class="bgm-blue c-white">
+                                                        <span data-bind="text:'ChildManagement: ' +  (childManagementWriteAccess() ? 'Write' : 'Read Only')"></span>
+                                                    </li>
+
+                                                    <li data-bind="visible: permissionsWriteAccess() !== null" class="bgm-blue c-white">
+                                                        <span data-bind="text:'Permission: ' +  (permissionsWriteAccess() ? 'Write' : 'Read Only')"></span>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- /ko -->
+                                </div>
+                                <div class="lv-body" data-bind="visible: sortedByDate().length == 0">
+                                    <a class="pull-right" data-bind="visible: canAdd, click: openNew, text: 'Add a new Permission'"></a>
+                                    <div class="lv-title">
+                                        <span style="font-size: 16px">No Permission found for this child.</span>
+                                    </div>
+                                    <div id='loadingDiv'>
+                                        Please wait...
+                                        <img src="Content/images/ajax-loader.gif" alt="loading" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /ko -->
+                <!--Feeding-->
+                <!-- ko with: feedingMgt -->
+                <div class="card" data-bind="if: isCreatingNew() || isEditing()">
+                    <div data-bind=" with: item">
+
+                        <div class="card-header">
+                            <h2 class="m-b-20">
+                                <span data-bind="if: $parent.isCreatingNew() ">Add New </span>
+                                <span data-bind="if: $parent.isEditing() ">Update </span>
+                                Feeding
+                            </h2>
+                        </div>
+
+
+                        <div class="card-body card-padding">
+                            <div class="row">
+                                <div class="col-sm-4 m-b-20">
+                                    <p class="c-black f-500 m-b-20">Start Time</p>
+                                    <div class="form-group fg-line">
+                                        <input type='text' class="form-control" data-bind="datetimepicker: startTime" data-toggle="dropdown" placeholder="Start Time">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 m-b-20">
+                                    <p class="c-black f-500 m-b-20">End Time</p>
+                                    <div class="form-group fg-line">
+                                        <input type='text' class="form-control" data-bind="datetimepicker: endTime" data-toggle="dropdown" placeholder="End Time">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4 m-b-20">
+                                    <p class="c-black f-500 m-b-20">Delivery Type</p>
+
+                                    <div>
+                                        <select class="form-control" data-bind="options: $parent.deliveryTypes, optionsText: 'name', optionsValue: 'value', value: deliveryType "></select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6 m-b-20">
+                                    <p class="c-black f-500 m-b-20">Amount (ml)</p>
+
+                                    <div class="col-sm-3 form-group fg-line">
+                                        <input id="amount" class="form-control" data-bind="value: amount" />
+                                        <span data-bind="text: $parent.amountOunces() + ' oz'"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="slider form-control" data-bind="sliderValue: {value: amount, min:0, max: 400, step: 1}" />
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col-sm-2 m-b-20 checkbox m-b-15">
+                                    <label>
+                                        <input type="checkbox" data-bind="checked: spitUp">
+                                        <i class=" input-helper"></i>
+                                        Was this feeding spit up by the baby?
+                                    </label>
+                                </div>
+
+                                <div class="col-sm-4 m-b-20">
+                                    <p class="c-black f-500 m-b-20">Notes</p>
+                                    <div class="form-group">
+                                        <div class="fg-line">
+                                            <textarea class="form-control" data-bind='value: notes' rows="5" placeholder="Enter notes about the feeding here...."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div data-bind="if: $parent.isEditing()">
+                                <button class="btn bgm-green btn-icon pull-right" data-bind="click: $parent.update, enable: $parent.canSave"><i class="md md-check"></i></button>
+                                <button class="btn bgm-red btn-icon" data-bind="click: $parent.cancel"><i class="md md-close"></i></button>
+                            </div>
+
+                            <div data-bind="if: $parent.isCreatingNew()">
+                                <button class="btn bgm-green btn-icon pull-right" data-bind="click: $parent.create, enable: $parent.canSave"><i class="md md-check"></i></button>
+                                <button class="btn bgm-red btn-icon" data-bind="click: $parent.cancel"><i class="md md-close"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="block-header">
+                    <h1>Feedings</h1>
+                </div>
+
+                <div>
+                    <div class="col-md-8 col-sm-6">
+                        <div class="card">
+                            <div class="listview lv-bordered lv-lg">
+                                <div class="lv-header-alt" data-bind="style: { backgroundColor: app.themeBackgroundColorClassName }">
+                                    <h2 class="lvh-label c-white" data-bind="text: moment(sDate()).format('dddd, MMM Do YYYY')"></h2>
+
+                                    <ul class="lv-actions actions">
+                                        <li data-bind="visible: canAdd">
+                                            <a href="#" data-bind="click: openNew">
+                                                <i class="md md-add c-white" style="font-size: 30px"></i>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="#" data-toggle="tooltip" title="Previous Day" data-bind="enable: previousDateButtonEnabled, click: previousDate">
+                                                <i class="md md-arrow-back c-white" style="font-size: 30px"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <input type="datetime" class="c-white" style="border: 0; margin-left: 10px;border-color: white;width:75px;" data-bind="datetimepicker: sDate, dateTimePickerOptions: { format: 'MM/DD/YYYY'}, style: { backgroundColor: app.themeBackgroundColorClassName }">
+                                        </li>
+                                        <li>
+                                            <a href="#" data-bind="enable: nextDateButtonEnabled, click: nextDate">
+                                                <i class="md md-arrow-forward c-white" style="font-size: 30px"></i>
+                                            </a>
+                                        </li>
+
+
+
+                                    </ul>
+                                </div>
+                                <div class="lv-body" data-bind="if: sortedFeedingsByDate().length > 0 ">
+                                    <!-- ko foreach: sortedFeedingsByDate -->
+                                    <div class="lv-item">
+                                        <div class="media">
+                                            <div class="pull-left">
+                                                <div class="profile-pic" data-bind="ifnot: reportedByUser().profileImageUrl()">
+                                                    <img style="border-radius: 50%" data-bind="attr: { src: app.noUserProfilePic(), alt: reportedByUser().userName() }">
+                                                    <div data-bind="text: reportedByUser().title()" style="text-align: center"></div>
+                                                </div>
+                                                <div class="profile-pic" data-bind="if: reportedByUser().profileImageUrl()">
+                                                    <img style="border-radius: 50%" data-bind="attr: { src: reportedByUser().profileImageUrl(), alt: reportedByUser().userName() }" alt="">
+                                                    <div data-bind="text: reportedByUser().title()" style="text-align: center"></div>
+                                                </div>
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="lv-actions actions dropdown" data-bind="visible: $parent.canEdit">
+                                                    <a href="" data-toggle="dropdown" aria-expanded="true">
+                                                        <i class="md md-more-vert" data-bind="style: { color: app.themeBackgroundColorClassName }"></i>
+                                                    </a>
+
+                                                    <ul class="dropdown-menu dropdown-menu-right">
+                                                        <li>
+                                                            <a href="" data-bind="visible: $parent.canEdit, click: $parent.edit">Edit</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="" data-bind="visible: $parent.canDelete, click: $parent.deleteItem">Delete</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="lv-title" style="font-weight: bold">
+                                                    <span data-bind="text: $parent.formattedDateTime(startTime(), 'time')"></span> - <span data-bind="text: $parent.formattedDateTime(endTime(), 'time')"></span>
+                                                </div>
+
+                                                <small class="lv-small" data-bind="text: $parent.getTimeDiff($data) + ' minutes'"></small>
+
+                                                <span data-bind="visible: notes">
+                                                    <span style="word-wrap: break-word" data-bind="text: notes"></span>
+                                                </span>
+
+                                                <ul class="lv-attrs">
+
+                                                    <li data-bind="visible:$parent.amountText($data)" class="bgm-green c-white">
+                                                        <span data-bind="text: $parent.amountText($data)"></span>
+                                                    </li>
+
+                                                    <li data-bind="text: $parent.getDeliveryType(deliveryType()), css:  $parent.deliveryTypeClassTheme(deliveryType())"></li>
+
+                                                    <li data-bind="visible: spitUp" class="bgm-red c-white">
+                                                        <span data-bind="text: 'Spitup'"></span>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- /ko -->
+                                </div>
+                                <div class="lv-body" data-bind="visible: sortedFeedingsByDate().length == 0">
+                                    <a class="pull-right" data-bind="visible: canAdd, click: openNew, text: 'Add a new feeding'"></a>
+                                    <div class="lv-title">
+                                        <span style="font-size: 16px">No feedings for this date.</span>
+                                    </div>
+                                    <div id='loadingDiv'>
+                                        Please wait...
+                                        <img src="Content/images/ajax-loader.gif" alt="loading" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /ko -->
+                <!--DiaperChanges-->
+                <!-- ko with: diapermgt -->
+
+                <div class="card" data-bind="if: isCreatingNew() || isEditing()">
+                    <div data-bind=" with: item">
+
+                        <div class="card-header">
+                            <h2 class="m-b-20">
+                                <span data-bind="if: $parent.isCreatingNew() ">Add New </span>
+                                <span data-bind="if: $parent.isEditing() ">Update </span>
+                                Diaper Changes
+                            </h2>
+                        </div>
+
+
+                        <div class="card-body card-padding">
+                            <div class="row">
+                                <div class="col-sm-4 m-b-20">
+                                    <p class="c-black f-500 m-b-20">Date</p>
+                                    <div class="form-group fg-line">
+                                        <input type='text' class="form-control" data-bind="datetimepicker: occurredOn" data-toggle="dropdown" placeholder="Date">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2 m-b-20 checkbox m-b-15">
+                                    <label>
+                                        <input type="checkbox" data-bind="checked: urine">
+                                        <i class=" input-helper"></i>
+                                        Pee?
+                                    </label>
+                                </div>
+
+                                <div class="col-sm-2 m-b-20 checkbox m-b-15">
+                                    <label>
+                                        <input type="checkbox" data-bind="checked: stool">
+                                        <i class=" input-helper"></i>
+                                        Poop?
+                                    </label>
+                                </div>
+
+                                <div class="col-sm-4 m-b-20">
+                                    <p class="c-black f-500 m-b-20">Notes</p>
+                                    <div class="form-group">
+                                        <div class="fg-line">
+                                            <textarea class="form-control" data-bind='value: notes' rows="5" placeholder="Enter notes here..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div data-bind="if: $parent.isEditing()">
+                                <button class="btn bgm-green btn-icon pull-right" data-bind="click: $parent.update, enable: $parent.canSave"><i class="md md-check"></i></button>
+                                <button class="btn bgm-red btn-icon" data-bind="click: $parent.cancel"><i class="md md-close"></i></button>
+                            </div>
+
+                            <div data-bind="if: $parent.isCreatingNew()">
+                                <button class="btn bgm-green btn-icon pull-right" data-bind="click: $parent.create, enable: $parent.canSave"><i class="md md-check"></i></button>
+                                <button class="btn bgm-red btn-icon" data-bind="click: $parent.cancel"><i class="md md-close"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="block-header">
+                    <h1>Diaper Changes</h1>
+                </div>
+
+
+
+                <div>
+                    <div class="col-md-8 col-sm-6">
+                        <div class="card">
+                            <div class="listview lv-bordered lv-lg">
+                                <div class="lv-header-alt" data-bind="style: { backgroundColor: app.themeBackgroundColorClassName }">
+                                    <h2 class="lvh-label c-white" data-bind="text: moment(sDate()).format('dddd, MMM Do YYYY')"></h2>
+
+                                    <ul class="lv-actions actions">
+                                        <li data-bind="visible: canAdd">
+                                            <a href="#" data-bind="click: openNew">
+                                                <i class="md md-add c-white" style="font-size: 30px"></i>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="#" data-toggle="tooltip" title="Previous Day" data-bind="enable: previousDateButtonEnabled, click: previousDate">
+                                                <i class="md md-arrow-back c-white" style="font-size: 30px"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <input type="datetime" class="c-white" style="border: 0; margin-left: 10px;border-color: white;width:75px" data-bind="datetimepicker: sDate, dateTimePickerOptions: { format: 'MM/DD/YYYY'}, style: { backgroundColor: app.themeBackgroundColorClassName }">
+                                        </li>
+                                        <li>
+                                            <a href="#" data-bind="enable: nextDateButtonEnabled, click: nextDate">
+                                                <i class="md md-arrow-forward c-white" style="font-size: 30px"></i>
+                                            </a>
+                                        </li>
+
+
+
+                                    </ul>
+                                </div>
+                                <div class="lv-body" data-bind="if: sortedByDate().length > 0 ">
+                                    <!-- ko foreach: sortedByDate -->
+                                    <div class="lv-item">
+                                        <div class="media">
+                                            <div class="pull-left">
+                                                <div class="profile-pic" data-bind="ifnot: reportedByUser().profileImageUrl()">
+                                                    <img style="border-radius: 50%" data-bind="attr: { src: app.noUserProfilePic(), alt: reportedByUser().userName() }">
+                                                    <div data-bind="text: reportedByUser().title()" style="text-align: center"></div>
+                                                </div>
+                                                <div class="profile-pic" data-bind="if: reportedByUser().profileImageUrl()">
+                                                    <img style="border-radius: 50%" data-bind="attr: { src: reportedByUser().profileImageUrl(), alt: reportedByUser().userName() }" alt="">
+                                                    <div data-bind="text: reportedByUser().title()" style="text-align: center"></div>
+                                                </div>
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="lv-actions actions dropdown" data-bind="visible: $parent.canEdit">
+                                                    <a href="" data-toggle="dropdown" aria-expanded="true">
+                                                        <i class="md md-more-vert" data-bind="style: { color: app.themeBackgroundColorClassName }"></i>
+                                                    </a>
+
+                                                    <ul class="dropdown-menu dropdown-menu-right">
+                                                        <li>
+                                                            <a href="" data-bind="visible: $parent.canEdit, click: $parent.edit">Edit</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="" data-bind="visible: $parent.canDelete, click: $parent.deleteItem">Delete</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="lv-title" style="font-weight: bold">
+                                                    <span data-bind="text: $parent.formattedDateTime(occurredOn(), 'time')"></span>
+                                                </div>
+
+                                                <span data-bind="visible: notes">
+                                                    <span style="word-wrap: break-word" data-bind="text: notes"></span>
+                                                </span>
+
+                                                <ul class="lv-attrs">
+                                                    <li data-bind="visible: urine" class="bgm-amber c-white">
+                                                        <span data-bind="text: 'Pee'"></span>
+                                                    </li>
+
+                                                    <li data-bind="visible: stool" class="bgm-brown c-white">
+                                                        <span data-bind="text: 'Poop'"></span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- /ko -->
+                                </div>
+                                <div class="lv-body" data-bind="visible: sortedByDate().length == 0">
+                                    <a class="pull-right" data-bind="visible: canAdd, click: openNew, text: 'Add a new Diaper'"></a>
+                                    <div class="lv-title">
+                                        <span style="font-size: 16px">No Diaper Changes for this date.</span>
+                                    </div>
+                                    <div id='loadingDiv'>
+                                        Please wait...
+                                        <img src="Content/images/ajax-loader.gif" alt="loading" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /ko -->
+                <!--SleepMgt-->
+                <!-- ko with: sleepMgt -->
+                <div class="card" data-bind="if: isCreatingNew() || isEditing()">
+                    <div data-bind=" with: item">
+
+                        <div class="card-header">
+                            <h2 class="m-b-20">
+                                <span data-bind="if: $parent.isCreatingNew() ">Add New </span>
+                                <span data-bind="if: $parent.isEditing() ">Update </span>
+                                Sleep / Nap
+                            </h2>
+                        </div>
+
+
+                        <div class="card-body card-padding">
+                            <div class="row">
+                                <div class="col-sm-4 m-b-20">
+                                    <p class="c-black f-500 m-b-20">Start Time</p>
+                                    <div class="form-group fg-line">
+                                        <input type='text' class="form-control" data-bind="datetimepicker: startTime" data-toggle="dropdown" placeholder="Start Time">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 m-b-20">
+                                    <p class="c-black f-500 m-b-20">End Time</p>
+                                    <div class="form-group fg-line">
+                                        <input type='text' class="form-control" data-bind="datetimepicker: endTime" data-toggle="dropdown" placeholder="End Time">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4 m-b-20">
+                                    <p class="c-black f-500 m-b-20">Notes</p>
+                                    <div class="form-group">
+                                        <div class="fg-line">
+                                            <textarea class="form-control" data-bind='value: notes' rows="5" placeholder="Enter notes about the feeding here...."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div data-bind="if: $parent.isEditing()">
+                                <button class="btn bgm-green btn-icon pull-right" data-bind="click: $parent.update, enable: $parent.canSave"><i class="md md-check"></i></button>
+                                <button class="btn bgm-red btn-icon" data-bind="click: $parent.cancel"><i class="md md-close"></i></button>
+                            </div>
+
+                            <div data-bind="if: $parent.isCreatingNew()">
+                                <button class="btn bgm-green btn-icon pull-right" data-bind="click: $parent.create, enable: $parent.canSave"><i class="md md-check"></i></button>
+                                <button class="btn bgm-red btn-icon" data-bind="click: $parent.cancel"><i class="md md-close"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="block-header">
+                    <h1>Sleep Events</h1>
+                </div>
+
+                <div>
+                    <div class="col-md-8 col-sm-6">
+                        <div class="card">
+                            <div class="listview lv-bordered lv-lg">
+                                <div class="lv-header-alt" data-bind="style: { backgroundColor: app.themeBackgroundColorClassName }">
+                                    <h2 class="lvh-label c-white" data-bind="text: moment(sDate()).format('dddd, MMM Do YYYY')"></h2>
+
+                                    <ul class="lv-actions actions">
+                                        <li data-bind="visible: canAdd">
+                                            <a href="#" data-bind="click: openNew">
+                                                <i class="md md-add c-white" style="font-size: 30px"></i>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="#" data-toggle="tooltip" title="Previous Day" data-bind="enable: previousDateButtonEnabled, click: previousDate">
+                                                <i class="md md-arrow-back c-white" style="font-size: 30px"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <input type="datetime" class="c-white" style="border: 0; margin-left: 10px;border-color: white;width:75px;" data-bind="datetimepicker: sDate, dateTimePickerOptions: { format: 'MM/DD/YYYY'}, style: { backgroundColor: app.themeBackgroundColorClassName }">
+                                        </li>
+                                        <li>
+                                            <a href="#" data-bind="enable: nextDateButtonEnabled, click: nextDate">
+                                                <i class="md md-arrow-forward c-white" style="font-size: 30px"></i>
+                                            </a>
+                                        </li>
+
+
+
+                                    </ul>
+                                </div>
+                                <div class="lv-body" data-bind="if: sortedByDate().length > 0 ">
+                                    <!-- ko foreach: sortedByDate -->
+                                    <div class="lv-item">
+                                        <div class="media">
+                                            <div class="pull-left">
+                                                <div class="profile-pic" data-bind="ifnot: reportedByUser().profileImageUrl()">
+                                                    <img style="border-radius: 50%" data-bind="attr: { src: app.noUserProfilePic(), alt: reportedByUser().userName() }">
+                                                    <div data-bind="text: reportedByUser().title()" style="text-align: center"></div>
+                                                </div>
+                                                <div class="profile-pic" data-bind="if: reportedByUser().profileImageUrl()">
+                                                    <img style="border-radius: 50%" data-bind="attr: { src: reportedByUser().profileImageUrl(), alt: reportedByUser().userName() }" alt="">
+                                                    <div data-bind="text: reportedByUser().title()" style="text-align: center"></div>
+                                                </div>
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="lv-actions actions dropdown" data-bind="visible: $parent.canEdit">
+                                                    <a href="" data-toggle="dropdown" aria-expanded="true">
+                                                        <i class="md md-more-vert" data-bind="style: { color: app.themeBackgroundColorClassName }"></i>
+                                                    </a>
+
+                                                    <ul class="dropdown-menu dropdown-menu-right">
+                                                        <li>
+                                                            <a href="" data-bind="visible: $parent.canEdit, click: $parent.edit">Edit</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="" data-bind="visible: $parent.canDelete, click: $parent.deleteItem">Delete</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="lv-title" style="font-weight: bold">
+                                                    <span data-bind="text: $parent.formattedDateTime(startTime(), 'time')"></span> - <span data-bind="text: $parent.formattedDateTime(endTime(), 'time')"></span>
+                                                </div>
+
+                                                <small class="lv-small" data-bind="text: $parent.getTimeDiff($data) + ' minutes'"></small>
+
+                                                <span data-bind="visible: notes">
+                                                    <span style="word-wrap: break-word" data-bind="text: notes"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- /ko -->
+                                </div>
+                                <div class="lv-body" data-bind="visible: sortedByDate().length == 0">
+                                    <a class="pull-right" data-bind="visible: canAdd, click: openNew, text: 'Add a new Sleep Entry'"></a>
+                                    <div class="lv-title">
+                                        <span style="font-size: 16px">No Naps for this date.</span>
+                                    </div>
+                                    <div id='loadingDiv'>
+                                        Please wait...
+                                        <img src="Content/images/ajax-loader.gif" alt="loading" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /ko -->
+
+                <!--Measurements-->
+               
+                <!-- ko with: manage -->
+                <div data-bind="visible: loading">Loading...</div>
+                <div data-bind="visible: !loading()">
+                    <p class="text-success" data-bind="text: message"></p>
+                    <h2>Manage Account</h2>
+                    <div class="card">
+                        <div class="card-body card-padding" data-bind="with: changePassword">
+                            <p class="text-info">You're logged in as <strong data-bind="text: name"></strong>.</p>
+                            <form class="form-horizontal" role="form">
+                                <h4>Change your password</h4>
+                                <hr />
+                                <ul class="text-danger" data-bind="foreach: errors">
+                                    <li data-bind="text: $data"></li>
+                                </ul>
+
+                                <div class="form-group fg-line">
+                                    <label for="ChangePasswordOldPassword" class="col-md-2 control-label">Old password</label>
+                                    <div class="col-md-10">
+                                        <input type="password" id="ChangePasswordOldPassword" class="form-control" data-bind="value: oldPassword" />
+                                    </div>
+                                </div>
+                                <div class="form-group fg-line">
+                                    <label for="ChangePasswordNewPassword" class="col-md-2 control-label">New password</label>
+                                    <div class="col-md-10">
+                                        <input type="password" id="ChangePasswordNewPassword" class="form-control" data-bind="value: newPassword" />
+                                    </div>
+                                </div>
+                                <div class="form-group fg-line">
+                                    <label for="ChangePasswordConfirmPassword" class="col-md-2 control-label">Confirm new password</label>
+                                    <div class="col-md-10">
+                                        <input type="password" id="ChangePasswordConfirmPassword" class="form-control" data-bind="value: confirmPassword" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <button type="submit" class="btn btn-default" data-bind="click: change, disable: changing">Change password</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div data-bind="with: setPassword">
+                            <p>You do not have a local username/password for this site. Add a local account so you can log in without an external login.</p>
+                            <form class="form-horizontal" role="form">
+                                <h4>Create Local Login</h4>
+                                <hr />
+                                <ul class="text-danger" data-bind="foreach: errors">
+                                    <li data-bind="text: $data"></li>
+                                </ul>
+                                <div class="form-group">
+                                    <label for="SetPasswordNewPassword" class="col-md-2 control-label">New password</label>
+                                    <div class="col-md-10">
+                                        <input type="password" id="SetPasswordNewPassword" class="form-control" data-bind="value: newPassword" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="SetPasswordConfirmPassword" class="col-md-2 control-label">Confirm new password</label>
+                                    <div class="col-md-10">
+                                        <input type="password" id="SetPasswordConfirmPassword" class="form-control" data-bind="value: confirmPassword" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <button type="submit" class="btn btn-default" data-bind="click: set, disable: setting">Set password</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <ul class="text-danger" data-bind="foreach: errors">
+                            <li data-bind="text: $data"></li>
+                        </ul>
+                        <div data-bind="if: logins().length > 0">
+                            <div class="card-header">
+                                <h4>Registered logins</h4>
+                            </div>
+                            <div class="card-body">
+                                <table class="table">
+                                    <tbody data-bind="foreach: logins">
+                                        <tr>
+                                            <td data-bind="text: loginProvider"></td>
+                                            <td>
+                                                <div data-bind="if: $parent.canRemoveLogin">
+                                                    <form>
+                                                        <div>
+                                                            <button type="submit" class="btn btn-default" data-bind="attr: { title: 'Remove this ' + loginProvider() + ' credential from your account' }, click: remove, disable: removing">Remove</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <span data-bind="if: !$parent.canRemoveLogin()">&nbsp;</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="card go-social col-md-8">
+                        <div class="card-header">
+                            <h2>Associate another provider with this account<small></small></h2>
+                        </div>
+
+                        <div class="card-body clearfix" data-bind="visible: hasExternalLogin">
+                            <!-- ko foreach: externalLoginProviders -->
+                            <a class="col-xs-4" href="">
+                                <img data-bind="attr: { src: 'Content/material/images/social/' + name().toLowerCase() + '-128.png',  title: 'Log in using your ' + name() + ' account' }, click: login, css: 'img-responsive'" />
+                            </a>
+                            <!-- /ko -->
+                        </div>
+                    </div>
+                </div>
+                <!-- /ko -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+        </section>
+    </section>
+    <footer class="panel-footer">
+        <div id="share-buttons">
+
+            <!-- Facebook -->
+            <a href="http://www.facebook.com/sharer.php?u=https://cozyjozy.net" target="_blank"><img src="https://www.simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" /></a>
+
+            <!-- Twitter -->
+            <a href="http://twitter.com/share?url=https://cozyjozy.net&text=Parents%20of%20newborns%2C%20track%20and%20analyze%20your%20child%27s%20growth!&hashtags=cozyjozy" target="_blank"><img src="https://www.simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" /></a>
+
+            <!-- Pinterest -->
+            <a href="https://pinterest.com/pin/create/button/?url=https://cozyjozt.net&media=https://cozyjozy.net/Content/images/cozyjozy-150-trans.png&description=Parents%20of%20newborns%2C%20track%20and%20analyze%20your%20child%27s%20growth!" target="_blank">
+                <img src="https://www.simplesharebuttons.com/images/somacro/pinterest.png" alt="Pinterest" />
+            </a>
+            <!-- Google+ -->
+            <a href="https://plus.google.com/share?url=https://cozyjozy.net" target="_blank"><img src="https://www.simplesharebuttons.com/images/somacro/google.png" alt="Google" /></a>
+
+            <!-- Reddit -->
+            <a href="http://reddit.com/submit?url=https://cozyjozy.net&title=Parents%20of%20newborns%2C%20track%20and%20analyze%20your%20child%27s%20growth!" target="_blank"><img src="https://www.simplesharebuttons.com/images/somacro/reddit.png" alt="Reddit" /></a>
+
+            <!-- Digg -->
+            <a href="http://www.digg.com/submit?url=https://cozyjozy.net" target="_blank"><img src="https://www.simplesharebuttons.com/images/somacro/diggit.png" alt="Digg" /></a>
+
+
+            <!-- LinkedIn -->
+            <a href="http://www.linkedin.com/shareArticle?mini=true&url=https://cozyjozy.net" target="_blank"><img src="https://www.simplesharebuttons.com/images/somacro/linkedin.png" alt="LinkedIn" /></a>
+
+            <!-- StumbleUpon-->
+            <a href="http://www.stumbleupon.com/submit?url=https://cozyjozy.net&title=Parents%20of%20newborns%2C%20track%20and%20analyze%20your%20child%27s%20growth!" target="_blank"><img src="https://www.simplesharebuttons.com/images/somacro/stumbleupon.png" alt="StumbleUpon" /></a>
+
+        </div>
+
+    </footer>
+
+
+    <!-- Cordova reference, this is added to your app when it's built. -->
+    <script src="cordova.js"></script>
+    <script src="scripts/platformOverrides.js"></script>
+
+    <script src="scripts/index.js"></script>
+
+
+
+    <script src="scripts/bootstrap.min.js"></script>
+    <script src="scripts/moment.min.js"></script>
+    <script src="scripts/handlebars-v3.0.3.js"></script>
+    <script src="scripts/bootstrap-growl.min.js"></script>
+    <script src="scripts/bootstrap-datetimepicker.min.js"></script>
+    <script src="scripts/typeahead.bundle.js"></script>
+    <script src="scripts/bootstrap-slider.min.js"></script>
+
+    <script src="scripts/knockout-3.2.0.js"></script>
+    <script src="scripts/knockout.validation.min.js"></script>
+    <script src="scripts/knockout.mapping-latest.js"></script>
+    <script src="scripts/knockout-date-bindings.js"></script>
+
+
+
+    <script src="scripts/app/ajaxPrefilters.js"></script>
+    <script src="scripts/app/app.models.js"></script>
+    <script src="scripts/app/base.viewmodel.js"></script>
+    <script src="scripts/app/app.datamodel.js"></script>
+    <script src="scripts/app/app.viewmodel.js"></script>
+    <script src="scripts/app/developer.viewmodel.js"></script>
+    <script src="scripts/app/home.viewmodel.js"></script>
+    <script src="scripts/app/childmgt.viewmodel.js"></script>
+    <script src="scripts/app/childPermission.viewmodel.js"></script>
+    <script src="scripts/app/feeding.viewmodel.js"></script>
+    <script src="scripts/app/sleep.viewmodel.js"></script>
+    <script src="scripts/app/diapermgt.viewmodel.js"></script>
+    <script src="scripts/app/measurements.viewmodel.js"></script>
+    <script src="scripts/app/login.viewmodel.js"></script>
+    <script src="scripts/app/register.viewmodel.js"></script>
+    <script src="scripts/app/registerExternal.viewmodel.js"></script>
+    <script src="scripts/app/manage.viewmodel.js"></script>
+    <script src="scripts/app/forgotpw.viewmodel.js"></script>
+    <script src="scripts/app/userInfo.viewmodel.js"></script>
+    <script src="scripts/app/stats.feeding.viewmodel.js"></script>
+    <script src="scripts/app/stats.diaper.viewmodel.js"></script>
+    <script src="scripts/app/_run.js"></script>
+
+
+
+    <script src="scripts/fullcalendar.min.js"></script>
+    <script src="scripts/waves.min.js"></script>
+    <script src="scripts/d3.min.js"></script>
+    <script src="scripts/c3.js"></script>
+    <script src="scripts/charts.js"></script>
+    <script src="scripts/functions.js"></script>
+
+
+
+
+    <script>
+        function myLoad(selector, page) {
+            $.ajax({
+                url: page,
+                success: function (data) { $(selector).append(data); },
+                dataType: 'html'
+            });
+        }
+
+
+        $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+            if (options.url.indexOf("cshtml") === -1) {
+                var baseUrl = "https://dev.cozyjozy.net:4443";
+                if (options.url.indexOf('/') === 0) {
+                    options.url = baseUrl + options.url; // encodeURIComponent(options.url);
+                } else {
+                    options.url = baseUrl + '/' + options.url; // encodeURIComponent(options.url);
+                }
+
+                options.crossDomain = true;
+            }
+            jqXHR.setRequestHeader('X-Requested-With', { toString: function () { return ''; } });
+
+        });
+
+
+
+        $(document).ready(function () {
+            $(document).ajaxStart(function () {
+                $('#loadingDiv').show();
+            });
+            $(document).ajaxStop(function () {
+                $('#loadingDiv').hide();
+            });
+            //myLoad('#pageBody', "./views/_Login.cshtml");
+            //myLoad('#pageBody', "./views/_Home.cshtml");
+            //myLoad('#pageBody', "./views/_FeedingStats.cshtml");
+            //myLoad('#pageBody', "./views/_DiaperStats.cshtml");
+            //myLoad('#pageBody', "./views/Developer.cshtml");
+            //myLoad('#pageBody', "./views/_ChildMgt.cshtml");
+            //myLoad('#pageBody', "./views/_ChildPermissions.cshtml");
+            //myLoad('#pageBody', "./views/_Feeding.cshtml");
+            //myLoad('#pageBody', "./views/_DiaperChanges.cshtml");
+            //myLoad('#pageBody', "./views/_SleepMgt.cshtml");
+            //myLoad('#pageBody', "./views/_Measurements.cshtml");
+            //myLoad('#pageBody', "./views/_Register.cshtml");
+            //myLoad('#pageBody', "./views/_RegisterExternal.cshtml");
+            //myLoad('#pageBody', "./views/_Manage.cshtml");
+            //myLoad('#pageBody', "./views/_PasswordReset.cshtml");
+
+            $(document).ajaxError(function (event, xhr, textStatus, err) {
+                switch (xhr.status) {
+                    case 401:
+                    case 403:
+                        app.user(null);
+                        app.navigateToLoggedOff();
+                        app.errors.push('Your request could not be authenicated. Please login again!');
+                        break;
+                    default:
+                        //xhr.responseJSON.modelState[""][0]
+                        var errorMessage = 'Error: ' + xhr.status + ' ' + err;
+
+                        if (xhr.responseJSON) {
+                            if (xhr.responseJSON.modelState) {
+                                var errorList = xhr.responseJSON.modelState[""];
+                                if (errorList && errorList.length > 0) {
+                                    errorMessage = errorList[0];
+                                }
+                            }
+                            else if (xhr.responseJSON.message) {
+                                errorMessage = xhr.responseJSON.message;
+                            }
+                            else if (xhr.responseJSON) {
+                                errorMessage = xhr.responseJSON;
+                            }
+                        }
+
+                        app.errors.push(errorMessage);
+                        break;
+                }
+            });
+
+
+            ko.bindingHandlers.datetimepicker = {
+                init: function (element, valueAccessor, allBindings) {
+                    var options = {
+                        format: 'MM/DD/YYYY hh:mm A',
+                        defaultDate: ko.unwrap(valueAccessor())
+                    };
+
+                    ko.utils.extend(options, allBindings().dateTimePickerOptions);
+
+                    $(element).datetimepicker(options).on("dp.change", function (evntObj) {
+                        var observable = valueAccessor();
+                        if (evntObj.timeStamp !== undefined) {
+                            var picker = $(this).data("DateTimePicker");
+                            var d = picker.date();
+
+                            if (d !== null) {
+                                var date = d.format(options.format);
+                                observable(date);
+                            } else {
+                                observable(d);
+                            }
+                        }
+                    });
+                },
+                update: function (element, valueAccessor, allBindingsAccessor) {
+                    //var value = ko.unwrap(valueAccessor());
+                    //$(element).datetimepicker('date', value || '');
+
+                    //when the view model is updated, update the widget
+                    if ($(element).data("DateTimePicker")) {
+                        $(element).datetimepicker("remove");
+                        var value = ko.unwrap(valueAccessor());
+
+                        $(element).data("DateTimePicker").date(moment(value) || '');
+                    }
+
+                }
+            };
+
+            ko.bindingHandlers.sliderValue = {
+                init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+                    var params = valueAccessor();
+
+                    // Check whether the value observable is either placed directly or in the paramaters object.
+                    if (!(ko.isObservable(params) || params['value']))
+                        throw "You need to define an observable value for the sliderValue. Either pass the observable directly or as the 'value' field in the parameters.";
+
+                    // Identify the value and initialize the slider
+                    var valueObservable;
+                    if (ko.isObservable(params)) {
+                        valueObservable = params;
+                        $(element).slider({ value: ko.unwrap(params) });
+                    }
+                    else {
+                        valueObservable = params['value'];
+                        // Replace the 'value' field in the options object with the actual value
+                        params['value'] = ko.unwrap(valueObservable);
+                        $(element).slider(params);
+                    }
+
+                    // Make sure we update the observable when changing the slider value
+                    $(element).on('slide', function (ev) {
+                        valueObservable(ev.value);
+                    });
+
+                },
+                update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+                    var modelValue = valueAccessor();
+                    var valueObservable;
+                    if (ko.isObservable(modelValue))
+                        valueObservable = modelValue;
+                    else
+                        valueObservable = modelValue['value'];
+
+                    $(element).slider('setValue', parseFloat(valueObservable()));
+                }
+            };
+        });
+    </script>
+
+
+
+
+
+
+</body>
+</html>
