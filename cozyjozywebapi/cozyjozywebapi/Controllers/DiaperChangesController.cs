@@ -126,7 +126,7 @@ namespace cozyjozywebapi.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (!HasWritePermission(diaperChanges.Child.Id))
+            if (!HasWritePermission(diaperChanges.ChildId))
             {
                 return BadRequest();
             }
@@ -174,7 +174,7 @@ namespace cozyjozywebapi.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (!HasWritePermission(diaperChanges.Child.Id))
+            if (!HasWritePermission(diaperChanges.ChildId))
             {
                 return BadRequest();
             }

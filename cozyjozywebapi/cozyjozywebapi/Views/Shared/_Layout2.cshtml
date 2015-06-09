@@ -514,7 +514,7 @@
 
 
         <section id="content">
-            <div class="container">
+            <div class="container" style="display: none" data-bind="visible: true">
                 <div class="alert alert-danger" data-bind="visible: errors().length > 0">
                     <ul data-bind="foreach: errors">
                         <li data-bind="text: $data"></li>
@@ -525,7 +525,8 @@
             </div>
         </section>
     </section>
-    <footer class="panel-footer">
+    <footer class="panel-footer" data-bind="if: loggedIn">
+        <p>Share your experience!</p>
         @*<div>
                 <a href="https://twitter.com/share" class="twitter-share-button" data-url="https://cozyjozy.net" data-text="Parents of newborns, track and analyze your child's growth!">Tweet</a>
             </div>*@

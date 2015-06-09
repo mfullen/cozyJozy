@@ -129,7 +129,7 @@ namespace cozyjozywebapi.Controllers
                 Notes = sleepSession.Notes
             };
 
-            if (!HasWritePermission(newFeeding.Child.Id))
+            if (!HasWritePermission(sleepSession.ChildId))
             {
                 return BadRequest();
             }
