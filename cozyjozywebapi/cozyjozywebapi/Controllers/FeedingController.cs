@@ -151,7 +151,7 @@ namespace cozyjozywebapi.Controllers
                 Notes = feeding.Notes
             };
 
-            if (!HasWritePermission(newFeeding.Child.Id))
+            if (!HasWritePermission(feeding.ChildId))
             {
                 return BadRequest();
             }
